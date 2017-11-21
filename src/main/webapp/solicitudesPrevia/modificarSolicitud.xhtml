@@ -6,8 +6,10 @@
         <ui:param name="yaFinalizado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion}" />
         <ui:param name="yaAnulado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaBaja}" />
         
-        <ui:param name="titulo" value="Modificar solicitud de documentación" />
-        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <f:metadata>
+            <ui:param name="titulo" value="Modificar solicitud de documentación" />
+            <f:viewAction action="#{navegacionBean.adelante(titulo, request.servletPath)}"/>
+        </f:metadata>
         <h3>#{titulo}</h3>
         <div class="aclaraciones">Los campos marcados con (*) son obligatorios</div>
 

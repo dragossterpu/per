@@ -5,8 +5,10 @@
         <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         
-        <ui:param name="titulo" value="Búsqueda de informes" />
-        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <f:metadata>
+            <ui:param name="titulo" value="Búsqueda de informes" />
+            <f:viewAction action="#{navegacionBean.recomenzar(titulo, request.servletPath)}"/>
+        </f:metadata>
         <h3>#{titulo}</h3>
         
         <h:form id="busquedaInforme">

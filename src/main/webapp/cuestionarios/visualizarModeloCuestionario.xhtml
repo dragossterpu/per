@@ -3,11 +3,11 @@
 
 		<f:metadata>
 			<f:viewParam name="idModelo" value="#{visualizarCuestionarioBean.idModelo}" />
-			<f:event type="preRenderView" listener="#{visualizarCuestionarioBean.visualizarModelo}" />
-		</f:metadata>
+			<f:viewAction action="#{visualizarCuestionarioBean.visualizarModelo}" />
 
-		<ui:param name="titulo" value="Ver modelo de cuestionario" />
-        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+    		<ui:param name="titulo" value="Ver modelo de cuestionario" />
+            <f:viewAction action="#{navegacionBean.adelante(titulo, request.servletPath)}"/>
+        </f:metadata>
         
         <div class="tituloCuestionario">
             <h:outputText value="#{visualizarCuestionarioBean.modeloCuestionario.descripcion}" />

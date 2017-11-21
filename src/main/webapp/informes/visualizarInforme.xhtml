@@ -3,9 +3,11 @@
 
         <h:form id="informe">
             <ui:param name="yaFinalizado" value="#{not empty informeBean.informe.fechaFinalizacion}" />
-                    
-            <ui:param name="titulo" value="Informe" />
-            <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+            
+            <f:metadata>
+                <ui:param name="titulo" value="Informe" />
+                <f:viewAction action="#{navegacionBean.adelante(titulo, request.servletPath)}"/>
+            </f:metadata>
             
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
             <p:outputPanel style="float: right;">

@@ -3,10 +3,11 @@
         
         <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
         <ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq informeBean.informe.inspeccion.equipo.jefeEquipo.username}" />
-                            
-        <ui:param name="titulo" value="Redactar informe" />
-        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
-            
+        
+        <f:metadata>             
+            <ui:param name="titulo" value="Redactar informe" />
+            <f:viewAction action="#{navegacionBean.adelante(titulo, request.servletPath)}"/>
+        </f:metadata>
         <h:form id="informe">
 
             

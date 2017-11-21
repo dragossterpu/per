@@ -3,12 +3,13 @@
 
         <f:metadata>
             <f:viewParam name="vieneDe" value="#{inspeccionBean.vieneDe}" />
+            
+            <ui:param name="titulo" value="Inspección" />
+            <f:viewAction action="#{navegacionBean.adelante(titulo, request.servletPath)}"/>
         </f:metadata>
 
         <ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}" />
         
-        <ui:param name="titulo" value="Inspección" />
-        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
         
         <h3>Inspección #{inspeccionBean.inspeccion.numero}</h3>
 

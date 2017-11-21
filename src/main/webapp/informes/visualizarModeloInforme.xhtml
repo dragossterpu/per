@@ -3,11 +3,12 @@
         
         <f:metadata>
             <f:viewParam name="idModelo" value="#{visualizarInformeBean.idModelo}" />
-            <f:event type="preRenderView" listener="#{visualizarInformeBean.visualizarModelo}" />
+            <f:viewAction action="#{visualizarInformeBean.visualizarModelo}" />
+            
+            <ui:param name="titulo" value="#{visualizarInformeBean.modelo.nombre}" />
+            <f:viewAction action="#{navegacionBean.adelante(titulo, request.servletPath)}"/>
         </f:metadata>
         
-        <ui:param name="titulo" value="#{visualizarInformeBean.modelo.nombre}" />
-        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
         <h3>#{titulo}</h3>
         
         <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />

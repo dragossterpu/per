@@ -7,8 +7,9 @@
         
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
        
-        <f:event listener="#{navegacionBean.iniciarCamino()}" type="preRenderView"/>
-
+        <f:metadata>
+            <f:viewAction action="#{navegacionBean.iniciarCamino()}"/>
+        </f:metadata>
         <div class="textoDerecha">
             <h:form>
                 <h:link outcome="/principal/crearSugerencia" value="Sugerencias de mejora"  />

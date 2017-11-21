@@ -5,8 +5,10 @@
         <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         
-        <ui:param name="titulo" value="Búsqueda de informes resumidos" />
-        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <f:metadata>
+            <ui:param name="titulo" value="Búsqueda de informes resumidos" />
+            <f:viewAction action="#{navegacionBean.recomenzar(titulo, request.servletPath)}"/>
+        </f:metadata>
         <h3>#{titulo}</h3>
         
         <h:form id="busquedaInforme">
@@ -62,8 +64,6 @@
                     <f:selectItems value="#{applicationBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                 </p:selectOneMenu>
                 
-                 
-                
             </div>
             <div class="columnaIzdaFormulario">
             	<p:outputLabel value="Modelos de informe:"/>
@@ -72,28 +72,27 @@
                     <f:selectItems value="#{informeBuscadorBean.listaModelosInforme}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}" />
                     <p:ajax update=":busquedaInforme:areasSelect" partialSubmit="true" listener="#{informeBuscadorBean.onChangeModelo()}" />
                 </p:selectOneMenu>
-              <h:outputLabel for="areasSelect" value="Áreas" />
-              <p:selectCheckboxMenu  styleClass="selectorMultiple" id="areasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedAreas}" label="Áreas" multiple="true"
-                                            filter="true" filterMatchMode="contains" converter="#{selectConverter}">
-                  <f:selectItems value="#{informeBuscadorBean.listaAreas}" var="area" itemLabel="#{area.descripcion}" itemValue="#{area}"/>
-                  <p:ajax event="change" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
-                  <p:ajax event="toggleSelect" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
-              </p:selectCheckboxMenu>
+                
+                <h:outputLabel for="areasSelect" value="Áreas" />
+                <p:selectCheckboxMenu  styleClass="selectorMultiple" id="areasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedAreas}" label="Áreas" multiple="true" filter="true" filterMatchMode="contains" converter="#{selectConverter}">
+                    <f:selectItems value="#{informeBuscadorBean.listaAreas}" var="area" itemLabel="#{area.descripcion}" itemValue="#{area}"/>
+                    <p:ajax event="change" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
+                    <p:ajax event="toggleSelect" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
+                </p:selectCheckboxMenu>
               
-              <h:outputLabel for="subareasSelect" value="Subáreas" />
-                   <p:selectCheckboxMenu styleClass="selectorMultiple" id="subareasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedSubAreas}" label="SubÁreas" multiple="true"
-                                                 filter="true" filterMatchMode="contains" converter="#{selectConverter}">
-                       <f:selectItems value="#{informeBuscadorBean.listaSubareas}" var="subarea"  itemLabel="#{subarea.area.descripcion} : #{subarea.descripcion}" itemValue="#{subarea}"/>
-                   </p:selectCheckboxMenu>
+                <h:outputLabel for="subareasSelect" value="Subáreas" />
+                <p:selectCheckboxMenu styleClass="selectorMultiple" id="subareasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedSubAreas}" label="SubÁreas" multiple="true" filter="true" filterMatchMode="contains" converter="#{selectConverter}">
+                    <f:selectItems value="#{informeBuscadorBean.listaSubareas}" var="subarea"  itemLabel="#{subarea.area.descripcion} : #{subarea.descripcion}" itemValue="#{subarea}"/>
+                </p:selectCheckboxMenu>
            </div>        
         </div>
         <div class="botonesFormulario">
             <p:commandButton actionListener="#{informeBuscadorBean.buscarInformesAgrupar}" value="Buscar" update="panelInformes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
             <p:commandButton actionListener="#{informeBuscadorBean.limpiarBusqueda}" value="Limpiar" update="busquedaInforme" icon="fa fa-eraser" />
-            <h:commandLink actionListener="#{informeBuscadorBean.exportar}"  styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
-               <h:outputText styleClass="ui-CommandLink-texto" value="Exportar" />
+            <p:commandLink actionListener="#{informeBuscadorBean.exportar}"  styleClass="ui-state-default ui-corner-all fa fa-file-word-o ui-CommandLink ui-CommandLink-icono-texto">
+               <h:outputText styleClass="ui-CommandLink-texto ui-CommandLink-icono-texto" value="Exportar" />
                <p:fileDownload value="#{informeBuscadorBean.file}" />
-            </h:commandLink>
+            </p:commandLink>
         </div>
 
         <p:separator styleClass="separator ui-state-disabled" />

@@ -2,6 +2,7 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.annotation.PostConstruct;
 
@@ -67,19 +68,21 @@ public class NavegacionBean implements Serializable {
      */
     public void adelante(String nombre, String ruta) {
         List<MenuElement> elementos = caminoMigas.getElements();
-        DefaultMenuItem e;
-        int tam = elementos.size();
-        for (int i = 0; i < tam; i++) {
-            e = (DefaultMenuItem) elementos.get(i);
-            if (nombre.equals(e.getValue())) {
-                elementos.subList(i, tam).clear();
-                break;
-            }
+        DefaultMenuItem e = null;
+        ListIterator<MenuElement> it = elementos.listIterator();
+        boolean yaEsta = false;
+        while (it.hasNext() && !yaEsta) {
+            e = (DefaultMenuItem) it.next();
+            yaEsta = nombre.equals(e.getValue());
         }
-        DefaultMenuItem nuevo = new DefaultMenuItem();
-        nuevo.setUrl(ruta);
-        nuevo.setValue(nombre);
-        caminoMigas.addElement(nuevo);
+        if (yaEsta) {
+            elementos.subList(it.nextIndex(), elementos.size()).clear();
+        } else {
+            DefaultMenuItem nuevo = new DefaultMenuItem();
+            nuevo.setUrl(ruta);
+            nuevo.setValue(nombre);
+            caminoMigas.addElement(nuevo);
+        }
     }
     
     /**
