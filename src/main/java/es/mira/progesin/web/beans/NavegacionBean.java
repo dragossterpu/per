@@ -60,8 +60,8 @@ public class NavegacionBean implements Serializable {
     }
     
     /**
-     * Busca si el paso ya está en el camino, de ser así lo borra junto con los que estén detrás, después se añade como
-     * último paso al camino.
+     * Busca si el paso ya está en el camino, de ser así borra los que estén detrás y sino, se añade como nuevo paso al
+     * final del camino.
      * 
      * @param nombre de la vista
      * @param ruta de la vista
