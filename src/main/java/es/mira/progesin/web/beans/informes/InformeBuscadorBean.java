@@ -27,17 +27,20 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelInforme;
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.RespuestaInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.services.IAreaInformeService;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInformeService;
+import es.mira.progesin.services.IModeloInformeService;
+import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.ISubareaInformeService;
 import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
@@ -70,16 +73,14 @@ public class InformeBuscadorBean implements Serializable {
      */
     private static final int NUMCOLSTABLA = 12;
     
-    /**
-     * Variable utilizada para almacenar el valor de la provincia seleccionada.
-     * 
-     */
-    private Provincia provinciSelec;
+    private List<Municipio> listaMunicipios;
     
     /**
      * Objeto de búsqueda de informes.
      */
     private InformeBusqueda informeBusqueda;
+    
+    private List<ModeloInforme> listaModelosInforme;
     
     /**
      * Lista de las áreas disponibles.
@@ -146,6 +147,12 @@ public class InformeBuscadorBean implements Serializable {
     @Autowired
     private transient IAreaInformeService areaInformeService;
     
+    @Autowired
+    private transient IModeloInformeService modeloInformeService;
+    
+    @Autowired
+    private transient IMunicipioService municipioService;
+    
     /**
      * Generador de DOCX.
      */
@@ -160,7 +167,8 @@ public class InformeBuscadorBean implements Serializable {
         listaEquipos = equipoService.findByFechaBajaIsNull();
         model = new LazyModelInforme(informeService);
         
-        listaAreas = areaInformeService.findAll();
+        listaModelosInforme = modeloInformeService.findAll();
+        Collections.sort(listaModelosInforme, (o1, o2) -> o1.getNombre().compareTo(o2.getNombre()));
         
         setInformeBusqueda(model.getBusqueda());
         
@@ -168,6 +176,8 @@ public class InformeBuscadorBean implements Serializable {
         for (int i = 0; i <= NUMCOLSTABLA; i++) {
             list.add(Boolean.TRUE);
         }
+        
+        Utilities.limpiarSesion("informeBuscadorBean");
     }
     
     /**
@@ -196,8 +206,10 @@ public class InformeBuscadorBean implements Serializable {
      * Borra los resultados de búsquedas anteriores.
      */
     public void limpiarBusqueda() {
-        setProvinciSelec(null);
-        setListaInformesSeleccionados(null);
+        // setProvinciSelec(null);
+        // setListaInformesSeleccionados(null);
+        // setListaAreas(null);
+        // setListaSubareas(null);
         setInformeBusqueda(new InformeBusqueda());
         model.setRowCount(0);
     }
@@ -208,7 +220,7 @@ public class InformeBuscadorBean implements Serializable {
      * 
      */
     public void buscarInforme() {
-        informeBusqueda.setProvincia(provinciSelec);
+        // informeBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(informeBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
     }
@@ -219,7 +231,6 @@ public class InformeBuscadorBean implements Serializable {
      * 
      */
     public void buscarInformesAgrupar() {
-        informeBusqueda.setProvincia(provinciSelec);
         informeBusqueda.setEstado(InformeEnum.FINALIZADO);
         model.setBusqueda(informeBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
@@ -317,7 +328,7 @@ public class InformeBuscadorBean implements Serializable {
                     informe.getInspeccion().getAmbito().getDescripcion(),
                     informe.getInspeccion().getMunicipio().getProvincia().getNombre()).toUpperCase();
             
-            informeFormateado.append("Informe de la inspección " + titulo);
+            informeFormateado.append(titulo);
             informeFormateado.append("</h2>");
             AtomicInteger j = new AtomicInteger(0);
             
@@ -348,6 +359,26 @@ public class InformeBuscadorBean implements Serializable {
         });
         
         return Utilities.limpiarHtml(informeFormateado.toString());
+    }
+    
+    public void onChangeModelo() {
+        if (informeBusqueda.getModeloInforme() != null) {
+            setListaAreas(areaInformeService.findByModeloInformeId(informeBusqueda.getModeloInforme().getId()));
+        } else {
+            setListaAreas(null);
+        }
+    }
+    
+    /**
+     * Devuelve una lista de municipios pertenecientes a una provincia. Se utiliza para recargar la lista de municipios
+     * dependiendo de la provincia seleccionada.
+     */
+    public void onChangeProvincia() {
+        if (informeBusqueda.getProvincia() != null) {
+            setListaMunicipios(municipioService.findByProvincia(informeBusqueda.getProvincia()));
+        } else {
+            setListaMunicipios(null);
+        }
     }
     
 }

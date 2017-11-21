@@ -13,6 +13,7 @@ import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,6 +80,11 @@ public class InformeBusqueda implements Serializable {
     private String nombreUnidad;
     
     // Añadidos para el nuevo buscador
+    
+    /**
+     * Modelo del informe a buscar.
+     */
+    private ModeloInforme modeloInforme;
     
     /**
      * Lista de subáreas seleccionadas.

@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.faces.context.FacesContext;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Document.OutputSettings.Syntax;
@@ -371,5 +373,25 @@ public class Utilities {
             cad = "";
         }
         return cad;
+    }
+    
+    /**
+     * Elimina los bean de la sesión que no contienen ese nombre.
+     * 
+     * @param nombreBeanActual Nombre del bean a eliminar de la sesión.
+     */
+    public static void limpiarSesion(String nombreBeanActual) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, Object> mapaSesion = context.getExternalContext().getSessionMap();
+        mapaSesion.forEach((k, v) -> System.out.println("ANTES DE BORRAR: \n clave: " + k + ", valor: " + v));
+        for (String cabecera : mapaSesion.keySet()) {
+            String ubicacion = mapaSesion.get(cabecera).getClass().getPackage().toString().toLowerCase();
+            if (ubicacion.contains("bean") && "navegacionBean".equals(cabecera) == Boolean.FALSE
+                    && cabecera.equals(nombreBeanActual) == Boolean.FALSE) {
+                mapaSesion.remove(cabecera);
+            }
+        }
+        mapaSesion.forEach((k, v) -> System.out.println("DESPUES DE BORRAR: \n clave: " + k + ", valor: " + v));
+        
     }
 }

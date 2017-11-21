@@ -23,16 +23,16 @@
                 </p:selectOneMenu>
                 
                  <h:outputLabel for="provinciasSelect" value="Provincia:" />
-                 <p:selectOneMenu value="#{informeBuscadorBean.provinciSelec}" id="provinciasSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
+                 <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.provincia}" id="provinciasSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
                      <f:selectItem itemLabel="Todos" itemValue="" />
                      <f:selectItems value="#{applicationBean.listaProvincias}" var="provincia" itemLabel="#{provincia.nombre}" itemValue="#{provincia}" />
-                     <p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia(informeBuscadorBean.provinciSelec)}" />
+                     <p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{informeBuscadorBean.onChangeProvincia()}" />
                  </p:selectOneMenu>
 
                  <h:outputLabel for="municipiosSelect" value="Municipio:" />
                  <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.municipio}" id="municipiosSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
                      <f:selectItem itemLabel="Todos" itemValue="" />
-                     <f:selectItems value="#{inspeccionBean.listaMunicipios}" var="municipio" itemLabel="#{municipio.name}" itemValue="#{municipio}" />
+                     <f:selectItems value="#{informeBuscadorBean.listaMunicipios}" var="municipio" itemLabel="#{municipio.name}" itemValue="#{municipio}" />
                  </p:selectOneMenu>              
             </div>
             
@@ -66,6 +66,12 @@
                 
             </div>
             <div class="columnaIzdaFormulario">
+            	<p:outputLabel value="Modelos de informe:"/>
+            	<p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.modeloInforme}" id="idModeloInforme" converter="#{selectConverter}" >
+                    <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                    <f:selectItems value="#{informeBuscadorBean.listaModelosInforme}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}" />
+                    <p:ajax update=":busquedaInforme:areasSelect" partialSubmit="true" listener="#{informeBuscadorBean.onChangeModelo()}" />
+                </p:selectOneMenu>
               <h:outputLabel for="areasSelect" value="Áreas" />
               <p:selectCheckboxMenu  styleClass="selectorMultiple" id="areasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedAreas}" label="Áreas" multiple="true"
                                             filter="true" filterMatchMode="contains" converter="#{selectConverter}">
