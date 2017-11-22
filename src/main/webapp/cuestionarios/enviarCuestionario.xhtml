@@ -20,29 +20,29 @@
 
             <div class="bloqueFormulario">
                 <h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección (*):" />
-                <p:autoComplete id="infoInspeccion" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{autocompleteInspeccion}" forceSelection="true" required="{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca la unidad o el número de la inspección" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000" disabled="#{yaEnviado}">
+                <p:autoComplete id="infoInspeccion" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{autocompleteInspeccion}" forceSelection="true" required="#{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca la unidad o el número de la inspección" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000" disabled="#{yaEnviado}">
                     <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario" />
                 </p:autoComplete>
                 <p:messages for="infoInspeccion" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="nombre" value="Nombre (*):" />
-                <p:inputText id="nombre" value="#{envioCuestionarioBean.cuestionarioEnvio.nombreUsuarioEnvio}" maxlength="500" required="{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca el nombre de la persona a la que va dirigido el cuestionario" converter="#{trimConverter}" disabled="#{yaEnviado}" />
+                <p:inputText id="nombre" value="#{envioCuestionarioBean.cuestionarioEnvio.nombreUsuarioEnvio}" maxlength="500" required="#{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca el nombre de la persona a la que va dirigido el cuestionario" converter="#{trimConverter}" disabled="#{yaEnviado}" />
                 <p:messages for="nombre" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="cargo" value="Cargo:" />
                 <p:inputText id="cargo" value="#{envioCuestionarioBean.cuestionarioEnvio.cargo}" maxlength="500" converter="#{trimConverter}" disabled="#{yaEnviado}" />
 
                 <h:outputLabel for="correo" value="Correo electrónico (*):" />
-                <p:inputText id="correo" value="#{envioCuestionarioBean.cuestionarioEnvio.correoEnvio}" maxlength="500" required="{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca el correo electrónico" converter="#{trimConverter}" validatorMessage="El formato del correo no es correcto o el dominio introducido no es válido" disabled="#{yaEnviado}">
+                <p:inputText id="correo" value="#{envioCuestionarioBean.cuestionarioEnvio.correoEnvio}" maxlength="500" required="#{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca el correo electrónico" converter="#{trimConverter}" validatorMessage="El formato del correo no es correcto o el dominio introducido no es válido" disabled="#{yaEnviado}">
                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                 </p:inputText>
                 <p:messages for="correo" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="fechaLimite" value="Fecha límite de respuesta (*):" />
-                <p:calendar id="fechaLimite" value="#{envioCuestionarioBean.cuestionarioEnvio.fechaLimiteCuestionario}" pattern="dd/MM/yyyy" locale="es" mindate="#{currentDate}" navigator="true" required="{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario" disabled="#{yaAnulado or yaFinalizado or (yaEnviado and not (esJefeEquipoInspeccion or esJefeInspecciones))}" />
+                <p:calendar id="fechaLimite" value="#{envioCuestionarioBean.cuestionarioEnvio.fechaLimiteCuestionario}" pattern="dd/MM/yyyy" locale="es" mindate="#{currentDate}" navigator="true" required="#{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario" disabled="#{yaAnulado or yaFinalizado or (yaEnviado and not (esJefeEquipoInspeccion or esJefeInspecciones))}" />
 
                 <h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
-                <p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres." required="{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}" disabled="#{yaEnviado}" />
+                <p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres." required="#{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}" disabled="#{yaEnviado}" />
                 <p:outputLabel id="contador" />
                 <p:messages for="motivo" autoUpdate="true" closable="true" />           
                 
