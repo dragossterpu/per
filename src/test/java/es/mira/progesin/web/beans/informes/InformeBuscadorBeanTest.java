@@ -1,6 +1,3 @@
-/**
- * 
- */
 package es.mira.progesin.web.beans.informes;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.Visibility;
@@ -25,10 +24,11 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInforme;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
-import es.mira.progesin.persistence.entities.informes.AreaInforme;
-import es.mira.progesin.services.IAreaInformeService;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInformeService;
+import es.mira.progesin.services.IModeloInformeService;
+import es.mira.progesin.util.Utilities;
 
 /**
  * 
@@ -37,7 +37,8 @@ import es.mira.progesin.services.IInformeService;
  * @author EZENTIS
  */
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Utilities.class)
 public class InformeBuscadorBeanTest {
     
     /**
@@ -53,10 +54,10 @@ public class InformeBuscadorBeanTest {
     private transient IEquipoService equipoService;
     
     /**
-     * Servicio de áreas.
+     * Servicio de modelos de informe.
      */
     @Mock
-    private transient IAreaInformeService areaInformeService;
+    private transient IModeloInformeService modeloInformeService;
     
     /**
      * Bean de ModeloInformePersonalizado.
@@ -86,15 +87,17 @@ public class InformeBuscadorBeanTest {
      */
     @Test
     public final void testInit() {
+        PowerMockito.mockStatic(Utilities.class);
+        
         InformeBusqueda informeBusqueda = new InformeBusqueda();
         informeBusqueda.setAmbitoInspeccion(AmbitoInspeccionEnum.PN);
         List<Equipo> lista = new ArrayList<>();
         lista.add(Equipo.builder().id(1L).build());
         when(equipoService.findByFechaBajaIsNull()).thenReturn(lista);
         
-        List<AreaInforme> listaAreas = new ArrayList<>();
-        listaAreas.add(AreaInforme.builder().id(1L).build());
-        when(areaInformeService.findAll()).thenReturn(listaAreas);
+        List<ModeloInforme> listaModelos = new ArrayList<>();
+        listaModelos.add(ModeloInforme.builder().id(1L).build());
+        when(modeloInformeService.findAll()).thenReturn(listaModelos);
         
         informeBuscadorBean.init();
         assertThat(informeBuscadorBean.getModel()).isNotNull();
