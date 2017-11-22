@@ -52,7 +52,7 @@
                     <h:outputLabel for="modeloCuestionarioSelect" value="Modelo de cuestionario:" />
                     <p:selectOneMenu value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.modeloCuestionarioSeleccionado}" id="modeloCuestionarioSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-                        <f:selectItems value="#{modelosCuestionarioBean.listadoCuestionarios}" var="modeloCuestionario" itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
+                        <f:selectItems value="#{cuestionarioEnviadoBean.listadoCuestionarios}" var="modeloCuestionario" itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="estado" value="Estado del cuestionario:" />

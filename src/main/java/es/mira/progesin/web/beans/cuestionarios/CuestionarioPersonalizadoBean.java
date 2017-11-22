@@ -2,6 +2,7 @@ package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,14 +23,17 @@ import es.mira.progesin.lazydata.LazyModelCuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
 import es.mira.progesin.services.IDocumentoService;
+import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -89,9 +93,20 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     private LazyModelCuestionarioPersonalizado model;
     
     /**
+     * Servicio de modelos de cuestionario.
+     */
+    @Autowired
+    private transient IModeloCuestionarioService modeloCuestionarioService;
+    
+    /**
      * Lista de booleanos para controlar la visualización de columnas en la vista.
      */
     private List<Boolean> list;
+    
+    /**
+     * Listado de modelos de cuestionarios.
+     */
+    private List<ModeloCuestionario> listadoCuestionarios;
     
     /**
      * Busca modelos de cuestionario personalizados según los filtros introducidos en el formulario de búsqueda.
@@ -181,7 +196,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
                     .setListaPlantillas(documentoService.buscaNombreTipoDocumento("PLANTILLA CUESTIONARIO"));
             envioCuestionarioBean.setPlantillasSeleccionadas(null);
             envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-            // envioCuestionarioBean.setMostrarPlantillas(false);
             rutaVista = "/cuestionarios/enviarCuestionario?faces-redirect=true";
         } else {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Acción no permitida",
@@ -202,6 +216,10 @@ public class CuestionarioPersonalizadoBean implements Serializable {
         }
         cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
         model = new LazyModelCuestionarioPersonalizado(cuestionarioPersonalizadoService);
+        setListadoCuestionarios(modeloCuestionarioService.findAll());
+        
+        Utilities.limpiarSesion(
+                Arrays.asList("cuestionarioPersonalizadoBean", "envioCuestionarioBean", "visualizarCuestionario"));
     }
     
     /**

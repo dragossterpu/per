@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -378,12 +379,10 @@ public class Utilities {
     /**
      * Elimina los bean de la sesión que no contienen ese nombre.
      * 
-     * @param nombreBeanActual Nombre del bean a eliminar de la sesión.
+     * @param nombreBeanActual Nombre del bean que no se tiene que eliminar de la sesión.
      */
     public static void limpiarSesion(String nombreBeanActual) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map<String, Object> mapaSesion = context.getExternalContext().getSessionMap();
-        mapaSesion.forEach((k, v) -> System.out.println("ANTES DE BORRAR: \n clave: " + k + ", valor: " + v));
+        Map<String, Object> mapaSesion = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         for (String cabecera : mapaSesion.keySet()) {
             String ubicacion = mapaSesion.get(cabecera).getClass().getPackage().toString().toLowerCase();
             if (ubicacion.contains("bean") && "navegacionBean".equals(cabecera) == Boolean.FALSE
@@ -391,7 +390,21 @@ public class Utilities {
                 mapaSesion.remove(cabecera);
             }
         }
-        mapaSesion.forEach((k, v) -> System.out.println("DESPUES DE BORRAR: \n clave: " + k + ", valor: " + v));
-        
+    }
+    
+    /**
+     * Elimina los bean de la sesión que no contienen ese nombre.
+     * 
+     * @param listaBeans Nombre de los beans que no se tienen que eliminar de la sesión.
+     */
+    public static void limpiarSesion(List<String> listaBeans) {
+        Map<String, Object> mapaSesion = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        for (String cabecera : mapaSesion.keySet()) {
+            String ubicacion = mapaSesion.get(cabecera).getClass().getPackage().toString().toLowerCase();
+            if (ubicacion.contains("bean") && "navegacionBean".equals(cabecera) == Boolean.FALSE
+                    && listaBeans.contains(cabecera) == Boolean.FALSE) {
+                mapaSesion.remove(cabecera);
+            }
+        }
     }
 }

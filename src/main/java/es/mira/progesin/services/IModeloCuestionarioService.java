@@ -50,4 +50,11 @@ public interface IModeloCuestionarioService {
      */
     ModeloCuestionario visualizarModelo(Integer id);
     
+    /**
+     * Busca todos los modelos de cuestionario que hay en BBDD.
+     * 
+     * @return lista de modelos en BBDD
+     */
+    List<ModeloCuestionario> findAll();
+    
 }

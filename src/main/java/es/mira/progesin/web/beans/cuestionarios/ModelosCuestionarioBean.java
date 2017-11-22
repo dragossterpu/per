@@ -16,6 +16,7 @@ import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,6 +56,10 @@ public class ModelosCuestionarioBean implements Serializable {
     public void init() {
         setListadoCuestionarios(modeloCuestionarioService.findAllByFechaBajaIsNull());
         Collections.sort(listadoCuestionarios, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
+        
+        // Aunque este Bean es de vista, limpio sesión para borrar el resto de beans de sesión que se llaman desde la
+        // vista de modelos
+        Utilities.limpiarSesion("modelosCuestionarioBean");
     }
     
     /**

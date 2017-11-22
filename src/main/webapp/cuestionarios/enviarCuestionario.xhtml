@@ -40,6 +40,7 @@
 
                 <h:outputLabel for="fechaLimite" value="Fecha límite de respuesta (*):" />
                 <p:calendar id="fechaLimite" value="#{envioCuestionarioBean.cuestionarioEnvio.fechaLimiteCuestionario}" pattern="dd/MM/yyyy" locale="es" mindate="#{currentDate}" navigator="true" required="#{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario" disabled="#{yaAnulado or yaFinalizado or (yaEnviado and not (esJefeEquipoInspeccion or esJefeInspecciones))}" />
+				<p:messages for="fechaLimite" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
                 <p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres." required="#{param['envioCuestionario:btnEnviar']!=null}" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}" disabled="#{yaEnviado}" />

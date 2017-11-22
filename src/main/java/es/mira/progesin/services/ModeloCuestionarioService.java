@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -143,5 +144,19 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
         }
         visualiza.setAreas(listaAreas);
         return visualiza;
+    }
+    
+    /**
+     * Busca todos los modelos de cuestionario que hay en BBDD.
+     * 
+     * @return lista de modelos en BBDD
+     */
+    @Override
+    public List<ModeloCuestionario> findAll() {
+        List<ModeloCuestionario> listadoModelos = (List<ModeloCuestionario>) modeloCuestionarioRepository.findAll();
+        Collections.sort(listadoModelos, (o1, o2) -> o1.getDescripcion().compareTo(o2.getDescripcion()));
+        
+        return listadoModelos;
+        
     }
 }

@@ -3,6 +3,7 @@ package es.mira.progesin.web.beans.cuestionarios;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,18 +26,21 @@ import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
+import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -89,6 +93,17 @@ public class CuestionarioEnviadoBean implements Serializable {
      * 
      */
     private List<Boolean> list;
+    
+    /**
+     * Servicio de modelos de cuestionario.
+     */
+    @Autowired
+    private transient IModeloCuestionarioService modeloCuestionarioService;
+    
+    /**
+     * Listado de modelos de cuestionarios.
+     */
+    private List<ModeloCuestionario> listadoCuestionarios;
     
     /**
      * Servicio de cuestionarios enviados.
@@ -223,6 +238,10 @@ public class CuestionarioEnviadoBean implements Serializable {
         }
         setCuestionarioEnviadoBusqueda(new CuestionarioEnviadoBusqueda());
         setModel(new LazyModelCuestionarioEnviado(cuestionarioEnvioService));
+        setListadoCuestionarios(modeloCuestionarioService.findAll());
+        
+        Utilities.limpiarSesion(Arrays.asList("cuestionarioEnviadoBean", "cuestionarioPersonalizadoBean",
+                "envioCuestionarioBean", "visualizarCuestionario"));
     }
     
     /**
