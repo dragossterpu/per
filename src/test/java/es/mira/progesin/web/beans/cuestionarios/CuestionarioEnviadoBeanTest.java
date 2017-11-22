@@ -46,14 +46,17 @@ import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
+import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
+import es.mira.progesin.util.Utilities;
 
 /**
  * 
@@ -64,7 +67,7 @@ import es.mira.progesin.util.ICorreoElectronico;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
+@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, Utilities.class })
 public class CuestionarioEnviadoBeanTest {
     /**
      * Constante user.
@@ -103,6 +106,12 @@ public class CuestionarioEnviadoBeanTest {
      */
     @Mock
     private ICuestionarioEnvioService cuestionarioEnvioService;
+    
+    /**
+     * Servicio de modelos de cuestionario.
+     */
+    @Mock
+    private IModeloCuestionarioService modeloCuestionarioService;
     
     /**
      * Mock Servicio de correos electrónicos.
@@ -158,6 +167,7 @@ public class CuestionarioEnviadoBeanTest {
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
+        PowerMockito.mockStatic(Utilities.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(USUARIOLOGUEADO);
@@ -326,6 +336,8 @@ public class CuestionarioEnviadoBeanTest {
         tiposInspeccion.add(mock(TipoInspeccion.class));
         cuestionarioEnviadoBeanMock.setModel(model);
         when(tipoInspeccionService.buscaTodos()).thenReturn(tiposInspeccion);
+        List<ModeloCuestionario> modelosCuestionarios = new ArrayList<>();
+        when(modeloCuestionarioService.findAll()).thenReturn(modelosCuestionarios);
         cuestionarioEnviadoBeanMock.init();
         assertThat(cuestionarioEnviadoBeanMock.getList()).hasSize(15);
         assertThat(cuestionarioEnviadoBeanMock.getCuestionarioEnviadoBusqueda()).isNotNull();
