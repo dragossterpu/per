@@ -290,19 +290,47 @@ public class InformeService implements IInformeService {
             criteria.add(Restrictions.ilike(Constantes.USERNAMEALTA, informeBusqueda.getUsuarioCreacion(),
                     MatchMode.ANYWHERE));
         }
-        
-        if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
-            criteria.createAlias("informe.modeloPersonalizado", "modelo"); // TODO Revisar
-            criteria.createAlias("modelo.subareas", "subarea");
-            Long[] longArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
-            for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
-                longArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
-            }
-            criteria.add(Restrictions.in("subarea.id", longArea));
-        }
+        criteriaAreas(criteria, informeBusqueda);
         criteriaInspeccion(criteria, informeBusqueda);
         criteriaEstadoInforme(criteria, informeBusqueda.getEstado());
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+    }
+    
+    /**
+     * Añade al criteria los parámetros de área y subárea.
+     * 
+     * @param informeBusqueda informe personalizado a guardar
+     * @param criteria informe a guardar
+     * 
+     */
+    private void criteriaAreas(Criteria criteria, InformeBusqueda informeBusqueda) {
+        
+        // TODO Meter el filtro de modelo
+        
+        criteria.createAlias("informe.modeloPersonalizado", "modelo");
+        criteria.createAlias("modelo.subareas", "subarea");
+        
+        if (informeBusqueda.getModeloInforme() != null) {
+            criteria.add(Restrictions.eq("modelo.modeloInforme", informeBusqueda.getModeloInforme()));
+        }
+        
+        if (informeBusqueda.getSelectedAreas() != null && !informeBusqueda.getSelectedAreas().isEmpty()) {
+            criteria.createAlias("subarea.area", "area");
+            Long[] longArea = new Long[informeBusqueda.getSelectedAreas().size()];
+            for (int i = 0; i < informeBusqueda.getSelectedAreas().size(); i++) {
+                longArea[i] = informeBusqueda.getSelectedAreas().get(i).getId();
+            }
+            criteria.add(Restrictions.in("area.id", longArea));
+        }
+        
+        if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
+            
+            Long[] longSubArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
+            for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
+                longSubArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
+            }
+            criteria.add(Restrictions.in("subarea.id", longSubArea));
+        }
     }
     
     /**
@@ -334,16 +362,6 @@ public class InformeService implements IInformeService {
         if (informeBusqueda.getCuatrimestre() != null) {
             criteria.add(Restrictions.eq("inspeccion.cuatrimestre", informeBusqueda.getCuatrimestre()));
         }
-        
-        // if (informeBusqueda.getEquipo() != null) {
-        // criteria.add(Restrictions.eq("inspeccion.equipo", informeBusqueda.getEquipo()));
-        // }
-        //
-        // if (informeBusqueda.getTipoUnidad() != null) {
-        // criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        // criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
-        // criteria.add(Restrictions.eq("tipoEquipo.id", informeBusqueda.getTipoUnidad().getId()));
-        // }
         
         criteriaEquipo(criteria, informeBusqueda);
         criteriaMunicipio(criteria, informeBusqueda);

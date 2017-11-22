@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -73,6 +74,14 @@ public class InformeBuscadorBean implements Serializable {
      */
     private static final int NUMCOLSTABLA = 12;
     
+    /**
+     * Nombre del área a visualizar.
+     */
+    String nombreAreaVisualizar = "";
+    
+    /**
+     * Lista de municipios.
+     */
     private List<Municipio> listaMunicipios;
     
     /**
@@ -80,6 +89,9 @@ public class InformeBuscadorBean implements Serializable {
      */
     private InformeBusqueda informeBusqueda;
     
+    /**
+     * Lista de modelos de informe.
+     */
     private List<ModeloInforme> listaModelosInforme;
     
     /**
@@ -147,9 +159,15 @@ public class InformeBuscadorBean implements Serializable {
     @Autowired
     private transient IAreaInformeService areaInformeService;
     
+    /**
+     * Servicio de modelos de informe.
+     */
     @Autowired
     private transient IModeloInformeService modeloInformeService;
     
+    /**
+     * Servicio de municipios.
+     */
     @Autowired
     private transient IMunicipioService municipioService;
     
@@ -258,6 +276,40 @@ public class InformeBuscadorBean implements Serializable {
     }
     
     /**
+     * Comprueba que el área recibida como parámetro no tiene seleccionada ninguna de sus subáreas.
+     * 
+     * @param area Área que se desea comprobar
+     * @return Respuesta a la comprobación
+     */
+    private boolean compruebaAreaVacia(AreaInforme area) {
+        List<SubareaInforme> listaSubAreas = informeBusqueda.getSelectedSubAreas();
+        ListIterator<SubareaInforme> iterador = listaSubAreas.listIterator();
+        boolean areaVacia = informeBusqueda.getSelectedAreas().contains(area);
+        while (iterador.hasNext() && areaVacia) {
+            SubareaInforme subarea = iterador.next();
+            areaVacia = !(listaSubAreas.contains(subarea) && subarea.getArea().equals(area));
+        }
+        return areaVacia;
+    }
+    
+    /**
+     * Comprueba si la respuesta cumple las condiciones para ser exportada.
+     * 
+     * @param respuesta Respuesta que se desea comprobar
+     * @return Respuesta de la comprobación
+     */
+    
+    private boolean cumpleCondiciones(RespuestaInforme respuesta) {
+        boolean seleccionada = informeBusqueda.getSelectedSubAreas().contains(respuesta.getSubarea());
+        boolean contieneConclusiones = informeBusqueda.getSelectedAreas().contains(respuesta.getSubarea().getArea())
+                && respuesta.getSubarea().getDescripcion().toLowerCase().contains("conclusiones");
+        
+        boolean areaSeleccionadaVacía = compruebaAreaVacia(respuesta.getSubarea().getArea());
+        
+        return seleccionada || areaSeleccionadaVacía || contieneConclusiones;
+    }
+    
+    /**
      * Exporta los informes seleccionados.
      */
     public void exportar() {
@@ -272,10 +324,12 @@ public class InformeBuscadorBean implements Serializable {
                 List<RespuestaInforme> listaRespuestasPosibles = informeService.findConRespuestas(inf.getId())
                         .getRespuestas();
                 List<RespuestaInforme> listaRespuestas = new ArrayList<>();
+                
                 if (!informeBusqueda.getSelectedAreas().isEmpty()) {
+                    
                     for (RespuestaInforme respuesta : listaRespuestasPosibles) {
-                        if (informeBusqueda.getSelectedAreas().contains(respuesta.getSubarea())
-                                || respuesta.getSubarea().getDescripcion().toLowerCase().contains("conclusiones")) {
+                        
+                        if (cumpleCondiciones(respuesta)) {
                             listaRespuestas.add(respuesta);
                         }
                     }
@@ -287,7 +341,7 @@ public class InformeBuscadorBean implements Serializable {
             
             String informeXHTML = generarXHTML(mapaRespuestas);
             
-            String nombreArchivo = "InformeResumido"; // TODO Cambiar nombre
+            String nombreArchivo = "InformeResumido";
             String titulo = "Informes resumidos";
             String fechaFinalizacion = Utilities.getFechaFormateada(new Date(), "MMMM 'de' yyyy");
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -331,17 +385,22 @@ public class InformeBuscadorBean implements Serializable {
             informeFormateado.append(titulo);
             informeFormateado.append("</h2>");
             AtomicInteger j = new AtomicInteger(0);
-            
+            AtomicInteger k = new AtomicInteger(0);
             List<RespuestaInforme> listaRespuestas = mapa.get(informe);
-            
+            nombreAreaVisualizar = "";
             listaRespuestas.forEach(respuesta -> {
+                if (!nombreAreaVisualizar.equals(respuesta.getSubarea().getArea().getDescripcion())) {
+                    nombreAreaVisualizar = respuesta.getSubarea().getArea().getDescripcion();
+                    informeFormateado.append("<h3>" + i.get() + "." + j.incrementAndGet() + ". ");
+                    informeFormateado.append(nombreAreaVisualizar);
+                    informeFormateado.append("</h3>");
+                    
+                }
                 
-                String tituloSubarea = String.format("%s : %s", respuesta.getSubarea().getArea().getDescripcion(),
-                        respuesta.getSubarea().getDescripcion());
+                informeFormateado.append("<h4>" + i.get() + "." + j.get() + "." + k.incrementAndGet() + ". ");
+                informeFormateado.append(respuesta.getSubarea().getDescripcion());
+                informeFormateado.append("</h4>");
                 
-                informeFormateado.append("<h3>" + i.get() + "." + j.incrementAndGet() + ". ");
-                informeFormateado.append(tituloSubarea);
-                informeFormateado.append("</h3>");
                 try {
                     if (respuesta.getConclusiones() != null) {
                         informeFormateado.append(new String(respuesta.getConclusiones(), "UTF-8"));
@@ -361,6 +420,9 @@ public class InformeBuscadorBean implements Serializable {
         return Utilities.limpiarHtml(informeFormateado.toString());
     }
     
+    /**
+     * Carga la lista de áreas cuando cambia el modelo de informe seleccionado.
+     */
     public void onChangeModelo() {
         if (informeBusqueda.getModeloInforme() != null) {
             setListaAreas(areaInformeService.findByModeloInformeId(informeBusqueda.getModeloInforme().getId()));

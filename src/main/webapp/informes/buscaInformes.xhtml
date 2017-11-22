@@ -65,9 +65,9 @@
                 </p:selectOneMenu>
                 
             </div>
-            <div class="columnaIzdaFormulario">
-            	<p:outputLabel value="Modelos de informe:"/>
-            	<p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.modeloInforme}" id="idModeloInforme" converter="#{selectConverter}" >
+            <div class="bajoFormulario">
+            	<h:outputLabel for="idModeloInforme" value="Modelos de informe:" />
+            	<p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.modeloInforme}" id="idModeloInforme" converter="#{selectConverter}" styleClass="selectorMultiple">
                     <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                     <f:selectItems value="#{informeBuscadorBean.listaModelosInforme}" var="modelo" itemLabel="#{modelo.nombre}" itemValue="#{modelo}" />
                     <p:ajax update=":busquedaInforme:areasSelect" partialSubmit="true" listener="#{informeBuscadorBean.onChangeModelo()}" />
@@ -88,11 +88,10 @@
         </div>
         <div class="botonesFormulario">
             <p:commandButton actionListener="#{informeBuscadorBean.buscarInformesAgrupar}" value="Buscar" update="panelInformes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-            <p:commandButton actionListener="#{informeBuscadorBean.limpiarBusqueda}" value="Limpiar" update="busquedaInforme" icon="fa fa-eraser" />
-            <p:commandLink actionListener="#{informeBuscadorBean.exportar}"  styleClass="ui-state-default ui-corner-all fa fa-file-word-o ui-CommandLink ui-CommandLink-icono-texto">
-               <h:outputText styleClass="ui-CommandLink-texto ui-CommandLink-icono-texto" value="Exportar" />
-               <p:fileDownload value="#{informeBuscadorBean.file}" />
-            </p:commandLink>
+            <p:commandButton actionListener="#{informeBuscadorBean.limpiarBusqueda}" value="Limpiar" update="busquedaInforme" icon="fa fa-eraser" />    
+            <p:commandButton ajax="false" actionListener="#{informeBuscadorBean.exportar}" icon="fa fa-file-word-o" value="Exportar" >
+                 <p:fileDownload value="#{informeBuscadorBean.file}" />
+            </p:commandButton>
         </div>
 
         <p:separator styleClass="separator ui-state-disabled" />

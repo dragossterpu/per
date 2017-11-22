@@ -415,7 +415,7 @@ public class UserBean implements Serializable {
     public void init() {
         userBusqueda = new UserBusqueda();
         
-        // para que en el select cargue por defecto la opción "Seleccine uno..."
+        // para que en el select cargue por defecto la opción "Seleccione uno..."
         this.puestoTrabajoSeleccionado = null;
         this.cuerpoEstadoSeleccionado = null;
         this.empleoSeleccionado = null;

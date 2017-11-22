@@ -14,6 +14,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -194,7 +195,8 @@ public class EnvioCuestionarioBean implements Serializable {
                     cuestionarioEnvio.getInspeccion().getEquipo());
             
         } catch (DataAccessException | CorreoException | ExcepcionRollback e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, e.getMessage(), "", null);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, e.getMessage(), Constantes.FALLOCORREO,
+                    null);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
