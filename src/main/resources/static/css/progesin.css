@@ -502,9 +502,10 @@ button.botonToggler {
 
 .selectorMultiple {
     display: block;
-/*     width:760px;  */
+    box-sizing: border-box;
     width: 100%;
     max-height: 168px;
+    padding-right: 23px;
 }
 
 .selectorMultiple .ui-selectcheckboxmenu-multiple-container.ui-inputfield {
