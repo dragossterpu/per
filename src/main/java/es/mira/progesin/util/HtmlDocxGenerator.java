@@ -22,6 +22,7 @@ import org.docx4j.toc.TocGenerator;
 import org.docx4j.toc.TocHelper;
 import org.docx4j.wml.BooleanDefaultTrue;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.io.StreamUtil;
@@ -57,9 +58,9 @@ public class HtmlDocxGenerator implements Serializable {
      * @return archivo DOCX
      * @throws ProgesinException al manejar archivos y generar el DOCX
      */
-    public DefaultStreamedContent generarInformeDocx(String nombreDocumento, String documentoXHTML, String titulo,
+    public StreamedContent generarInformeDocx(String nombreDocumento, String documentoXHTML, String titulo,
             String fechaFinalizacion, String autor) throws ProgesinException {
-        DefaultStreamedContent docxStream = null;
+        StreamedContent docxStream = null;
         try {
             
             crearDocumentoConPlantilla(titulo, autor, fechaFinalizacion);
@@ -92,23 +93,23 @@ public class HtmlDocxGenerator implements Serializable {
             throws Docx4JException, URISyntaxException, IOException {
         
         // Cargar plantilla
-        InputStream plantillaStream = StreamUtil.getResourceStream(Constantes.TEMPLATEINFORMEDOTX);
-        documento = WordprocessingMLPackage.load(plantillaStream);
-        plantillaStream.close();
-        
-        // Añadir metadatos
-        documento.setTitle(titulo);
-        ObjectFactory of = new ObjectFactory();
-        SimpleLiteral creator = of.createSimpleLiteral();
-        creator.getContent().add(autor);
-        documento.getDocPropsCorePart().getContents().setCreator(creator);
-        documento.addDocPropsCustomPart();
-        documento.getDocPropsCustomPart().setProperty("fechaFinalizacion", fechaFinalizacion);
-        
-        // Convertir content type plantilla dotx en documento docx
-        ContentTypeManager ctm = documento.getContentTypeManager();
-        CTOverride override = ctm.getOverrideContentType().get(new URI("/word/document.xml"));
-        override.setContentType(ContentTypes.WORDPROCESSINGML_DOCUMENT);
+        try (InputStream plantillaStream = StreamUtil.getResourceStream(Constantes.TEMPLATEINFORMEDOTX)) {
+            documento = WordprocessingMLPackage.load(plantillaStream);
+            
+            // Añadir metadatos
+            documento.setTitle(titulo);
+            ObjectFactory of = new ObjectFactory();
+            SimpleLiteral creator = of.createSimpleLiteral();
+            creator.getContent().add(autor);
+            documento.getDocPropsCorePart().getContents().setCreator(creator);
+            documento.addDocPropsCustomPart();
+            documento.getDocPropsCustomPart().setProperty("fechaFinalizacion", fechaFinalizacion);
+            
+            // Convertir content type plantilla dotx en documento docx
+            ContentTypeManager ctm = documento.getContentTypeManager();
+            CTOverride override = ctm.getOverrideContentType().get(new URI("/word/document.xml"));
+            override.setContentType(ContentTypes.WORDPROCESSINGML_DOCUMENT);
+        }
     }
     
     /**
@@ -118,10 +119,10 @@ public class HtmlDocxGenerator implements Serializable {
      * @throws IOException error al acceder al css
      */
     private void incluirCSS() throws UnsupportedEncodingException, IOException {
-        InputStream cssStream = StreamUtil.getResourceStream(Constantes.CSSTEXTEDITORPDF);
-        String css = new String(StreamUtil.inputStreamToArray(cssStream), "UTF-8");
-        cssStream.close();
-        documento.getMainDocumentPart().getStyleDefinitionsPart().setCss(css);
+        try (InputStream cssStream = StreamUtil.getResourceStream(Constantes.CSSTEXTEDITORPDF)) {
+            String css = new String(StreamUtil.inputStreamToArray(cssStream), "UTF-8");
+            documento.getMainDocumentPart().getStyleDefinitionsPart().setCss(css);
+        }
     }
     
     /**
@@ -157,19 +158,18 @@ public class HtmlDocxGenerator implements Serializable {
      * @throws Docx4JException error al guardar
      * @throws IOException error al cerrar el outputstream
      */
-    private DefaultStreamedContent exportarDocx(String nombreDocumento) throws Docx4JException, IOException {
-        DefaultStreamedContent contenidoDOCX;
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        
-        documento.save(outputStream);
-        
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-        
-        outputStream.close();
-        
-        contenidoDOCX = new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
-                nombreDocumento + ".docx");
-        return contenidoDOCX;
+    private StreamedContent exportarDocx(String nombreDocumento) throws Docx4JException, IOException {
+        StreamedContent contenidoDOCX;
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            
+            documento.save(outputStream);
+            
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+            
+            contenidoDOCX = new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
+                    nombreDocumento + ".docx");
+            return contenidoDOCX;
+        }
     }
     
 }

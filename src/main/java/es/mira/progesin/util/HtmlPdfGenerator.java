@@ -3,8 +3,10 @@ package es.mira.progesin.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.Document;
@@ -48,16 +50,12 @@ public class HtmlPdfGenerator {
      * @return archivo PDF
      * @throws ProgesinException al manejar archivos y generar el PDF
      */
-    public DefaultStreamedContent generarInformePdf(String nombreDocumento, String documentoXHTML, String titulo,
+    public StreamedContent generarInformePdf(String nombreDocumento, String documentoXHTML, String titulo,
             String fechaFinalizacion, String autor) throws ProgesinException {
         
-        DefaultStreamedContent pdfStream = null;
+        StreamedContent pdfStream = null;
         
-        try {
-            // Archivo temporal
-            // File file = File.createTempFile(nombreDocumento, ".pdf");
-            // OutputStream fileOS = new FileOutputStream(file);
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        try (ByteArrayOutputStream byteStream = new ByteArrayOutputStream()) {
             
             // Initialize PDF document A4
             Document documento = new Document();
@@ -117,30 +115,32 @@ public class HtmlPdfGenerator {
      */
     private void generarPortada(Document documento, PdfWriter writer, String titulo, String fechaFinalizacion)
             throws IOException, DocumentException {
-        float width = PageSize.A4.getWidth();
-        float height = PageSize.A4.getHeight();
-        Image png = PngImage.getImage(StreamUtil.getResourceStream(Constantes.PORTADAINFORME));
-        
-        PdfTemplate portada = writer.getDirectContent().createTemplate(width, height);
-        portada.addImage(png, width, 0, 0, height, 0, 0);
-        
-        ColumnText ctT = new ColumnText(portada);
-        ctT.setSimpleColumn(24, 540, 400, 300);
-        ctT.setAlignment(Element.ALIGN_CENTER);
-        ctT.setLeading(28);
-        ctT.setText(new Phrase(titulo, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 24)));
-        ctT.go();
-        
-        ColumnText ctF = new ColumnText(portada);
-        ctF.setSimpleColumn(890, 100, 50, 50);
-        ctF.setAlignment(Element.ALIGN_CENTER);
-        ctF.setLeading(22);
-        ctF.setText(new Phrase(fechaFinalizacion, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
-        ctF.go();
-        
-        documento.setMargins(0, 0, 0, 0);
-        documento.newPage();
-        documento.add(Image.getInstance(portada));
+        try (InputStream streamPortada = StreamUtil.getResourceStream(Constantes.PORTADAINFORME)) {
+            Image png = PngImage.getImage(streamPortada);
+            float width = PageSize.A4.getWidth();
+            float height = PageSize.A4.getHeight();
+            
+            PdfTemplate portada = writer.getDirectContent().createTemplate(width, height);
+            portada.addImage(png, width, 0, 0, height, 0, 0);
+            
+            ColumnText ctT = new ColumnText(portada);
+            ctT.setSimpleColumn(24, 540, 400, 300);
+            ctT.setAlignment(Element.ALIGN_CENTER);
+            ctT.setLeading(28);
+            ctT.setText(new Phrase(titulo, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 24)));
+            ctT.go();
+            
+            ColumnText ctF = new ColumnText(portada);
+            ctF.setSimpleColumn(890, 100, 50, 50);
+            ctF.setAlignment(Element.ALIGN_CENTER);
+            ctF.setLeading(22);
+            ctF.setText(new Phrase(fechaFinalizacion, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
+            ctF.go();
+            
+            documento.setMargins(0, 0, 0, 0);
+            documento.newPage();
+            documento.add(Image.getInstance(portada));
+        }
     }
     
 }

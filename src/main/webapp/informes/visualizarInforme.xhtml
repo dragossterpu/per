@@ -8,31 +8,42 @@
                 <ui:param name="titulo" value="Informe" />
                 <f:viewAction action="#{navegacionBean.adelante(titulo, request.servletPath)}"/>
             </f:metadata>
-            
+            <script type="text/javascript">
+                function showStatus() {
+                    PF('statusDialog').show();
+                }
+                function hideStatus() {
+                    PF('statusDialog').hide();
+                }
+            </script>
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
             <p:outputPanel style="float: right;">
                 <table>
                 <tr>
                     <th>Informe completo</th>
-                    <td><h:commandLink actionListener="#{informeBean.exportarInforme('DOCX', 'completo')}" title="Informe completo">
-                        <p:graphicImage value="/images/doc.png" style="padding: 0" />
-                        <p:fileDownload value="#{informeBean.file}" />
-                    </h:commandLink>
-                    <h:commandLink actionListener="#{informeBean.exportarInforme('PDF', 'completo')}" title="Informe completo">
-                        <p:graphicImage value="/images/pdf.png" style="padding: 0" />
-                        <p:fileDownload value="#{informeBean.file}" />
-                    </h:commandLink></td>
+                    <td>
+                        <p:commandLink title="Informe completo" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+                            <p:graphicImage value="/images/doc.png" style="padding: 0" />
+                            <p:fileDownload value="#{informeBean.exportarInforme('DOCX', 'completo')}" />
+                        </p:commandLink>
+                        <p:commandLink title="Informe completo" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+                            <p:graphicImage value="/images/pdf.png" style="padding: 0" />
+                            <p:fileDownload value="#{informeBean.exportarInforme('PDF', 'completo')}" />
+                        </p:commandLink>
+                    </td>
                 </tr>
                 <tr>
                     <th>Conclusiones</th>
-                    <td><h:commandLink actionListener="#{informeBean.exportarInforme('DOCX', 'conclusiones')}" title="Conclusiones">
-                        <p:graphicImage value="/images/doc.png" style="padding: 0" />
-                        <p:fileDownload value="#{informeBean.file}" />
-                    </h:commandLink>
-                    <h:commandLink actionListener="#{informeBean.exportarInforme('PDF', 'conclusiones')}" title="Conclusiones">
-                        <p:graphicImage value="/images/pdf.png" style="padding: 0" />
-                        <p:fileDownload value="#{informeBean.file}" />
-                    </h:commandLink></td>
+                    <td>
+                        <p:commandLink title="Conclusiones" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+                            <p:graphicImage value="/images/doc.png" style="padding: 0" />
+                            <p:fileDownload value="#{informeBean.exportarInforme('DOCX', 'conclusiones')}" />
+                        </p:commandLink>
+                        <p:commandLink title="Conclusiones" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+                            <p:graphicImage value="/images/pdf.png" style="padding: 0" />
+                            <p:fileDownload value="#{informeBean.exportarInforme('PDF', 'conclusiones')}" />
+                        </p:commandLink>
+                    </td>
                 </tr>
                 </table>
             </p:outputPanel>
@@ -65,6 +76,11 @@
             <div class="botonesFormulario">
                 <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
             </div>
+            
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage value="/images/loading.gif" />
+            </p:dialog>
+            
         </h:form>
 
     </ui:define>

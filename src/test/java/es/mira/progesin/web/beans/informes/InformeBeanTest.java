@@ -32,6 +32,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -497,12 +498,12 @@ public class InformeBeanTest {
         when(htmlPdfGenerator.generarInformePdf(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class))).thenReturn(mock(DefaultStreamedContent.class));
         
-        informeBean.exportarInforme("PDF", "completo");
+        StreamedContent file = informeBean.exportarInforme("PDF", "completo");
         verifyStatic(Utilities.class, times(1));
         Utilities.limpiarHtml(any(String.class));
         verify(htmlPdfGenerator, times(1)).generarInformePdf(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class));
-        assertThat(informeBean.getFile()).isNotNull();
+        assertThat(file).isNotNull();
     }
     
     /**
@@ -556,12 +557,12 @@ public class InformeBeanTest {
         when(htmlDocxGenerator.generarInformeDocx(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class))).thenReturn(mock(DefaultStreamedContent.class));
         
-        informeBean.exportarInforme("DOCX", "conclusiones");
+        StreamedContent file = informeBean.exportarInforme("DOCX", "conclusiones");
         verifyStatic(Utilities.class, times(1));
         Utilities.limpiarHtml(any(String.class));
         verify(htmlDocxGenerator, times(1)).generarInformeDocx(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class));
-        assertThat(informeBean.getFile()).isNotNull();
+        assertThat(file).isNotNull();
     }
     
     /**

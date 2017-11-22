@@ -138,11 +138,6 @@ public class InformeBean implements Serializable {
     private transient INotificacionService notificacionesService;
     
     /**
-     * Archivo descargable generado a partir del informe.
-     */
-    private transient StreamedContent file;
-    
-    /**
      * Variable con los índices activos del acordeón de áreas.
      */
     private String indicesActivosAreas;
@@ -472,8 +467,10 @@ public class InformeBean implements Serializable {
      * 
      * @param tipoArchivo formato al que se exporta el informe
      * @param tipoInforme completo o sólo conclusiones
+     * @return archivo generado
      */
-    public void exportarInforme(String tipoArchivo, String tipoInforme) {
+    public StreamedContent exportarInforme(String tipoArchivo, String tipoInforme) {
+        StreamedContent file = null;
         try {
             String informeXHTML = null;
             String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
@@ -502,17 +499,19 @@ public class InformeBean implements Serializable {
             }
             
             if ("PDF".equals(tipoArchivo)) {
-                setFile(htmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
-                        autor));
+                file = htmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                        autor);
             } else if ("DOCX".equals(tipoArchivo)) {
-                setFile(htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
-                        autor));
+                file = htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                        autor);
             }
+            
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error en la generación del " + tipoArchivo);
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
+        return file;
     }
     
     /**
