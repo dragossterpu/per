@@ -12,14 +12,19 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.services.IModeloCuestionarioService;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.GuiaBean;
 
 /**
@@ -28,7 +33,9 @@ import es.mira.progesin.web.beans.GuiaBean;
  *
  * @author EZENTIS
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PowerMockIgnore("javax.security.*")
+@PrepareForTest({ Utilities.class })
 public class ModelosCuestionarioBeanTest {
     
     /**
@@ -63,6 +70,10 @@ public class ModelosCuestionarioBeanTest {
     /**
      * Inicializa el test.
      */
+    @Before
+    public void setUp() {
+        PowerMockito.mockStatic(Utilities.class);
+    }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.cuestionarios.ModelosCuestionarioBean#init()}.

@@ -162,7 +162,6 @@ public class CuestionarioEnviadoBeanTest {
     /**
      * Inicializa el test.
      */
-    
     @Before
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
@@ -336,8 +335,8 @@ public class CuestionarioEnviadoBeanTest {
         tiposInspeccion.add(mock(TipoInspeccion.class));
         cuestionarioEnviadoBeanMock.setModel(model);
         when(tipoInspeccionService.buscaTodos()).thenReturn(tiposInspeccion);
-        List<ModeloCuestionario> modelosCuestionarios = new ArrayList<>();
-        when(modeloCuestionarioService.findAll()).thenReturn(modelosCuestionarios);
+        List<ModeloCuestionario> modelosCuestionario = new ArrayList<>();
+        when(modeloCuestionarioService.findAll()).thenReturn(modelosCuestionario);
         cuestionarioEnviadoBeanMock.init();
         assertThat(cuestionarioEnviadoBeanMock.getList()).hasSize(15);
         assertThat(cuestionarioEnviadoBeanMock.getCuestionarioEnviadoBusqueda()).isNotNull();

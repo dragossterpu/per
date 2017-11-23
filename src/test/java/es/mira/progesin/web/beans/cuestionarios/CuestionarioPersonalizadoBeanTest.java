@@ -38,6 +38,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelCuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -45,8 +46,10 @@ import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
 import es.mira.progesin.services.IDocumentoService;
+import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 
 /**
  * 
@@ -54,10 +57,9 @@ import es.mira.progesin.util.FacesUtilities;
  *
  * @author EZENTIS
  */
-
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
+@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, Utilities.class })
 public class CuestionarioPersonalizadoBeanTest {
     
     /**
@@ -81,6 +83,12 @@ public class CuestionarioPersonalizadoBeanTest {
      */
     @Mock
     private Authentication authentication;
+    
+    /**
+     * Servicio de modelos de cuestionario.
+     */
+    @Mock
+    private IModeloCuestionarioService modeloCuestionarioService;
     
     /**
      * Simulación del servicio de cuestionarios personalizados.
@@ -142,11 +150,11 @@ public class CuestionarioPersonalizadoBeanTest {
     /**
      * Inicializa el test.
      */
-    
     @Before
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
+        PowerMockito.mockStatic(Utilities.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(USUARIOLOGUEADO);
@@ -345,6 +353,8 @@ public class CuestionarioPersonalizadoBeanTest {
      */
     @Test
     public final void testInit() {
+        List<ModeloCuestionario> modelosCuestionario = new ArrayList<>();
+        when(modeloCuestionarioService.findAll()).thenReturn(modelosCuestionario);
         cuestionarioPersonalizadoBean.init();
         assertThat(cuestionarioPersonalizadoBean.getCuestionarioBusqueda()).isNotNull();
         assertThat(cuestionarioPersonalizadoBean.getModel()).isNotNull();
