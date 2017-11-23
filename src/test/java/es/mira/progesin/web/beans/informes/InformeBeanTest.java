@@ -176,7 +176,6 @@ public class InformeBeanTest {
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
         when(Utilities.getFechaFormateada(any(Date.class), any(String.class))).thenCallRealMethod();
-        PowerMockito.mockStatic(SecurityContextHolder.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(USERLOGIN);

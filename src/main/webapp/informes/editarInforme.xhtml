@@ -49,14 +49,15 @@
                                     
                                 </p:textEditor>
                                 <p:messages for="editortexto" autoUpdate="true" closable="true" />
-                                
-                                <h5><h:outputText value="Conclusiones y propuestas."/></h5>
-                                <p:textEditor id="editorconclusiones" value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px">
-                                    
-                                    <ui:include src="toolbarEditor.xhtml"/>
-                                    
-                                </p:textEditor>
-                                <p:messages for="editorconclusiones" autoUpdate="true" closable="true" />
+                                <h:outputFormat rendered="#{not (fn:startsWith(subarea.descripcion, 'Conclusion') or fn:startsWith(subarea.descripcion, 'Propuesta'))}">
+                                    <h5><h:outputText value="Conclusiones y propuestas."/></h5>
+                                    <p:textEditor id="editorconclusiones" value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px">
+                                        
+                                        <ui:include src="toolbarEditor.xhtml"/>
+                                        
+                                    </p:textEditor>
+                                    <p:messages for="editorconclusiones" autoUpdate="true" closable="true" />
+                                </h:outputFormat>
                             </p:outputPanel>
                             
                         </p:tab>

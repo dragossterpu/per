@@ -23,12 +23,12 @@
                     <th>Informe completo</th>
                     <td>
                         <p:commandLink title="Informe completo" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
-                            <p:graphicImage value="/images/doc.png" style="padding: 0" />
                             <p:fileDownload value="#{informeBean.exportarInforme('DOCX', 'completo')}" />
+                            <p:graphicImage value="/images/doc.png" style="padding: 0" />
                         </p:commandLink>
                         <p:commandLink title="Informe completo" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
-                            <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                             <p:fileDownload value="#{informeBean.exportarInforme('PDF', 'completo')}" />
+                            <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                         </p:commandLink>
                     </td>
                 </tr>
@@ -36,12 +36,12 @@
                     <th>Conclusiones</th>
                     <td>
                         <p:commandLink title="Conclusiones" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
-                            <p:graphicImage value="/images/doc.png" style="padding: 0" />
                             <p:fileDownload value="#{informeBean.exportarInforme('DOCX', 'conclusiones')}" />
+                            <p:graphicImage value="/images/doc.png" style="padding: 0" />
                         </p:commandLink>
                         <p:commandLink title="Conclusiones" ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
-                            <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                             <p:fileDownload value="#{informeBean.exportarInforme('PDF', 'conclusiones')}" />
+                            <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                         </p:commandLink>
                     </td>
                 </tr>
