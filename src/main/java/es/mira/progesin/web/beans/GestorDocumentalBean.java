@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -41,6 +43,7 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.util.VerificadorExtensiones;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,7 +59,6 @@ import lombok.Setter;
 @Getter
 @Controller("gestorDocumentalBean")
 @Scope("session")
-
 public class GestorDocumentalBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -166,6 +168,7 @@ public class GestorDocumentalBean implements Serializable {
         model = new LazyModelDocumentos(documentoService);
         mapaInspecciones = new LinkedHashMap<>();
         mapaEdicion = new HashMap<>();
+        Utilities.limpiarSesion("gestorDocumentalBean");
     }
     
     /**

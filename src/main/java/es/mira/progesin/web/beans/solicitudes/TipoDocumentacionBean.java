@@ -17,7 +17,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.constantes.Constantes;
-import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -42,7 +41,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Component("tipoDocumentacionBean")
-@Scope(FacesViewScope.NAME)
+@Scope("view")
 public class TipoDocumentacionBean implements Serializable {
     
     private static final long serialVersionUID = 1L;

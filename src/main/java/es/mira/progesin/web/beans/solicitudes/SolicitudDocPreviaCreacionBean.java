@@ -43,7 +43,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("solicitudDocPreviaCreacionBean")
-@Scope("session")
+@Scope("view")
 public class SolicitudDocPreviaCreacionBean implements Serializable {
     
     private static final long serialVersionUID = 1L;

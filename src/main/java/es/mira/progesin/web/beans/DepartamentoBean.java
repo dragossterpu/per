@@ -13,7 +13,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
-import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -34,7 +33,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("departamentosBean")
-@Scope(FacesViewScope.NAME)
+@Scope("view")
 public class DepartamentoBean implements Serializable {
     
     /**

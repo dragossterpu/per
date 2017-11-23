@@ -89,14 +89,15 @@
                 <h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor (*):" />
                 <p:inputText id="correoCorporativoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el correo corporativo del interlocutor " validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
-                    <p:messages for="correoCorporativoInterlocutor" autoUpdate="true" closable="true" />
                 </p:inputText>
+                <p:messages for="correoCorporativoInterlocutor" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor:" />
                 <p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
-                    <p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true" closable="true" />
                 </p:inputText>
+                <p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true" closable="true" />
+                
 
                 <div class="botonesFormulario">
                     <p:commandButton action="/provisionalSolicitud/cargaDocumentos?faces-redirect=true" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}" />

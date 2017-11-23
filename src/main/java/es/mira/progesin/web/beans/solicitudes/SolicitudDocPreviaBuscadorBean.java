@@ -2,6 +2,7 @@ package es.mira.progesin.web.beans.solicitudes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,7 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -87,6 +89,7 @@ public class SolicitudDocPreviaBuscadorBean implements Serializable {
         for (int i = 0; i <= NUMCOLSTABLA; i++) {
             listaColumnToggler.add(Boolean.TRUE);
         }
+        Utilities.limpiarSesion(Arrays.asList("solicitudDocPreviaBuscadorBean", "solicitudDocPreviaBean"));
     }
     
     /**

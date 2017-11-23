@@ -36,6 +36,7 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGeneratorSolicitudes;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.util.VerificadorExtensiones;
 import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
@@ -225,7 +226,7 @@ public class ProvisionalSolicitudBean implements Serializable {
             extensiones.put(p.getValue(), p.getKey());
         }
         visualizarSolicitud();
-        
+        Utilities.limpiarSesion("provisionalSolicitudBean");
     }
     
     /**
