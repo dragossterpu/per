@@ -1,6 +1,5 @@
 package es.mira.progesin.util;
 
-import org.docx4j.UnitsOfMeasurement;
 import org.docx4j.convert.in.xhtml.XHTMLImageHandlerDefault;
 import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -28,9 +27,7 @@ public class XHTMLImageHandlerProgesin extends XHTMLImageHandlerDefault {
     @Override
     public void addImage(Docx4jUserAgent docx4jUserAgent, WordprocessingMLPackage wordMLPackage, P p, Element e,
             Long cx, Long cy) {
-        Long e_cx = UnitsOfMeasurement.twipToEMU(UnitsOfMeasurement.pxToTwip(Float.valueOf(e.getAttribute("width"))));
-        Long e_cy = UnitsOfMeasurement.twipToEMU(UnitsOfMeasurement.pxToTwip(Float.valueOf(e.getAttribute("height"))));
-        super.addImage(docx4jUserAgent, wordMLPackage, p, e, e_cx, e_cy);
+        super.addImage(docx4jUserAgent, wordMLPackage, p, e, null, null);
     }
     
 }
