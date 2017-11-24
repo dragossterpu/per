@@ -30,6 +30,7 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.util.WordGeneratorGuias;
 import lombok.Getter;
 import lombok.Setter;
@@ -200,6 +201,8 @@ public class GuiaPersonalizadaBean implements Serializable {
         setList(lista);
         mapaInspecciones = new LinkedHashMap<>();
         model = new LazyModelGuiasPersonalizadas(guiaPersonalizadaService);
+        
+        Utilities.limpiarSesion("guiaPersonalizadaBean");
     }
     
     /**

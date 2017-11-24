@@ -35,6 +35,7 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.util.WordGeneratorGuias;
 import lombok.Getter;
 import lombok.Setter;
@@ -320,6 +321,8 @@ public class GuiaBean implements Serializable {
         }
         model = new LazyModelGuias(guiaService);
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
+        
+        Utilities.limpiarHtml("guiaBean");
     }
     
     /**

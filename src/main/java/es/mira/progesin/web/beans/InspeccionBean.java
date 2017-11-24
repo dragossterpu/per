@@ -431,6 +431,8 @@ public class InspeccionBean implements Serializable {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelInspeccion(inspeccionesService);
+        
+        Utilities.limpiarSesion("inspeccionBean");
     }
     
     /**
@@ -515,7 +517,6 @@ public class InspeccionBean implements Serializable {
         } else {
             setListaMunicipios(null);
         }
-        
     }
     
     /**

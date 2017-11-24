@@ -36,6 +36,7 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -557,6 +558,8 @@ public class EquiposBean implements Serializable {
             columnasVisibles.add(Boolean.TRUE);
         }
         model = new LazyModelEquipos(equipoService);
+        
+        Utilities.limpiarSesion("equiposBean");
     }
     
 }

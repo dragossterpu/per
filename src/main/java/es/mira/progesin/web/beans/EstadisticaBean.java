@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.exceptions.ProgesinException;
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -44,8 +45,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("estadisticaBean")
-@Scope("session")
-
+@Scope(FacesViewScope.NAME)
 public class EstadisticaBean implements Serializable {
     
     private static final long serialVersionUID = 1L;

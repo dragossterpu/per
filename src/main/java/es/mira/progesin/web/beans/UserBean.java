@@ -426,6 +426,8 @@ public class UserBean implements Serializable {
         }
         
         model = new LazyModelUsuarios(userService);
+        
+        Utilities.limpiarSesion("userBean");
     }
     
     /**
