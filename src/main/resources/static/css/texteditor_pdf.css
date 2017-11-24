@@ -14,7 +14,8 @@ ul {
 }
 
 div.ql-editor {
-    padding: 0 10px;
+    margin: 0;
+    padding: 0;
 }
 
 .ql-tooltip.ql-editing {
@@ -37,9 +38,9 @@ div.ql-editor {
 }
 
 .ql-editor ol.titulos {
-  counter-reset: item;
-  list-style-type: none;
-  margin: 7.5pt;
+    counter-reset: item;
+    list-style-type: none;
+    margin: 7.5pt;
 }
 
 .ql-editor ol.titulos>li .enumerado {
@@ -316,19 +317,21 @@ div.ql-editor {
     overflow: visible
 }
 
-.ql-editor img {
-    max-width: 100%
-}
-
 .ql-editor a {
     color: #06c
+}
+
+.ql-editor img {
+    max-width: 100%;
+    height:auto;
+    vertical-align: middle
 }
 
 .ql-container.ql-editor {
     border: 1px solid #ccc
 }
 .ql-editor p {
-    margin: 9.75pt 0;
+     margin: 9.75pt 0;
 }
 body {
     font-size: 12pt;
