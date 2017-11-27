@@ -263,11 +263,12 @@ public class InformeService implements IInformeService {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Informe.class, "informe");
         creaCriteria(informeBusqueda, criteria);
-        criteria.setProjection(Projections.rowCount());
-        Long cnt = (Long) criteria.uniqueResult();
+        
+        int cnt = criteria.list().size();
         session.close();
         
         return Math.toIntExact(cnt);
+        
     }
     
     /**
@@ -290,6 +291,7 @@ public class InformeService implements IInformeService {
             criteria.add(Restrictions.ilike(Constantes.USERNAMEALTA, informeBusqueda.getUsuarioCreacion(),
                     MatchMode.ANYWHERE));
         }
+        
         criteriaAreas(criteria, informeBusqueda);
         criteriaInspeccion(criteria, informeBusqueda);
         criteriaEstadoInforme(criteria, informeBusqueda.getEstado());
@@ -305,32 +307,34 @@ public class InformeService implements IInformeService {
      */
     private void criteriaAreas(Criteria criteria, InformeBusqueda informeBusqueda) {
         
-        // TODO Meter el filtro de modelo
-        
-        criteria.createAlias("informe.modeloPersonalizado", "modelo");
-        criteria.createAlias("modelo.subareas", "subarea");
-        
         if (informeBusqueda.getModeloInforme() != null) {
-            criteria.add(Restrictions.eq("modelo.modeloInforme", informeBusqueda.getModeloInforme()));
-        }
-        
-        if (informeBusqueda.getSelectedAreas() != null && !informeBusqueda.getSelectedAreas().isEmpty()) {
-            criteria.createAlias("subarea.area", "area");
-            Long[] longArea = new Long[informeBusqueda.getSelectedAreas().size()];
-            for (int i = 0; i < informeBusqueda.getSelectedAreas().size(); i++) {
-                longArea[i] = informeBusqueda.getSelectedAreas().get(i).getId();
-            }
-            criteria.add(Restrictions.in("area.id", longArea));
-        }
-        
-        if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
+            criteria.createAlias("informe.modeloPersonalizado", "modeloPersonalizado");
             
-            Long[] longSubArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
-            for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
-                longSubArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
+            criteria.add(Restrictions.eq("modeloPersonalizado.modeloInforme", informeBusqueda.getModeloInforme()));
+            
+            if (informeBusqueda.getSelectedAreas() != null && !informeBusqueda.getSelectedAreas().isEmpty()) {
+                criteria.createAlias("modeloPersonalizado.subareas", "subarea");
+                criteria.createAlias("subarea.area", "area");
+                
+                Long[] longArea = new Long[informeBusqueda.getSelectedAreas().size()];
+                for (int i = 0; i < informeBusqueda.getSelectedAreas().size(); i++) {
+                    longArea[i] = informeBusqueda.getSelectedAreas().get(i).getId();
+                }
+                
+                criteria.add(Restrictions.in("area.id", longArea));
+                
+                if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
+                    
+                    Long[] longSubArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
+                    for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
+                        longSubArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
+                    }
+                    criteria.add(Restrictions.in("subarea.id", longSubArea));
+                }
             }
-            criteria.add(Restrictions.in("subarea.id", longSubArea));
+            
         }
+        
     }
     
     /**

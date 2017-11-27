@@ -149,11 +149,6 @@ public class InformeBuscadorBean implements Serializable {
     private transient RegistroActividadService regActividadService;
     
     /**
-     * Fichero a descargar.
-     */
-    private transient StreamedContent file;
-    
-    /**
      * Servicio de áreas.
      */
     @Autowired
@@ -224,10 +219,6 @@ public class InformeBuscadorBean implements Serializable {
      * Borra los resultados de búsquedas anteriores.
      */
     public void limpiarBusqueda() {
-        // setProvinciSelec(null);
-        // setListaInformesSeleccionados(null);
-        // setListaAreas(null);
-        // setListaSubareas(null);
         setInformeBusqueda(new InformeBusqueda());
         model.setRowCount(0);
     }
@@ -238,7 +229,6 @@ public class InformeBuscadorBean implements Serializable {
      * 
      */
     public void buscarInforme() {
-        // informeBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(informeBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
     }
@@ -269,6 +259,7 @@ public class InformeBuscadorBean implements Serializable {
      */
     
     public void cargaListaSubareas() {
+        informeBusqueda.setSelectedSubAreas(null);
         listaSubareas = new ArrayList<>();
         for (AreaInforme area : informeBusqueda.getSelectedAreas()) {
             listaSubareas.addAll(subareaInformeService.findByArea(area));
@@ -311,8 +302,12 @@ public class InformeBuscadorBean implements Serializable {
     
     /**
      * Exporta los informes seleccionados.
+     * @return Fichero a descargar
      */
-    public void exportar() {
+    public StreamedContent exportar() {
+        
+        StreamedContent file = null;
+        
         if (listaInformesSeleccionados != null && !listaInformesSeleccionados.isEmpty()) {
             
             Collections.sort(listaInformesSeleccionados,
@@ -347,8 +342,8 @@ public class InformeBuscadorBean implements Serializable {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             
             try {
-                setFile(htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
-                        usuarioActual.getUsername()));
+                file = htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                        usuarioActual.getUsername());
             } catch (ProgesinException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         "Se ha producido un error en la generación del " + "DOCX");
@@ -358,6 +353,7 @@ public class InformeBuscadorBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "No hay ningún informe seleccionado para exportar");
         }
+        return file;
     }
     
     /**
@@ -374,7 +370,7 @@ public class InformeBuscadorBean implements Serializable {
         listaInformes.addAll(mapa.keySet());
         
         listaInformes.forEach(informe -> {
-            informeFormateado.append("<h2>" + i.incrementAndGet() + ". ");
+            informeFormateado.append("<h1>" + i.incrementAndGet() + ". ");
             
             String titulo = String.format("Informe de la Inspección %s realizada a %s de %s de %s",
                     informe.getInspeccion().getTipoInspeccion().getDescripcion(),
@@ -383,7 +379,7 @@ public class InformeBuscadorBean implements Serializable {
                     informe.getInspeccion().getMunicipio().getProvincia().getNombre()).toUpperCase();
             
             informeFormateado.append(titulo);
-            informeFormateado.append("</h2>");
+            informeFormateado.append("</h1>");
             AtomicInteger j = new AtomicInteger(0);
             AtomicInteger k = new AtomicInteger(0);
             List<RespuestaInforme> listaRespuestas = mapa.get(informe);
@@ -391,28 +387,34 @@ public class InformeBuscadorBean implements Serializable {
             listaRespuestas.forEach(respuesta -> {
                 if (!nombreAreaVisualizar.equals(respuesta.getSubarea().getArea().getDescripcion())) {
                     nombreAreaVisualizar = respuesta.getSubarea().getArea().getDescripcion();
-                    informeFormateado.append("<h3>" + i.get() + "." + j.incrementAndGet() + ". ");
+                    informeFormateado.append("<h2>" + j.incrementAndGet() + ". ");
                     informeFormateado.append(nombreAreaVisualizar);
-                    informeFormateado.append("</h3>");
+                    informeFormateado.append("</h2>");
                     
                 }
                 
-                informeFormateado.append("<h4>" + i.get() + "." + j.get() + "." + k.incrementAndGet() + ". ");
+                informeFormateado.append("<h3>" + j.get() + "." + k.incrementAndGet() + ". ");
                 informeFormateado.append(respuesta.getSubarea().getDescripcion());
-                informeFormateado.append("</h4>");
+                informeFormateado.append("</h3>");
                 
                 try {
-                    if (respuesta.getConclusiones() != null) {
-                        informeFormateado.append(new String(respuesta.getConclusiones(), "UTF-8"));
-                    } else {
-                        informeFormateado.append("Sin conclusiones");
+                    if (!respuesta.getSubarea().getDescripcion().toLowerCase().contains("conclusiones"))
+                        if (respuesta.getConclusiones() != null) {
+                            informeFormateado.append(new String(respuesta.getConclusiones(), "UTF-8"));
+                        } else {
+                            informeFormateado.append("Sin conclusiones");
+                        }
+                    else {
+                        
+                        informeFormateado.append(new String(respuesta.getTexto(), "UTF-8"));
+                        
                     }
+                    
                 } catch (UnsupportedEncodingException e) {
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                             "Se ha producido un error en la recuperación del texto");
                     regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
                 }
-                informeFormateado.append("</h2>");
                 
             });
         });
@@ -424,6 +426,7 @@ public class InformeBuscadorBean implements Serializable {
      * Carga la lista de áreas cuando cambia el modelo de informe seleccionado.
      */
     public void onChangeModelo() {
+        informeBusqueda.setSelectedAreas(null);
         if (informeBusqueda.getModeloInforme() != null) {
             setListaAreas(areaInformeService.findByModeloInformeId(informeBusqueda.getModeloInforme().getId()));
         } else {

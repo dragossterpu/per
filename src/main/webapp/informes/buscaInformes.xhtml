@@ -4,7 +4,14 @@
         <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
         <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
-        
+        <script type="text/javascript">
+                function showStatus() {
+                    PF('statusDialog').show();
+                }
+                function hideStatus() {
+                    PF('statusDialog').hide();
+                }
+            </script>
         <f:metadata>
             <ui:param name="titulo" value="Búsqueda de informes resumidos" />
             <f:viewAction action="#{navegacionBean.recomenzar(titulo, request.servletPath)}"/>
@@ -89,8 +96,8 @@
         <div class="botonesFormulario">
             <p:commandButton actionListener="#{informeBuscadorBean.buscarInformesAgrupar}" value="Buscar" update="panelInformes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
             <p:commandButton actionListener="#{informeBuscadorBean.limpiarBusqueda}" value="Limpiar" update="busquedaInforme" icon="fa fa-eraser" />    
-            <p:commandButton ajax="false" actionListener="#{informeBuscadorBean.exportar}" icon="fa fa-file-word-o" value="Exportar" >
-                 <p:fileDownload value="#{informeBuscadorBean.file}" />
+            <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)" icon="fa fa-file-word-o" value="Exportar" >
+                 <p:fileDownload value="#{informeBuscadorBean.exportar()}" /> 
             </p:commandButton>
         </div>
 
