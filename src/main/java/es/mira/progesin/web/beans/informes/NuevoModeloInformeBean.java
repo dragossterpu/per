@@ -175,7 +175,9 @@ public class NuevoModeloInformeBean implements Serializable {
      * Borra el área seleccionada.
      */
     public void borraArea() {
-        listaAreas.removeIf(a -> a.getDescripcion().equals(areaSelect.getDescripcion()));
+        if (areaSelect != null) {
+            listaAreas.removeIf(a -> a.getDescripcion().equals(areaSelect.getDescripcion()));
+        }
     }
     
     /**
@@ -184,9 +186,11 @@ public class NuevoModeloInformeBean implements Serializable {
      * @param area Área de la que se eliminará el subárea.
      */
     public void borraSubarea(AreaInforme area) {
-        List<SubareaInforme> listado = area.getSubareas();
-        listado.removeIf(a -> a.getDescripcion().equals(subAreaSelect.getDescripcion()));
-        area.setSubareas(listado);
+        if (subAreaSelect != null) {
+            List<SubareaInforme> listado = area.getSubareas();
+            listado.removeIf(a -> a.getDescripcion().equals(subAreaSelect.getDescripcion()));
+            area.setSubareas(listado);
+        }
     }
     
     /**
