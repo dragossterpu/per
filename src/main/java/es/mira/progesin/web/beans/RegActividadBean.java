@@ -18,6 +18,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelRegistro;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -124,6 +125,8 @@ public class RegActividadBean implements Serializable {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelRegistro(regActividadService);
+        
+        Utilities.limpiarSesion("regActividadBean");
     }
     
     /**

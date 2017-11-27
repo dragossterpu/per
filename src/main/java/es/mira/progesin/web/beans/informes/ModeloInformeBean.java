@@ -16,6 +16,7 @@ import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.services.IModeloInformeService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +51,7 @@ public class ModeloInformeBean implements Serializable {
     public void init() {
         setListadoModelosInforme(modeloInformeService.findAllByFechaBajaIsNull());
         Collections.sort(listadoModelosInforme, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
+        Utilities.limpiarSesion("modelosInformeBean");
     }
     
     /**
