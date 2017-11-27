@@ -1,16 +1,20 @@
 package es.mira.progesin.web.beans;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
@@ -25,8 +29,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Controller("miPerfilBean")
-@Scope("session")
-public class MiPerfilBean {
+@Scope(FacesViewScope.NAME)
+public class MiPerfilBean implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
     /**
      * Clave actual del usuario.
      */
@@ -45,14 +54,13 @@ public class MiPerfilBean {
     /**
      * Usuario a mostrar.
      */
-    @Autowired
-    private UserBean user;
+    private User user;
     
     /**
      * Servicio de usuarios.
      */
     @Autowired
-    IUserService userService;
+    private IUserService userService;
     
     /**
      * Constante patrón de contraseña.
@@ -67,12 +75,11 @@ public class MiPerfilBean {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Las contraseñas introducidas no coinciden", "", null);
         } else {
-            User usuario = user.getUser();
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            if (passwordEncoder.matches(this.getClaveActual(), usuario.getPassword())) {
+            if (passwordEncoder.matches(this.getClaveActual(), user.getPassword())) {
                 if (validaPass(this.claveNueva)) {
-                    usuario.setPassword(passwordEncoder.encode(this.getClaveNueva()));
-                    userService.save(usuario);
+                    user.setPassword(passwordEncoder.encode(this.getClaveNueva()));
+                    userService.save(user);
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
                             "La contraseña ha sido modificada con éxito", "", "dialogMessage");
                 } else {
@@ -98,5 +105,13 @@ public class MiPerfilBean {
         Matcher matcher = pattern.matcher(password);
         
         return matcher.matches();
+    }
+    
+    /**
+     * Inicilización del usuario a mostrar en pantalla.
+     */
+    @PostConstruct
+    public void init() {
+        user = userService.findOne((String) SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
