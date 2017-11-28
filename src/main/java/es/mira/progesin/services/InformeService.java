@@ -340,7 +340,6 @@ public class InformeService implements IInformeService {
                 DetachedCriteria subcritsubarea = DetachedCriteria.forClass(RespuestaInforme.class, "respuesta");
                 subcritsubarea.createAlias("respuesta.subarea", "subarea");
                 
-                criteria.createAlias("modeloPersonalizado.subareas", "subarea");
                 Long[] longSubArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
                 for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
                     longSubArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
