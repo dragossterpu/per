@@ -34,6 +34,7 @@ import es.mira.progesin.lazydata.LazyModelRegistro;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 
 /**
  * Test para el controlador RegActividadBean.
@@ -43,7 +44,7 @@ import es.mira.progesin.util.FacesUtilities;
  */
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RequestContext.class })
+@PrepareForTest({ Utilities.class, FacesUtilities.class, SecurityContextHolder.class, RequestContext.class })
 public class RegActividadBeanTest {
     /**
      * Simulación del securityContext.
@@ -86,6 +87,7 @@ public class RegActividadBeanTest {
      */
     @Before
     public void setUp() {
+        PowerMockito.mockStatic(Utilities.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         PowerMockito.mockStatic(RequestContext.class);

@@ -30,6 +30,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.services.IModeloInformeService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 
 /**
  * 
@@ -40,7 +41,7 @@ import es.mira.progesin.util.FacesUtilities;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class })
+@PrepareForTest({ Utilities.class, FacesUtilities.class })
 public class ModeloInformeBeanTest {
     
     /**
@@ -78,6 +79,7 @@ public class ModeloInformeBeanTest {
     
     @Before
     public void setUp() {
+        PowerMockito.mockStatic(Utilities.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         
     }

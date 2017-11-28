@@ -27,6 +27,7 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 
 /**
  * Test del bean solicitudDocPreviaBuscador.
@@ -34,7 +35,7 @@ import es.mira.progesin.util.FacesUtilities;
  * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ FacesUtilities.class })
+@PrepareForTest({ Utilities.class, FacesUtilities.class })
 public class SolicitudDocPreviaBuscadorBeanTest {
     
     /**
@@ -72,6 +73,7 @@ public class SolicitudDocPreviaBuscadorBeanTest {
      */
     @Before
     public void setUp() {
+        PowerMockito.mockStatic(Utilities.class);
         PowerMockito.mockStatic(FacesUtilities.class);
     }
     

@@ -96,7 +96,7 @@ public class MiPerfilBean implements Serializable {
     }
     
     /**
-     * Método qué que indica si una cadena cumple un ptrón determinado.
+     * Método qué que indica si una cadena cumple un patrón determinado.
      * @param password String a validar
      * @return ¿Válida?
      */
@@ -112,6 +112,6 @@ public class MiPerfilBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        user = userService.findOne((String) SecurityContextHolder.getContext().getAuthentication().getName());
+        user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

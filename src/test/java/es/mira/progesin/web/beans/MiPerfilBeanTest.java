@@ -175,7 +175,7 @@ public class MiPerfilBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.MiPerfilBean#cambiarClave()}.
      */
     @Test
-    public final void testCambiarClaveNoConcideConPatron() {
+    public final void testCambiarClaveNoCoincideConPatron() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String passNueva = "2ddd";
         String passActual = "abc";

@@ -45,6 +45,7 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.util.WordGeneratorGuias;
 
 /**
@@ -56,7 +57,7 @@ import es.mira.progesin.util.WordGeneratorGuias;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
+@PrepareForTest({ Utilities.class, FacesUtilities.class, SecurityContextHolder.class })
 public class GuiaPersonalizadaBeanTest {
     
     /**
@@ -128,6 +129,7 @@ public class GuiaPersonalizadaBeanTest {
     
     @Before
     public void setUp() {
+        PowerMockito.mockStatic(Utilities.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);

@@ -57,6 +57,7 @@ import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.util.VerificadorExtensiones;
 
 /**
@@ -66,7 +67,7 @@ import es.mira.progesin.util.VerificadorExtensiones;
  */
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RequestContext.class })
+@PrepareForTest({ Utilities.class, FacesUtilities.class, SecurityContextHolder.class, RequestContext.class })
 public class GestorDocumentalBeanTest {
     /**
      * Constante descripcion.
@@ -148,6 +149,7 @@ public class GestorDocumentalBeanTest {
      */
     @Before
     public void setUp() {
+        PowerMockito.mockStatic(Utilities.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);

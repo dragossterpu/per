@@ -52,79 +52,79 @@ div.ql-editor {
 }
 
 .ql-editor ol, .ql-editor ul {
-    padding-left: 0pt/*1.5em base 13px*/
+    padding-left: 0pt
 }
 
 .ql-editor .ql-indent-1 {
-    margin-left: 29.25pt; /*3em base 13px*/
+    margin-left: 29.25pt;
 }
 
 .ql-editor li.ql-indent-1 {
-    padding-left: 43.75pt; /*4.5em base 13px*/
+    padding-left: 43.75pt;
 }
 
 .ql-editor .ql-indent-2 {
-    padding-left: 58.5pt/*6em base 13px*/
+    padding-left: 58.5pt
 }
 
 .ql-editor li.ql-indent-2 {
-    padding-left: 72.75pt/*7.5em base 13px*/
+    padding-left: 72.75pt
 }
 
 .ql-editor .ql-indent-3 {
-    padding-left: 87.75pt/*9em base 13px*/
+    padding-left: 87.75pt
 }
 
 .ql-editor li.ql-indent-3 {
-    padding-left: 102pt/*10.5em base 13px*/
+    padding-left: 102pt
 }
 
 .ql-editor .ql-indent-4 {
-    padding-left: 117pt/*12em base 13px*/
+    padding-left: 117pt
 }
 
 .ql-editor li.ql-indent-4 {
-    padding-left: 131.25pt/*13.5em base 13px*/
+    padding-left: 131.25pt
 }
 
 .ql-editor .ql-indent-5 {
-    padding-left: 146.25pt/*15em base 13px*/
+    padding-left: 146.25pt
 }
 
 .ql-editor li.ql-indent-5 {
-    padding-left: 160.5pt/*16.5em base 13px*/
+    padding-left: 160.5pt
 }
 
 .ql-editor .ql-indent-6 {
-    padding-left: 175.5pt/*18em base 13px*/
+    padding-left: 175.5pt
 }
 
 .ql-editor li.ql-indent-6 {
-    padding-left: 189.75pt/*19.5em base 13px*/
+    padding-left: 189.75pt
 }
 
 .ql-editor .ql-indent-7 {
-    padding-left: 204.75pt/*21em base 13px*/
+    padding-left: 204.75pt
 }
 
 .ql-editor li.ql-indent-7 {
-    padding-left: 219pt/*22.5em base 13px*/
+    padding-left: 219pt
 }
 
 .ql-editor .ql-indent-8 {
-    padding-left: 234pt/*24em base 13px*/
+    padding-left: 234pt
 }
 
 .ql-editor li.ql-indent-8 {
-    padding-left: 248.25pt/*25.5em base 13px*/
+    padding-left: 248.25pt
 }
 
 .ql-editor .ql-indent-9 {
-    padding-left: 263.25pt/*27em base 13px*/
+    padding-left: 263.25pt
 }
 
 .ql-editor li.ql-indent-9 {
-    padding-left: 277.5pt/*28.5em base 13px*/
+    padding-left: 277.5pt
 }
 
 .ql-editor .ql-bg-black {
@@ -192,15 +192,15 @@ div.ql-editor {
 }
 
 .ql-editor .ql-size-small {
-    font-size: 6.75pt/*.75em base 13px*/
+    font-size: 6.75pt
 }
 
 .ql-editor .ql-size-large {
-    font-size: 14.25pt/*1.5em base 13px*/
+    font-size: 14.25pt
 }
 
 .ql-editor .ql-size-huge {
-    font-size: 24pt/*2.5em base 13px*/
+    font-size: 24pt
 }
 
 .ql-editor .ql-align-center {
@@ -250,42 +250,42 @@ div.ql-editor {
 .ql-editor h1 {
     font-size: 18.5pt;
     font-weight: bold;
-    margin: 6pt 0pt;/*0.67em base 13px*/
+    margin: 6pt 0pt;
     text-align: left;
 }
 
 .ql-editor h2 {
-    font-size: 14.25pt;/*1.5em base 13px*/
+    font-size: 14.25pt;
     font-weight: bold;
-    margin: 7.5pt 0pt;/*0.83em base 13px*/
+    margin: 7.5pt 0pt;
     text-align: left;
 }
 
 .ql-editor h3 {
-    font-size: 11.25pt;/*1.17em base 13px*/
+    font-size: 11.25pt;
     font-weight: bold;
-    margin: 9.75pt 0pt;/*1em base 13px*/
+    margin: 9.75pt 0pt;
     text-align: left;
 }
 
 .ql-editor h4 {
-    font-size: 12pt;/*1em base 13px*/
+    font-size: 12pt;
     font-weight: bold;
-    margin: 12.75pt 0pt;/*1.33em base 13px*/
+    margin: 12.75pt 0pt;
     text-align: left;
 }
 
 .ql-editor h5 {
-    font-size: 7.5pt;/*0.83em base 13px*/
+    font-size: 7.5pt;
     font-weight: bold;
-    margin: 15.75pt 0pt;/*1.67em base 13px*/
+    margin: 15.75pt 0pt;
     text-align: left;
 }
 
 .ql-editor h6 {
-    font-size: 6pt;/*.67em base 13px*/
+    font-size: 6pt;
     font-weight: bold;
-    margin: 22.5pt 0pt;/*2.33em base 13px*/
+    margin: 22.5pt 0pt;
     text-align: left;
 }
 

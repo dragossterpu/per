@@ -51,6 +51,7 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 
 /**
  * Test del bean Equipos.
@@ -60,10 +61,7 @@ import es.mira.progesin.util.FacesUtilities;
 @RunWith(PowerMockRunner.class)
 // Evita conflictos con clases del sistema al enlazar los mocks por tipo
 @PowerMockIgnore("javax.security.*")
-// @PowerMockRunnerDelegate(SpringRunner.class)
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
-// @ContextConfiguration // @SpringBootTest
-// @TestExecutionListeners(listeners = { WithSecurityContextTestExecutionListener.class })
+@PrepareForTest({ Utilities.class, FacesUtilities.class, SecurityContextHolder.class })
 public class EquiposBeanTest {
     
     /**
@@ -157,6 +155,7 @@ public class EquiposBeanTest {
      */
     @Before
     public void setUp() {
+        PowerMockito.mockStatic(Utilities.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
