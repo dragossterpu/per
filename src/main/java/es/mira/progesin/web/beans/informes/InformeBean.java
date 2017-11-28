@@ -415,7 +415,7 @@ public class InformeBean implements Serializable {
                     informeFormateado.append(mapaRespuestas.get(subarea)[0]);
                 }
                 if (mapaRespuestas.get(subarea)[1] != null) {
-                    informeFormateado.append("<h3>Conclusiones y propuestas.</h3>");
+                    informeFormateado.append("<h4>Conclusiones y propuestas.</h4>");
                     informeFormateado.append(mapaRespuestas.get(subarea)[1]);
                 }
             });
@@ -454,8 +454,7 @@ public class InformeBean implements Serializable {
                 informeFormateado.append(subarea.getDescripcion());
                 informeFormateado.append("</h2>");
                 String descSubarea = subarea.getDescripcion().toLowerCase();
-                if (descSubarea.startsWith("conclusion") || descSubarea.startsWith("propuesta")
-                        || descSubarea.startsWith("anexo")) {
+                if (descSubarea.startsWith("conclusion") || descSubarea.startsWith("propuesta")) {
                     informeFormateado.append(mapaRespuestas.get(subarea)[0]);
                 } else {
                     informeFormateado.append(mapaRespuestas.get(subarea)[1]);
