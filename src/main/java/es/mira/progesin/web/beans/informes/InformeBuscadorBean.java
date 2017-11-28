@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -318,8 +319,12 @@ public class InformeBuscadorBean implements Serializable {
             for (Informe inf : listaInformesSeleccionados) {
                 List<RespuestaInforme> listaRespuestasPosibles = informeService.findConRespuestas(inf.getId())
                         .getRespuestas();
-                Collections.sort(listaRespuestasPosibles,
-                        (o1, o2) -> Long.compare(o1.getSubarea().getArea().getId(), o2.getSubarea().getArea().getId()));
+                
+                Comparator<RespuestaInforme> comparador = Comparator
+                        .comparing(o1 -> o1.getSubarea().getArea().getOrden());
+                comparador = comparador.thenComparing(Comparator.comparing(o1 -> o1.getSubarea().getOrden()));
+                
+                listaRespuestasPosibles.sort(comparador);
                 
                 List<RespuestaInforme> listaRespuestas = new ArrayList<>();
                 

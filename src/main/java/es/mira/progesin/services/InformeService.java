@@ -98,6 +98,11 @@ public class InformeService implements IInformeService {
     }
     
     /**
+     * Constante con el informe.
+     */
+    public static final String INFORME = "informe";
+    
+    /**
      * Constructor usado para el test.
      * 
      * @param sessionFact Factoría de sesiones
@@ -240,7 +245,7 @@ public class InformeService implements IInformeService {
     public List<Informe> buscarInformeCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             InformeBusqueda informeBusqueda) {
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Informe.class, "informe");
+        Criteria criteria = session.createCriteria(Informe.class, INFORME);
         creaCriteria(informeBusqueda, criteria);
         
         criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder, "id");
@@ -261,7 +266,7 @@ public class InformeService implements IInformeService {
     @Override
     public int getCountInformeCriteria(InformeBusqueda informeBusqueda) {
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Informe.class, "informe");
+        Criteria criteria = session.createCriteria(Informe.class, INFORME);
         creaCriteria(informeBusqueda, criteria);
         
         int cnt = criteria.list().size();
@@ -312,40 +317,39 @@ public class InformeService implements IInformeService {
             criteria.createAlias("informe.modeloPersonalizado", "modeloPersonalizado");
             
             criteria.add(Restrictions.eq("modeloPersonalizado.modeloInforme", informeBusqueda.getModeloInforme()));
+        }
+        
+        if (informeBusqueda.getSelectedAreas() != null && !informeBusqueda.getSelectedAreas().isEmpty()) {
             
-            if (informeBusqueda.getSelectedAreas() != null && !informeBusqueda.getSelectedAreas().isEmpty()) {
-                
-                DetachedCriteria subcrit = DetachedCriteria.forClass(RespuestaInforme.class, "respuesta");
-                subcrit.createAlias("respuesta.subarea", "subarea");
-                subcrit.createAlias("subarea.area", "area");
-                
-                Long[] longArea = new Long[informeBusqueda.getSelectedAreas().size()];
-                for (int i = 0; i < informeBusqueda.getSelectedAreas().size(); i++) {
-                    longArea[i] = informeBusqueda.getSelectedAreas().get(i).getId();
-                }
-                
-                subcrit.add(Restrictions.in("area.id", longArea));
-                subcrit.setProjection(Projections.property("informe"));
-                
-                criteria.add(Property.forName("id").in(subcrit));
-                
-                if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
-                    
-                    DetachedCriteria subcritsubarea = DetachedCriteria.forClass(RespuestaInforme.class, "respuesta");
-                    subcritsubarea.createAlias("respuesta.subarea", "subarea");
-                    
-                    criteria.createAlias("modeloPersonalizado.subareas", "subarea");
-                    Long[] longSubArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
-                    for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
-                        longSubArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
-                    }
-                    subcritsubarea.add(Restrictions.in("subarea.id", longSubArea));
-                    
-                    subcritsubarea.setProjection(Projections.property("informe"));
-                    criteria.add(Property.forName("id").in(subcritsubarea));
-                }
+            DetachedCriteria subcrit = DetachedCriteria.forClass(RespuestaInforme.class, "respuesta");
+            subcrit.createAlias("respuesta.subarea", "subarea");
+            subcrit.createAlias("subarea.area", "area");
+            
+            Long[] longArea = new Long[informeBusqueda.getSelectedAreas().size()];
+            for (int i = 0; i < informeBusqueda.getSelectedAreas().size(); i++) {
+                longArea[i] = informeBusqueda.getSelectedAreas().get(i).getId();
             }
             
+            subcrit.add(Restrictions.in("area.id", longArea));
+            subcrit.setProjection(Projections.property(INFORME));
+            
+            criteria.add(Property.forName("id").in(subcrit));
+            
+            if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
+                
+                DetachedCriteria subcritsubarea = DetachedCriteria.forClass(RespuestaInforme.class, "respuesta");
+                subcritsubarea.createAlias("respuesta.subarea", "subarea");
+                
+                criteria.createAlias("modeloPersonalizado.subareas", "subarea");
+                Long[] longSubArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
+                for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
+                    longSubArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
+                }
+                subcritsubarea.add(Restrictions.in("subarea.id", longSubArea));
+                
+                subcritsubarea.setProjection(Projections.property(INFORME));
+                criteria.add(Property.forName("id").in(subcritsubarea));
+            }
         }
         
     }
