@@ -49,7 +49,8 @@
                                     
                                 </p:textEditor>
                                 <p:messages for="editortexto" autoUpdate="true" closable="true" />
-                                <h:outputFormat rendered="#{not (fn:startsWith(subarea.descripcion, 'Conclusion') or fn:startsWith(subarea.descripcion, 'Propuesta'))}">
+                                <ui:param name="descSubarea" value="#{fn:toLowerCase(subarea.descripcion)}" />
+                                <h:outputFormat rendered="#{not (fn:startsWith(descSubarea, 'conclusion') or fn:startsWith(descSubarea, 'propuesta') or fn:startsWith(descSubarea, 'anexo'))}">
                                     <h5><h:outputText value="Conclusiones y propuestas."/></h5>
                                     <p:textEditor id="editorconclusiones" value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px">
                                         

@@ -28,7 +28,7 @@
 		<itext.version>5.5.9</itext.version>
 		<xmlworker.version>5.5.9</xmlworker.version>
 		<jsoup.version>1.10.2</jsoup.version>
-		<docx4j.version>3.3.4</docx4j.version>
+		<docx4j.version>3.3.6</docx4j.version>
 		<pebble.version>2.4.0</pebble.version>
 	</properties>
 

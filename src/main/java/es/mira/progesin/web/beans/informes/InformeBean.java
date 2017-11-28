@@ -453,8 +453,9 @@ public class InformeBean implements Serializable {
                 informeFormateado.append("<h2>" + i.get() + "." + j.incrementAndGet() + ". ");
                 informeFormateado.append(subarea.getDescripcion());
                 informeFormateado.append("</h2>");
-                if (subarea.getDescripcion().startsWith("Conclusion")
-                        || subarea.getDescripcion().startsWith("Propuesta")) {
+                String descSubarea = subarea.getDescripcion().toLowerCase();
+                if (descSubarea.startsWith("conclusion") || descSubarea.startsWith("propuesta")
+                        || descSubarea.startsWith("anexo")) {
                     informeFormateado.append(mapaRespuestas.get(subarea)[0]);
                 } else {
                     informeFormateado.append(mapaRespuestas.get(subarea)[1]);

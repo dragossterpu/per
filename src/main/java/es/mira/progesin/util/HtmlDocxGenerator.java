@@ -17,9 +17,7 @@ import org.docx4j.openpackaging.contenttype.ContentTypeManager;
 import org.docx4j.openpackaging.contenttype.ContentTypes;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.docx4j.toc.Toc;
 import org.docx4j.toc.TocGenerator;
-import org.docx4j.toc.TocHelper;
 import org.docx4j.wml.BooleanDefaultTrue;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -137,16 +135,15 @@ public class HtmlDocxGenerator implements Serializable {
     }
     
     /**
-     * Incluir en el documento word una tabla de contenidos detrás de la portada desplazando el resto del contenido.
+     * Actualizar tabla de contenidos en la plantilla del documento word tras incluir el contenido del html.
      * @throws Docx4JException error
      */
     private void incluirTablaContenidos() throws Docx4JException {
-        Toc.setTocHeadingText("Índice");
         TocGenerator tocGenerator = new TocGenerator(documento);
         
         // Tabla sin núm. página
-        tocGenerator.generateToc(1, TocHelper.DEFAULT_TOC_INSTRUCTION, true);
-        // Forzar actualizar al abrir documento
+        tocGenerator.updateToc(true, true);
+        // Forzar actualizar al abrir documento para calcular núm. pagina
         documento.getMainDocumentPart().getDocumentSettingsPart().getContents()
                 .setUpdateFields(new BooleanDefaultTrue());
     }

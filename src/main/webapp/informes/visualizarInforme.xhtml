@@ -74,7 +74,7 @@
             </div>
 
             <div class="botonesFormulario">
-                <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
+                <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="#{navegacionBean.caminoMigas.getElements().get(1).getUrl()}" />
             </div>
             
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">

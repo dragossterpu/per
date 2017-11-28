@@ -15,7 +15,7 @@ ul {
 
 div.ql-editor {
     margin: 0;
-    padding: 0;
+    padding: 0 10px;
 }
 
 .ql-tooltip.ql-editing {
