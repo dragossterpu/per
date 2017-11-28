@@ -305,7 +305,7 @@ public class InformeBuscadorBean implements Serializable {
      * @return Fichero a descargar
      */
     public StreamedContent exportar() {
-        // TODO ordenar las respuestas
+        
         StreamedContent file = null;
         
         if (listaInformesSeleccionados != null && !listaInformesSeleccionados.isEmpty()) {
@@ -319,7 +319,7 @@ public class InformeBuscadorBean implements Serializable {
                 List<RespuestaInforme> listaRespuestasPosibles = informeService.findConRespuestas(inf.getId())
                         .getRespuestas();
                 Collections.sort(listaRespuestasPosibles,
-                        (o1, o2) -> Long.compare(o1.getSubarea().getOrden(), o2.getSubarea().getOrden()));
+                        (o1, o2) -> Integer.compare(o1.getSubarea().getOrden(), o2.getSubarea().getOrden()));
                 
                 List<RespuestaInforme> listaRespuestas = new ArrayList<>();
                 
@@ -402,7 +402,7 @@ public class InformeBuscadorBean implements Serializable {
                 informeFormateado.append("</h3>");
                 
                 try {
-                    if (!respuesta.getSubarea().getDescripcion().toLowerCase().contains("conclusiones"))
+                    if (!respuesta.getSubarea().getDescripcion().toLowerCase().contains("conclusion"))
                         if (respuesta.getConclusiones() != null) {
                             informeFormateado.append(new String(respuesta.getConclusiones(), "UTF-8"));
                         } else {
