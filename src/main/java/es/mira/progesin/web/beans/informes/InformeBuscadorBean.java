@@ -319,7 +319,7 @@ public class InformeBuscadorBean implements Serializable {
                 List<RespuestaInforme> listaRespuestasPosibles = informeService.findConRespuestas(inf.getId())
                         .getRespuestas();
                 Collections.sort(listaRespuestasPosibles,
-                        (o1, o2) -> Integer.compare(o1.getSubarea().getOrden(), o2.getSubarea().getOrden()));
+                        (o1, o2) -> Long.compare(o1.getSubarea().getArea().getId(), o2.getSubarea().getArea().getId()));
                 
                 List<RespuestaInforme> listaRespuestas = new ArrayList<>();
                 
