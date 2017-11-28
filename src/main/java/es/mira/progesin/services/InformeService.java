@@ -30,6 +30,7 @@ import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
 import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.RespuestaInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
@@ -296,6 +297,7 @@ public class InformeService implements IInformeService {
         criteriaInspeccion(criteria, informeBusqueda);
         criteriaEstadoInforme(criteria, informeBusqueda.getEstado());
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        
     }
     
     /**
@@ -313,18 +315,22 @@ public class InformeService implements IInformeService {
             criteria.add(Restrictions.eq("modeloPersonalizado.modeloInforme", informeBusqueda.getModeloInforme()));
             
             if (informeBusqueda.getSelectedAreas() != null && !informeBusqueda.getSelectedAreas().isEmpty()) {
-                criteria.createAlias("modeloPersonalizado.subareas", "subarea");
-                criteria.createAlias("subarea.area", "area");
+                
+                DetachedCriteria subcrit = DetachedCriteria.forClass(ModeloInforme.class, "modelo");
+                subcrit.createAlias("modelo.areas", "area");
                 
                 Long[] longArea = new Long[informeBusqueda.getSelectedAreas().size()];
                 for (int i = 0; i < informeBusqueda.getSelectedAreas().size(); i++) {
                     longArea[i] = informeBusqueda.getSelectedAreas().get(i).getId();
                 }
                 
-                criteria.add(Restrictions.in("area.id", longArea));
+                subcrit.add(Restrictions.in("area.id", longArea));
+                subcrit.setProjection(Projections.property("id"));
+                
+                criteria.add(Property.forName("modeloPersonalizado.modeloInforme").in(subcrit));
                 
                 if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
-                    
+                    criteria.createAlias("modeloPersonalizado.subareas", "subarea");
                     Long[] longSubArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
                     for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
                         longSubArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
