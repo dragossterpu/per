@@ -62,7 +62,7 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Gestión económica.', SEQ_AREASINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Registro y archivo.', SEQ_AREASINFORME.CURRVAL, 3);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Régimen Disciplinario y Asistencia Letrada.', SEQ_AREASINFORME.CURRVAL, 4);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Oficina Periférica de Comuniación.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Oficina Periférica de Comunicación.', SEQ_AREASINFORME.CURRVAL, 5);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Núcleo de Destinos.', SEQ_AREASINFORME.CURRVAL, 6);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Acción social.', SEQ_AREASINFORME.CURRVAL, 7);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Quejas y sugerencias.', SEQ_AREASINFORME.CURRVAL, 8);

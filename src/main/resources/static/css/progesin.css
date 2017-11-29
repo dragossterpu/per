@@ -506,10 +506,15 @@ button.botonToggler {
     width: 100%;
     max-height: 168px;
     padding-right: 23px;
+    max-width: 785px;
 }
 
 .selectorMultiple .ui-selectcheckboxmenu-multiple-container.ui-inputfield {
     overflow: auto;
     max-height: inherit;
+}
+
+.panelSelectorMultiple{
+    max-width: 750px;
 }
 

@@ -81,14 +81,14 @@
                 </p:selectOneMenu>
                 
                 <h:outputLabel for="areasSelect" value="Áreas" />
-                <p:selectCheckboxMenu  styleClass="selectorMultiple" id="areasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedAreas}" label="Áreas" multiple="true" filter="true" filterMatchMode="contains" converter="#{selectConverter}">
+                <p:selectCheckboxMenu  styleClass="selectorMultiple" id="areasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedAreas}" label="Áreas" multiple="true" filter="true" filterMatchMode="contains" converter="#{selectConverter}" panelStyleClass="panelSelectorMultiple">
                     <f:selectItems value="#{informeBuscadorBean.listaAreas}" var="area" itemLabel="#{area.descripcion}" itemValue="#{area}"/>
                     <p:ajax event="change" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
                     <p:ajax event="toggleSelect" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
                 </p:selectCheckboxMenu>
               
                 <h:outputLabel for="subareasSelect" value="Subáreas" />
-                <p:selectCheckboxMenu styleClass="selectorMultiple" id="subareasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedSubAreas}" label="SubÁreas" multiple="true" filter="true" filterMatchMode="contains" converter="#{selectConverter}">
+                <p:selectCheckboxMenu styleClass="selectorMultiple" id="subareasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedSubAreas}" label="SubÁreas" multiple="true" filter="true" filterMatchMode="contains" converter="#{selectConverter}" panelStyleClass="panelSelectorMultiple">
                     <f:selectItems value="#{informeBuscadorBean.listaSubareas}" var="subarea"  itemLabel="#{subarea.area.descripcion} : #{subarea.descripcion}" itemValue="#{subarea}"/>
                 </p:selectCheckboxMenu>
            </div>        

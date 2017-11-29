@@ -45,7 +45,7 @@ insert into subareas_informe(id, descripcion, area_id) values (29, '7.1.- Plana 
 insert into subareas_informe(id, descripcion, area_id) values (30, '7.2.- Gestión económica.', 7);
 insert into subareas_informe(id, descripcion, area_id) values (31, '7.3.- Registro y archivo.', 7);
 insert into subareas_informe(id, descripcion, area_id) values (32, '7.4.- Régimen Disciplinario y Asistencia Letrada.', 7);
-insert into subareas_informe(id, descripcion, area_id) values (33, '7.5.- Oficina Periférica de Comuniación.', 7);
+insert into subareas_informe(id, descripcion, area_id) values (33, '7.5.- Oficina Periférica de Comunicación.', 7);
 insert into subareas_informe(id, descripcion, area_id) values (34, '7.6.- Núcleo de Destinos.', 7);
 insert into subareas_informe(id, descripcion, area_id) values (35, '7.7.- Acción social.', 7);
 insert into subareas_informe(id, descripcion, area_id) values (36, '7.8.- Quejas y sugerencias.', 7);
