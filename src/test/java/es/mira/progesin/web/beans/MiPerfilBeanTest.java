@@ -58,12 +58,6 @@ public class MiPerfilBeanTest {
     private Authentication authentication;
     
     /**
-     * Mock Usuario a mostrar.
-     */
-    @Mock
-    private UserBean userBean;
-    
-    /**
      * Mock Servicio de usuarios.
      */
     @Mock
@@ -121,14 +115,16 @@ public class MiPerfilBeanTest {
         String passActualCodificada = passwordEncoder.encode(passActual);
         miPerfilBeanMock.setClaveNueva(passNueva);
         miPerfilBeanMock.setClaveConfirm(passNueva);
+        miPerfilBeanMock.setClaveActual(passActual);
         
         User userActual = new User();
         userActual.setPassword(passActualCodificada);
-        when(userBean.getUser()).thenReturn(userActual);
-        miPerfilBeanMock.setClaveActual(passActual);
+        miPerfilBeanMock.setUser(userActual);
         
         miPerfilBeanMock.cambiarClave();
+        
         verify(userService, timeout(1)).save(userCaptor.capture());
+        assertThat(passwordEncoder.matches(userCaptor.getValue().getPassword(), passwordEncoder.encode(passNueva)));
         verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class), any(String.class));
@@ -145,6 +141,8 @@ public class MiPerfilBeanTest {
         miPerfilBeanMock.setClaveConfirm(passConfirm);
         
         miPerfilBeanMock.cambiarClave();
+        
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -159,13 +157,14 @@ public class MiPerfilBeanTest {
         String passActualCodificada = "abahsgdgdkd";
         miPerfilBeanMock.setClaveNueva(passNueva);
         miPerfilBeanMock.setClaveConfirm(passNueva);
+        miPerfilBeanMock.setClaveActual(passActual);
         
         User userActual = new User();
         userActual.setPassword(passActualCodificada);
-        when(userBean.getUser()).thenReturn(userActual);
-        miPerfilBeanMock.setClaveActual(passActual);
+        miPerfilBeanMock.setUser(userActual);
         
         miPerfilBeanMock.cambiarClave();
+        
         verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
@@ -182,13 +181,14 @@ public class MiPerfilBeanTest {
         String passActualCodificada = passwordEncoder.encode(passActual);
         miPerfilBeanMock.setClaveNueva(passNueva);
         miPerfilBeanMock.setClaveConfirm(passNueva);
+        miPerfilBeanMock.setClaveActual(passActual);
         
         User userActual = new User();
         userActual.setPassword(passActualCodificada);
-        when(userBean.getUser()).thenReturn(userActual);
-        miPerfilBeanMock.setClaveActual(passActual);
+        miPerfilBeanMock.setUser(userActual);
         
         miPerfilBeanMock.cambiarClave();
+        
         verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
