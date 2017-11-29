@@ -18,3 +18,7 @@
     display: inline !important;
     white-space: pre-line;
 }
+
+.checkboxes-all .ui-selectmanycheckbox.ui-widget td {
+    display: flex;
+}
