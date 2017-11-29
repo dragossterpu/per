@@ -296,7 +296,7 @@ public class VisualizarCuestionarioTest {
         
         String redireccion = visualizarCuestionario.visualizarVacio(cuestionario);
         verify(preguntasRepository, times(1)).findPreguntasElegidasCuestionarioPersonalizadoAndAreaIn(
-                cuestionario.getId(), new ArrayList<Long>(mapaAreasVisualizarUsuario.keySet()));
+                cuestionario.getId(), new ArrayList<>(mapaAreasVisualizarUsuario.keySet()));
         verify(configuracionRespuestaRepository, times(1))
                 .findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
         verify(datosTablaMock, times(1)).crearMatriz(listaConfigRespuestasCaptor.capture());
@@ -467,7 +467,7 @@ public class VisualizarCuestionarioTest {
                         cuestionarioEnviado, null);
         
         verify(preguntasRepository, times(1)).findPreguntasElegidasCuestionarioPersonalizadoAndAreaIn(
-                cuestionario.getId(), new ArrayList<Long>(mapaAreasVisualizarUsuario.keySet()));
+                cuestionario.getId(), new ArrayList<>(mapaAreasVisualizarUsuario.keySet()));
         verify(configuracionRespuestaRepository, times(1))
                 .findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
         verify(datosTablaMock, times(1)).crearMatriz(listaConfigRespuestasCaptor.capture());

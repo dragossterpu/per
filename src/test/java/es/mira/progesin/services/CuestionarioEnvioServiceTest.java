@@ -184,7 +184,7 @@ public class CuestionarioEnvioServiceTest {
      */
     @Test
     public void crearYEnviarCuestionario() throws ExcepcionRollback {
-        List<User> listadoUsuariosProvisionales = new ArrayList<User>();
+        List<User> listadoUsuariosProvisionales = new ArrayList<>();
         listadoUsuariosProvisionales.add(User.builder().username("usuario").password("password").build());
         CuestionarioPersonalizado cuestionarioPersonalizado = CuestionarioPersonalizado.builder().id(1L).build();
         Inspeccion inspeccion = Inspeccion.builder().id(1L).build();

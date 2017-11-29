@@ -333,7 +333,7 @@ public class VisualizarCuestionario implements Serializable {
             preguntas = preguntasRepository.findPreguntasElegidasCuestionarioPersonalizado(cuestionario.getId());
         } else {
             preguntas = preguntasRepository.findPreguntasElegidasCuestionarioPersonalizadoAndAreaIn(
-                    cuestionario.getId(), new ArrayList<Long>(mapaAreasVisualizarUsuario.keySet()));
+                    cuestionario.getId(), new ArrayList<>(mapaAreasVisualizarUsuario.keySet()));
         }
         return preguntas;
     }

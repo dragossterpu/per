@@ -110,7 +110,7 @@ public class RespuestaCuestionarioServiceTest {
      */
     @Test
     public void transaccSaveConRespuestas() {
-        List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
+        List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
         listaRespuestas.add(mock(RespuestaCuestionario.class));
         when(respuestaRepository.save(listaRespuestas)).thenReturn(listaRespuestas);
         
@@ -121,7 +121,6 @@ public class RespuestaCuestionarioServiceTest {
         assertThat(respuesta).isEqualTo(listaRespuestas);
     }
     
-    
     /**
      * Test method for
      * {@link es.mira.progesin.services.RespuestaCuestionarioService#transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio, List)}
@@ -131,7 +130,7 @@ public class RespuestaCuestionarioServiceTest {
     public void transaccSaveConRespuestasInactivaUsuariosProv() {
         String correoPrincipal = "correo@dominio.es";
         CuestionarioEnvio cuestionario = CuestionarioEnvio.builder().id(1L).correoEnvio(correoPrincipal).build();
-        List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
+        List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
         
         respuestaCuestionarioService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionario, listaRespuestas);
         

@@ -314,7 +314,7 @@ public class InformeBuscadorBean implements Serializable {
             Collections.sort(listaInformesSeleccionados,
                     (o1, o2) -> Long.compare(o1.getInspeccion().getId(), o2.getInspeccion().getId()));
             
-            Map<Informe, List<RespuestaInforme>> mapaRespuestas = new HashMap<Informe, List<RespuestaInforme>>();
+            Map<Informe, List<RespuestaInforme>> mapaRespuestas = new HashMap<>();
             
             for (Informe inf : listaInformesSeleccionados) {
                 List<RespuestaInforme> listaRespuestasPosibles = informeService.findConRespuestas(inf.getId())

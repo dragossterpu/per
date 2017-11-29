@@ -289,7 +289,7 @@ public class Utilities {
     private static String devuelveNombreCampo(String campo) {
         StringBuffer respuesta = new StringBuffer("<strong>");
         
-        Map<String, String> mapaNombres = new HashMap<String, String>();
+        Map<String, String> mapaNombres = new HashMap<>();
         mapaNombres.put("username", "Nombre usuario");
         mapaNombres.put("estado", "Estado");
         mapaNombres.put("nombre", "Nombre");

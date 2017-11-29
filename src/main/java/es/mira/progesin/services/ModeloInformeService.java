@@ -145,7 +145,7 @@ public class ModeloInformeService implements IModeloInformeService {
      */
     @Override
     public Map<AreaInforme, List<SubareaInforme>> cargarMapaSubareas(List<AreaInforme> areasVisualizar) {
-        Map<AreaInforme, List<SubareaInforme>> mapaAreasSubareas = new HashMap<AreaInforme, List<SubareaInforme>>();
+        Map<AreaInforme, List<SubareaInforme>> mapaAreasSubareas = new HashMap<>();
         
         for (AreaInforme area : areasVisualizar) {
             mapaAreasSubareas.put(area, subareaInformeService.findByArea(area));
