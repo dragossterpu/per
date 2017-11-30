@@ -7,7 +7,7 @@ prompt    SCRIPT CARGA DE MODELOS DE INFORME
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Fecha actualización: 15/11/2017
+prompt    Fecha actualización: 30/11/2017
 prompt =========================================================================
 
 
@@ -39,7 +39,7 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Medidas de seguridad y protección de los acuartelamientos.', SEQ_AREASINFORME.CURRVAL, 3);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Depósito de detenidos.', SEQ_AREASINFORME.CURRVAL, 4);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Galería de tiro.', SEQ_AREASINFORME.CURRVAL, 5);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Otros aspectos relevantes.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Organización Periférica PRL.', SEQ_AREASINFORME.CURRVAL, 6);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 7);
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', SEQ_MODELOINFORME.CURRVAL, 5);
@@ -61,12 +61,13 @@ insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Plana Mayor.', SEQ_AREASINFORME.CURRVAL, 1);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Gestión económica.', SEQ_AREASINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Registro y archivo.', SEQ_AREASINFORME.CURRVAL, 3);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Régimen Disciplinario y Asistencia Letrada.', SEQ_AREASINFORME.CURRVAL, 4);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Oficina Periférica de Comunicación.', SEQ_AREASINFORME.CURRVAL, 5);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Núcleo de Destinos.', SEQ_AREASINFORME.CURRVAL, 6);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Acción social.', SEQ_AREASINFORME.CURRVAL, 7);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Quejas y sugerencias.', SEQ_AREASINFORME.CURRVAL, 8);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 9);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Asesoría Jurídica (solo Zonas).', SEQ_AREASINFORME.CURRVAL, 4);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Régimen Disciplinario y Asistencia Letrada.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Oficina Periférica de Comunicación.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Núcleo de Destinos.', SEQ_AREASINFORME.CURRVAL, 7);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Acción social.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Quejas y sugerencias.', SEQ_AREASINFORME.CURRVAL, 9);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 10);
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ÁREA OPERATIVA', SEQ_MODELOINFORME.CURRVAL, 8);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Seguridad Ciudadana.', SEQ_AREASINFORME.CURRVAL, 1);
@@ -146,7 +147,7 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Medidas de seguridad y protección de los edificios policiales.', SEQ_AREASINFORME.CURRVAL, 3);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Depósito de detenidos.', SEQ_AREASINFORME.CURRVAL, 4);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Galería de tiro.', SEQ_AREASINFORME.CURRVAL, 5);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Otros aspectos relevantes.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Organización Periférica PRL.', SEQ_AREASINFORME.CURRVAL, 6);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 7);
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', SEQ_MODELOINFORME.CURRVAL, 5);
@@ -167,12 +168,13 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ÁREAS ADMINISTRATIVAS Y DE APOYO', SEQ_MODELOINFORME.CURRVAL, 7);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Secretaría General.', SEQ_AREASINFORME.CURRVAL, 1);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Gestión económica-Habilitación.', SEQ_AREASINFORME.CURRVAL, 2);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Registro y archivo. Gestión y tramitación de la documentación.', SEQ_AREASINFORME.CURRVAL, 3);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Régimen Disciplinario y Asistencia Letrada.', SEQ_AREASINFORME.CURRVAL, 4);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Gabinete de Prensa.', SEQ_AREASINFORME.CURRVAL, 5);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Documentación (DNI-pasaportes-extranjeros).', SEQ_AREASINFORME.CURRVAL, 6);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Quejas y sugerencias.', SEQ_AREASINFORME.CURRVAL, 7);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Registro. Gestión y tramitación de la documentación.', SEQ_AREASINFORME.CURRVAL, 3);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Archivo. Gestión y tramitación de la documentación.', SEQ_AREASINFORME.CURRVAL, 4);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Régimen Disciplinario y Asistencia Letrada.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Gabinete de Prensa.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Documentación (DNI-pasaportes-extranjeros).', SEQ_AREASINFORME.CURRVAL, 7);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Quejas y sugerencias.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 9);
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ÁREA OPERATIVA', SEQ_MODELOINFORME.CURRVAL, 8);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Seguridad Ciudadana.', SEQ_AREASINFORME.CURRVAL, 1);
