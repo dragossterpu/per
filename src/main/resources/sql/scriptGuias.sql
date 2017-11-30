@@ -7,7 +7,7 @@ prompt    SCRIPT CARGA DE GUÍAS
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Fecha creación: 08/05/2017
+prompt    Fecha modificación: 30/11/2017
 prompt =========================================================================
 
 
@@ -1224,5 +1224,193 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL,
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'ABSENTISMO. Confeccionar cuadro.', 18);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Horas extraordinarias (peonadas): Autorización para su realización, control de las efectuadas y del personal (no sobrepasa las 80 anuales ni las 11 h. intervalo)', 19);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemáticas observadas. Propuestas de mejora. Problemática que continúa de la anterior inspección.', 20);
+
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values (SEQ_GUIAS.NEXTVAL,'GUÍA ÁMBITO INSPECCIÓN GC','I.G.P.',0,trunc(sysdate),'system');
+
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Análisis y adecuación del Catálogo de Puestos de Trabajo a las necesidades de la Unidad.',0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actividades desarrolladas por las distintas unidades operativas, tanto en los aspectos preventivos como de investigación.',1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de trabajo y dimensionado de personal.',2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Estado de las infraestructuras.',3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Funcionamiento de la Intervención de Armas y Explosivos, valoración de la atención prestada al ciudadano.',4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Conocer sobre la dotación de los chalecos antibalas.',5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Evaluar el grado de cumplimiento del Plan Nacional de Tiro.',6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Inspección de los calabozos.',7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Análisis de la incidencia del absentismo.',8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La coordinación con otros cuerpos policiales en materia de seguridad ciudadana, especialmente con la Policía Municipal.',9);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar el cumplimiento de las Instrucciones de la Secretaría de Estado de Seguridad 12/2009, Registro y Custodia de Detenidos, la 7/1997, Elaboración de atestados, la 2/2001, Libro de Menores e Incapaces en situación de riesgo, la 7/2005, Libro de Menores Detenidos, la 4/2007, Aplicación del Protocolo Facultativo a la Convención contra la Tortura, la 12/2007, Comportamientos exigidos a los miembros de la Fuerzas y Cuerpos de Seguridad del Estado, 13/2007, sobre uso del número de identificación en la uniformidad, la 8/2009, Conducción y custodia de internos de Centros Penitenciarios, la 7/2015, práctica de diligencias de identificación, registros y actuación con menores, y la 12/2015, protocolo de actuación en las áreas de custodia de detenidos de las FCSE.',10);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Comprobar la fiabilidad y evolución de los datos sobre delincuencia.',11);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar el funcionamiento de la aplicación LexNET.',12);
+
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values (SEQ_GUIAS.NEXTVAL,'GUÍA ÁMBITO INSPECCIÓN PN','I.G.P.',0,trunc(sysdate),'system');
+
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Análisis y adecuación del Catálogo de Puestos de Trabajo a las necesidades de la Unidad.',0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actividades desarrolladas por las distintas unidades operativas, tanto en los aspectos preventivos como de investigación.',1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de trabajo y dimensionado de personal.',2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Estado de las infraestructuras.',3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Funcionamiento de la oficina del D.N.I. y Pasaportes, valoración de la atención prestada al ciudadano.',4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Conocer sobre la dotación de los chalecos antibalas.',5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Evaluar el grado de cumplimiento del Plan Nacional de Tiro.',6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Inspección de los calabozos.',7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Análisis de la incidencia del absentismo.',8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La coordinación con otros cuerpos policiales en materia de seguridad ciudadana, especialmente con la Policía Municipal.',9);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar el cumplimiento de las Instrucciones de la Secretaría de Estado de Seguridad 12/2009, Registro y Custodia de Detenidos, la 7/1997, Elaboración de atestados, la 2/2001, Libro de Menores e Incapaces en situación de riesgo, la 7/2005, Libro de Menores Detenidos, la 4/2007, Aplicación del Protocolo Facultativo a la Convención contra la Tortura, la 12/2007, Comportamientos exigidos a los miembros de la Fuerzas y Cuerpos de Seguridad del Estado, 13/2007, sobre uso del número de identificación en la uniformidad, la 8/2009, Conducción y custodia de internos de Centros Penitenciarios, la 7/2015, práctica de diligencias de identificación, registros y actuación con menores, y la 12/2015, protocolo de actuación en las áreas de custodia de detenidos de las FCSE.',10);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Comprobar la fiabilidad y evolución de los datos sobre delincuencia.',11);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar el funcionamiento de la aplicación LexNET.',12);
+
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values (SEQ_GUIAS.NEXTVAL,'GUÍA INSPECCIÓN AREA DE CUSTODIA DE DETENIDOS','I.G.P.',0,trunc(sysdate),'system');
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Ubicación',0
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Estado general, situación del calabozo y descripción de dependencias de que dispone (Zona previa, Zona de Control y Zona de Celdas) ',1
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Año de construcción y última reforma',2
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Barreras arquitectónicas, puertas de acceso y por donde entran los detenidos (si atraviesan zonas comunes)',3
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Dimensiones de cada celda y fotos (7 m² superficie estimada por cada celda) (paredes)',4
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Se detectan en las celdas aristas vivas, picos, salientes, superficies cortantes, etc.',5
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Se observan desperfectos (pintadas, agujeros, rayadas, etc.) en el interior: en paredes, suelo y puerta de entrada.',6
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:¿Se dispone de servicio de mantenimiento integral para ésta instalación?',7
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:¿Quién realiza este mantenimiento?, si existe',8
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Las puertas como son, separación entre barrotes y sistema de cierre',9
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Comprobar el perfil parte superior de la puerta',10
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 11/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA LA “INSTRUCCIÓN TÉCNICA PARA EL DISEÑO Y LA CONSTRUCCIÓN DE ÁREAS DE DETENCIÓN”.:Descripción somera de la instalación eléctrica y si el grupo electrógeno alimenta esta área y si disponen de SAI',11
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Disposición del Plan Específico de Medidas de Emergencia y Evacuación integrado en el Plan de Medidas de Emergencia?',0);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Fecha de su creación y última revisión',1);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":¿Disponen de copia en el área de custodia?',2);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Conocimiento que tiene el personal de custodia de llevar a cabo la evacuación del recinto',3);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Medios contra incendios de que dispone:
+-¿Existen extintores y BIES en el pasillo de celdas?  (Ojo , no deberían estar aquí, sino en la zona de control)
+-¿En la Zona del Puesto de control existen Extintores de polvo ABC polivalente, extintor de CO2 para equipos eléctricos y BIES con alcance hasta la última celda? (contabilizar)
+',4);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Sistema de climatización en qué consiste y su funcionamiento',5);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Sistema de extracción forzada de aire ¿dónde está ubicado?, comprobar su funcionamiento',6);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Número de personas/detenidos/presos durante el año anterior y lo que va del año en curso, ingresados en los calabazos. (contar del libro de detenidos)
+-¿Son suficientes el número de celdas existentes?
+-¿Se ha sobrepasado la capacidad máxima en algún momento puntual?
+-En caso positivo, como han solucionado el problema',7);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Incidentes en los dos últimos años ocurridos en el interior del área de custodia y que se hubieran hecho constar en diligencias (solicitar copia de la mismas en relación al apartado donde se narra  lo ocurrido)
+',8);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":CCTV (todo esto viene en el cuestionario pero comprobar)
+-Enumeración
+-Cámaras dentro de las celdas
+-Tiempo de grabación
+-Monitores (donde están, disponen recinto del calabozo)
+-Donde se visualizan
+-Carteles señalización',9);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Limpieza del Área de detención:
+-Estado visual de las dependencias
+-Empresa encargada.
+-Número de limpiadores/as.
+-Limpieza en fines de semana y festivos 
+-Grado de satisfacción: 
+-Caso de alguna incidencia extraordinaria como la solucionan
+-Caso de vacaciones de la limpiadora, quien la sustituye',10);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Hay que advertir de la posibilidad de que se autolesione el detenido si lleva vendas y es ingresado en la celda con las mismas, por lo que se debe extremar las medidas de protección sobre el mismo.
+',11);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":PERTENENCIAS: Bolsas de plástico formalizadas, ver si disponen de ellas',12);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":PERTENENCIAS: Como se cumplimentan',13);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":PERTENENCIAS: Donde se depositan',14);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":PERTENENCIAS: Objetos de gran valor',15);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":PERTENENCIAS: Medicamentos ver donde los depositan y que hacen con ellos una vez puesto a disposición judicial el detenido',16);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Hoja informativa, ver una y donde la depositan',17);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Comprobación del núm. identificativo del personal de custodia',18);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Hoja de incidencias de los relevos con los recibí y si disponen de algún protocolo establecido por la Unidad',19);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Vigilancia in situ SI/NO',20);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Vigilancia en remoto ',21);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Personal asignado (custodia in situ):
+-Por turno y total',22);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Como dejan constancia de las rondas realizadas',23);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Comprobar en la grabación, la periodicidad de las rondas en aquellas áreas de que no se disponga de cámaras enfocadas al interior de las celdas',24);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Entrada con armas o sin armas',25);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Donde las depositan (si disponen de cajas de seguridad)',26);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Que otros medios de defensa utilizan',27);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Medios de protección de que disponen (guantes, mascarillas, etc.).',28);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Timbre de llamada en las celdas Hay que comprobar el funcionamiento',29);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Micrófono ambiente en el pasillo Hay que comprobar el funcionamiento',30);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Ver si tiene el personal de custodia de la obligación del cierre de las puertas interiores de las celdas de incomunicados',31);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Informar de la obligación de cierre con llave del resto de las puertas de las celdas aunque estén vacías',32);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Alimentación de los detenidos.',33);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Procedimiento',34);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Clase de alimentos ',35);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Existencia de algún instrumento que permita calentar la comida y limpieza del mismo',36);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Se le proporciona agua (grifo o mineral).',37);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Comprobación de las bandejas de comida cuando se retiren (instrucciones)',38);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":¿Disponen las celdas de bancada de obra u hormigón?, ver si su tamaño es adecuado al de la colchoneta. ',39);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":¿Dispone de suficientes colchonetas y mantas? ',40);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":¿Son ignífugas?  ',41);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Procedimiento de limpieza o sustitución. (quien se encarga de ello). Sistema de suministro y retirada a los detenidos por parte de los funcionarios.',42);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Lugar de almacenamiento',43);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Se detectan en los aseos elementos que pueden utilizarse para agredir (escobilla, papelera, soporte papel higiénico, etc.)',44);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Los aseos son antivandálicos. (describir de los elementos de que disponen)',45);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Material que se le proporciona para su limpieza',46);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":COMPROBACIÓN DEL ESTADO DE LA CELDA: ¿Se realiza?',47);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":COMPROBACIÓN DEL ESTADO DE LA CELDA: ¿Es supervisado por el responsable?',48);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":FORMACIÓN DEL PERSONAL DE CUSTODIA: ¿Existe algún tipo de formación que hayan recibido sobre esta materia?',49);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":FORMACIÓN DEL PERSONAL DE CUSTODIA: ¿Tienen constancia documental de los funcionarios a los que se les ha impartido?',50);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Cuando fue visitado por última vez por el MNPCT el área de custodia',51);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Copia del Informe',52);
+insert into guia_Pasos (id, id_guia, paso, orden) values 
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO":Copia contestación de la Unidad',53);
 
 commit;
