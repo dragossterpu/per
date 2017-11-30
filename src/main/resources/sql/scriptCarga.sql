@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  15/11/2017   
+prompt    Actualización:  30/11/2017   
 prompt =========================================================================
 
 prompt =========================================================================
@@ -1434,11 +1434,9 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.port','mail','25
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.auth','mail','false');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable','mail','true');
 
--- ELIMINAR EZENTIS COMO DOMINIO VÁLIDO EN PRODUCCIÓN
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('dominiosCorreo','dominiosCorreo','interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
-
 --******************************************************************************************************
 
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('dominiosCorreo','dominiosCorreo','interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','apoyo_ipss@interior.es');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspección de Personal y Servicios de Seguridad');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','915372505');
@@ -1686,11 +1684,19 @@ Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('rherrera','HERRERA','ABIÁN','rherrera@interior.es',56,'A1',192,'ACTIVO',sysdate,to_timestamp('01/01/2000','DD/MM/RR'),27,'ROSARIO','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_GABINETE','915372655','system',4,6,28,6,1);
 --Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('josess','SAN SEGUNDO','CORCHERO','josess@interior.es',57,'A1',135,'ACTIVO',sysdate,to_timestamp('01/01/2000','DD/MM/RR'),27,'JOSÉ','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_GABINETE','915372553','system',,6,,6,1);
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('sgsics','SGSICS','SGSICS','jahb@interior.es',58,'A1',0,'ACTIVO',sysdate,to_timestamp('27/09/2017','DD/MM/RR'),20,'SGSICS','$2a$10$kgbRBJTPQoJVGgwtqkrQb.sQj3Z29szzorIcwDAsg2T5/FTJ0bQlO','ROLE_ADMIN','111111111','system',2,8,17,1,2);
+
+
+--******************************************************************************************************
+
+--ELIMINAR ANTES DE ENTREGA FINAL
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('ezentisAdmin','EZENTIS','EZENTIS','ramon.garcia@ezentis.com',58,'A1',0,'ACTIVO',sysdate,to_timestamp('27/09/2017','DD/MM/RR'),20,'EZENTIS','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_ADMIN','111111112','system',2,8,17,1,2);
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('ezentisJefeInspecciones','EZENTIS','EZENTIS','ramon.garcia@ezentis.com',58,'A1',0,'ACTIVO',sysdate,to_timestamp('27/09/2017','DD/MM/RR'),20,'EZENTIS','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_JEFE_INSPECCIONES','111111112','system',2,8,17,1,2);
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('ezentisApoyo','EZENTIS','EZENTIS','ramon.garcia@ezentis.com',58,'A1',0,'ACTIVO',sysdate,to_timestamp('27/09/2017','DD/MM/RR'),20,'EZENTIS','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_SERVICIO_APOYO','111111112','system',2,8,17,1,2);
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('ezentisEquipo','EZENTIS','EZENTIS','ramon.garcia@ezentis.com',58,'A1',0,'ACTIVO',sysdate,to_timestamp('27/09/2017','DD/MM/RR'),20,'EZENTIS','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_EQUIPO_INSPECCIONES','111111112','system',2,8,17,1,2);
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_DESTINO_IPSS,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,USERNAME_ALTA,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('ezentisGabinete','EZENTIS','EZENTIS','ramon.garcia@ezentis.com',58,'A1',0,'ACTIVO',sysdate,to_timestamp('27/09/2017','DD/MM/RR'),20,'EZENTIS','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_GABINETE','111111112','system',2,8,17,1,2);
+
+--******************************************************************************************************
+
 
 Insert into EQUIPO (ID,FECHA_ALTA,USERNAME_ALTA,JEFE_EQUIPO,NOMBRE_EQUIPO,ID_TIPO_EQUIPO) values (seq_equipo.nextval,to_timestamp('21/09/2017','DD/MM/RR'),'system','csanchezh','Equipo 1',1);
 
