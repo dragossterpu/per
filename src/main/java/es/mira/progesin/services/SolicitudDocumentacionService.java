@@ -90,7 +90,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      * Clase para el manejo de correos electrónicos.
      */
     @Autowired
-    private transient ICorreoElectronico correoElectronico;
+    private ICorreoElectronico correoElectronico;
     
     /**
      * Servicio para usar los métodos usados junto con criteria.
@@ -343,7 +343,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         paramPlantilla.put("password", password);
         
         String plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGP;
-        if (tipoInspeccion.getCodigo().equals("I.G.S.")) {
+        if ("I.G.S.".equals(tipoInspeccion.getCodigo())) {
             plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS;
         }
         

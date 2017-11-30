@@ -124,7 +124,6 @@ public class MiPerfilBeanTest {
         miPerfilBeanMock.cambiarClave();
         
         verify(userService, timeout(1)).save(userCaptor.capture());
-        assertThat(passwordEncoder.matches(userCaptor.getValue().getPassword(), passwordEncoder.encode(passNueva)));
         verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class), any(String.class));

@@ -287,7 +287,7 @@ public class Utilities {
      * @return Nombre del campo
      */
     private static String devuelveNombreCampo(String campo) {
-        StringBuffer respuesta = new StringBuffer("<strong>");
+        StringBuilder respuesta = new StringBuilder("<strong>");
         
         Map<String, String> mapaNombres = new HashMap<>();
         mapaNombres.put("username", "Nombre usuario");

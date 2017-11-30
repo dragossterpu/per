@@ -296,9 +296,9 @@ public class InformeBuscadorBean implements Serializable {
         boolean contieneConclusiones = informeBusqueda.getSelectedAreas().contains(respuesta.getSubarea().getArea())
                 && respuesta.getSubarea().getDescripcion().toLowerCase().contains("conclusiones");
         
-        boolean areaSeleccionadaVacía = compruebaAreaVacia(respuesta.getSubarea().getArea());
+        boolean areaSeleccionadaVacia = compruebaAreaVacia(respuesta.getSubarea().getArea());
         
-        return seleccionada || areaSeleccionadaVacía || contieneConclusiones;
+        return seleccionada || areaSeleccionadaVacia || contieneConclusiones;
     }
     
     /**
