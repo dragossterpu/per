@@ -14,13 +14,13 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAS
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo02', 'HASTA Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo03', 'MOTIVO');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONINPARTIDA', 'ACTIVIDAD');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONINPARTIDA', 'MATERIA (General, específica, Medidas de Emergencia…)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONINPARTIDA', 'Personal que la impartió');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONINPARTIDA', 'Personal que lo recibió');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAFORMACIONINPARTIDA', 'Número de alumnos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAFORMACIONINPARTIDA', 'Duración.');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAFORMACIONINPARTIDA', 'Método utilizado (Telemático, presencial, divulgativo,…)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONIMPARTIDA', 'ACTIVIDAD');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONIMPARTIDA', 'MATERIA (General, específica, Medidas de Emergencia…)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONIMPARTIDA', 'Personal que la impartió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONIMPARTIDA', 'Personal que lo recibió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAFORMACIONIMPARTIDA', 'Número de alumnos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAFORMACIONIMPARTIDA', 'Duración.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAFORMACIONIMPARTIDA', 'Método utilizado (Telemático, presencial, divulgativo,…)');
 
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLARESERVAPLAZAS', 'campo01', 'NÚMERO');
@@ -1924,16 +1924,6 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZEJERCICIOTIROGC', '% (Semestre 2)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'MATRIZEJERCICIOTIROGC', 'Refuerzo (Semestre 2)');
 
---Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TEXTAREA', '1', '1');
---Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('INPUT', '1', '1');
---Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTOINPUT', '1', '1');
---Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTORADIOSINO', '1', '1');
---insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'Sí');
---insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'NO', 'No');
---insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'BUENO', 'Bueno');
---insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'ACEPTABLE', 'Aceptable');
---insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'DEFICIENTE', 'Deficiente');
-
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZAUTOMOCION', 'TOTAL');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZAUTOMOCION', 'BUEN ESTADO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZAUTOMOCION', 'REGULAR');
@@ -3173,10 +3163,10 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales (SPRL): Procedimientos de comunicación, cooperación e información recíprocos establecidos en caso de concurrencia de actividades en un mismo centro de trabajo (artículo 24 de la Ley 31/1995, de Prevención de Riesgos Laborales y RD 171/ 2004 sobre coordinación de actividades empresariales).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio.
 Relación de accidentes de trabajo por provincias con indicación de mortales y graves, según lo dispuesto en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación” y, número de accidentados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes Ocurridos ocurridos en Actos de Servicio. Indicar si los informes de investigación son recibidos por la Sección de Prevención de la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes Ocurridos ocurridos en Actos de Servicio. Relación de los informes de investigación realizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes Ocurridos ocurridos en Actos de Servicio. Responsable de ejecutar las medidas preventivas propuestas en los informes de investigación cuando el puesto de trabajo es común a nivel nacional.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes Ocurridos ocurridos en Actos de Servicio. Relación de comunicaciones efectuadas a la Inspección de Trabajo de conformidad con lo establecido en la disposición adicional cuarta del RD 67/2010.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio. Indicar si los informes de investigación son recibidos por la Sección de Prevención de la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio. Relación de los informes de investigación realizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio. Responsable de ejecutar las medidas preventivas propuestas en los informes de investigación cuando el puesto de trabajo es común a nivel nacional.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio. Relación de comunicaciones efectuadas a la Inspección de Trabajo de conformidad con lo establecido en la disposición adicional cuarta del RD 67/2010.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Accidentes e incidentes de trabajo investigados. Adjuntar informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 22);
 
 Insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'DIRECCIÓN', SEQ_AREASCUESTIONARIOS.NEXTVAL, 4);
@@ -4211,7 +4201,7 @@ insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden)
 Relación de las evaluaciones que quedan pendientes de realizar. Si dichas evaluaciones de riesgos contemplan los correspondientes riesgos específicos (Unidades especializadas).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Propuesta de Planificación Preventiva. 
-Actividades de seguimiento y control de las acciones correctoras', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
+Actividades de seguimiento y control de las acciones correctoras.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Planes de Emergencia y de Autoprotección. 
 Planes de Emergencia/Autoprotección elaborados durante el periodo, diferenciando los llevados a cabo por el Servicio de Prevención, Secciones y Oficinas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
@@ -4224,19 +4214,19 @@ Indicar simulacros realizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vigilancia de la Salud. 
 Coordinación con los Servicios de Asistencia Sanitaria y de Psicología y Psicotecnia.
-Procedimientos de actuación y mecanismos de coordinación entre el Servicio de Prevención y los Servicios de Asistencia Sanitaria y de Psicología y Psicotecnia en materia de vigilancia y control de la salud de los guardias civiles en relación con los riesgos derivados del ejercicio de las funciones profesionales', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 8);
+Procedimientos de actuación y mecanismos de coordinación entre el Servicio de Prevención y los Servicios de Asistencia Sanitaria y de Psicología y Psicotecnia en materia de vigilancia y control de la salud de los guardias civiles en relación con los riesgos derivados del ejercicio de las funciones profesionales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 8);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vigilancia de la Salud. 
 Coordinación con los Servicios de Asistencia Sanitaria y de Psicología y Psicotecnia. Actuaciones desarrolladas destinadas a la protección de trabajadores especialmente sensible a determinados riesgos y declarados útil con limitaciones al objeto de adaptar las condiciones y exigencias que demanda el puesto de trabajo al estado psicofísico del funcionario.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 9);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vigilancia de la Salud. 
-Coordinación con los Servicios de Asistencia Sanitaria y de Psicología y Psicotecnia. Actuaciones llevadas a acabo en relación a la protección de la guardia civil en situación de embarazo, parto reciente o en periodo de lactancia.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
+Coordinación con los Servicios de Asistencia Sanitaria y de Psicología y Psicotecnia. Actuaciones llevadas acabo en relación a la protección de la guardia civil en situación de embarazo, parto reciente o en periodo de lactancia.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio.
 Relación de accidentes de trabajo por provincias con indicación de mortales y graves, según lo dispuesto en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación” y, número de accidentados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio.
-Relación de aquellos incidentes por provincias contemplados en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 12);
+Relación de aquellos incidentes por provincias contemplados en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación”.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 12);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio.
 Relación de los informes de investigación realizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 13);
@@ -4254,10 +4244,10 @@ insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden)
 Procedimiento empleado para justificar la recepción por el personal.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida.
-Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONINPARTIDA', 19);
+Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONIMPARTIDA', 19);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida.
-Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONINPARTIDA', 20);
+Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONIMPARTIDA', 20);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Asesoramiento e informes emitidos.
 Breve descripción de las actividades de asesoramiento y de informes o dictámenes emitidos por el Servicio de Prevención relacionados con el sistema de gestión de la prevención de riesgos laborales en el ámbito de la Dirección General de la Guardia Civil.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 21);
@@ -4807,88 +4797,88 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 commit;
 
 --
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: SECRETARÍA GENERAL', SEQ_AREASCUESTIONARIOS.NEXTVAL, 14);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: SECRETARÍA GENERAL', SEQ_AREASCUESTIONARIOS.NEXTVAL, 15);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Organigrama', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios Informáticos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Necesidades', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: GESTIÓN ECONÓMICA - HABILITACIÓN (SÓLO JSP y COMISARÍAS PROVINCIALES)', SEQ_AREASCUESTIONARIOS.NEXTVAL, 15);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: GESTIÓN ECONÓMICA - HABILITACIÓN (SÓLO JSP y COMISARÍAS PROVINCIALES)', SEQ_AREASCUESTIONARIOS.NEXTVAL, 16);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Identificar responsable y relación nominal del personal dedicado a estos cometidos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Identificar responsable y relación nominal del personal dedicado a estos cometidos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Cursos en relación al puesto de trabajo', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Identificar cajero pagador, suplente y habilitado', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 2);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Programas informáticos que utilizan y su compatibilidad con la Hacienda Pública. Problemática', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de actividad', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Remitir el último informe de control financiero permanente ejecutado por la Intervención Territorial de la Intervención General de la Administración del Estado', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Identificar cajero pagador, suplente y habilitado.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 2);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Programas informáticos que utilizan y su compatibilidad con la Hacienda Pública. Problemática.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de actividad.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Remitir el último informe de control financiero permanente ejecutado por la Intervención Territorial de la Intervención General de la Administración del Estado.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informe detallado de los créditos asignados, por concepto presupuestario, gestionados en los DOS ÚLTIMOS AÑOS NATURALES y del año en curso (hasta la fecha de la inspección). Asignación inicial, modificaciones y gastado.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Indicar cuantía de Anticipo de Caja Fija', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 7);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Cantidad autorizada de dinero en metálico en caja', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informe relativo a la contratación y prestación de servicios de interpretación. Modo de prestación y provisión de estos recursos. Recursos económicos asignados. Deficiencias, problemáticas y necesidades', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Último estado trimestral de la situación de tesorería', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Quejas, sugerencias y felicitaciones de los dos últimos años completos y año en curso', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZQUEJASAMPLIADA', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Indicar cuantía de Anticipo de Caja Fija.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Cantidad autorizada de dinero en metálico en caja.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informe relativo a la contratación y prestación de servicios de interpretación. Modo de prestación y provisión de estos recursos. Recursos económicos asignados. Deficiencias, problemáticas y necesidades.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 9);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Último estado trimestral de la situación de tesorería.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Quejas, sugerencias y felicitaciones de los dos últimos años completos y año en curso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZQUEJASAMPLIADA', 11);
 
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: REGISTRO', SEQ_AREASCUESTIONARIOS.NEXTVAL, 16);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: REGISTRO', SEQ_AREASCUESTIONARIOS.NEXTVAL, 17);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Incluir en la siguiente tabla los datos solicitados, relativos a los dos últimos años naturales completos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZREGISTROARCHIVO', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Detallar si el registro (entrada y salida) se encuentra informatizado, así como dónde se ubica el punto de entrada y el sistema de registro de la correspondencia electrónica', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Incluir en la siguiente tabla los datos solicitados, relativos a los dos últimos años naturales completos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZREGISTROARCHIVO', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Detallar si el registro (entrada y salida) se encuentra informatizado, así como dónde se ubica el punto de entrada y el sistema de registro de la correspondencia electrónica.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 1);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: ARCHIVO', SEQ_AREASCUESTIONARIOS.NEXTVAL, 17);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: ARCHIVO', SEQ_AREASCUESTIONARIOS.NEXTVAL, 18);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Está informatizado el registro?', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Incluir en la siguiente tabla los datos solicitados relativos a los dos últimos años naturales completos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZCONTROLARCHIVO', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Incluir en la siguiente tabla los datos solicitados relativos a los dos últimos años naturales completos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZCONTROLARCHIVO', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimiento de archivo de los Atestados sin autor conocido y no enviados a la Autoridad Judicial y Ministerio Fiscal, a tenor de lo dispuesto en la Ley 41/2015, de 5 de octubre, de modificación de la Ley de Enjuiciamiento Criminal para la agilización de la justicia penal y el fortalecimiento de las garantía procesales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: RÉGIMEN DISCIPLINARIO Y ASISTENCIA LETRADA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 18);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: RÉGIMEN DISCIPLINARIO Y ASISTENCIA LETRADA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 19);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimientos por falta leve (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSFALTALEVEPN', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informaciones reservadas (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAINFORMACIONRESERVADAPN', 1);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimientos por falta leve (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSFALTALEVEPN', 2);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informaciones reservadas (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAINFORMACIONRESERVADAPN', 3);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En relación con los datos recogidos en las tablas anteriores, cumplimentar la siguiente para el último año AÑO (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMOTIVOS1', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En relación con los datos recogidos en las tablas anteriores, cumplimentar la siguiente para el penúltimo año AÑO (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMOTIVOS2', 5);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Reseñar los procedimientos caducados y archivados por prescripción, indicando los motivos. (Último año) (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSPRESCRITOS', 6);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Reseñar los procedimientos caducados y archivados por prescripción, indicando los motivos. (Penúltimo año) (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSPRESCRITOS', 7);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Reflejar el número de procedimientos por faltas graves y muy graves en los dos últimos años naturales completos, funcionarios implicados y sanción impuesta', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros procedimientos (incluyendo los datos de los dos últimos años naturales completos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZOTROSPROCEDIMIENTOS', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Asistencia letrada', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPERSONALASISTENCIALETRADA', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimientos por falta leve (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSFALTALEVEPN', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informaciones reservadas (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAINFORMACIONRESERVADAPN', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimientos por falta leve (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSFALTALEVEPN', 2);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informaciones reservadas (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAINFORMACIONRESERVADAPN', 3);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En relación con los datos recogidos en las tablas anteriores, cumplimentar la siguiente para el último año AÑO (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMOTIVOS1', 4);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En relación con los datos recogidos en las tablas anteriores, cumplimentar la siguiente para el penúltimo año AÑO (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMOTIVOS2', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Reseñar los procedimientos caducados y archivados por prescripción, indicando los motivos. (Último año) (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSPRESCRITOS', 6);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Reseñar los procedimientos caducados y archivados por prescripción, indicando los motivos. (Penúltimo año) (Nota: se consignará la falta leve por la que se ha instruido, así como el número correspondiente de procedimiento disciplinario).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROCEDIMIENTOSPRESCRITOS', 7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Reflejar el número de procedimientos por faltas graves y muy graves en los dos últimos años naturales completos, funcionarios implicados y sanción impuesta.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros procedimientos (incluyendo los datos de los dos últimos años naturales completos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZOTROSPROCEDIMIENTOS', 9);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Asistencia letrada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPERSONALASISTENCIALETRADA', 10);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: GABINETE DE PRENSA (SÓLO JSP y COMISARÍAS PROVINCIALES)', SEQ_AREASCUESTIONARIOS.NEXTVAL, 19);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: GABINETE DE PRENSA (SÓLO JSP y COMISARÍAS PROVINCIALES)', SEQ_AREASCUESTIONARIOS.NEXTVAL, 20);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal destinado. Dependencias. Medios técnicos y audiovisuales. Problemática (correspondientes a los dos últimos años naturales completos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Cumplimentar la siguiente tabla, incluyendo los datos correspondientes a los dos últimos años naturales completos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVIDADPN', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Cumplimentar la siguiente tabla, incluyendo los datos correspondientes a los dos últimos años naturales completos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVIDADPN', 1);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: DOCUMENTACIÓN', SEQ_AREASCUESTIONARIOS.NEXTVAL, 20);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA ADMINISTRATIVA: DOCUMENTACIÓN', SEQ_AREASCUESTIONARIOS.NEXTVAL, 21);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en jornada ordinaria (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOS', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaportes en jornada ordinaria (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONPASAPORTES', 1);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en jornada ordinaria (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOS', 2);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaportes en jornada ordinaria (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOS', 3);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en horas extraordinarias (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en horas extraordinarias (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 5);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaporte en horas extraordinarias (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 6);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaporte en horas extraordinarias (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 7);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOS', 8);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOS', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'D.N.I. rural (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADNIRURAL', 10);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'D.N.I. rural (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADNIRURAL', 11);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOSEXPEDIDOS', 12);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOSEXPEDIDOS', 13);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación de Extranjeros Nº TOTAL DE TRÁMITES REALIZADOS (Último año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADOCUMENTOSEXTRANJEROS', 14);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación de Extranjeros (Penúltimo año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADOCUMENTOSEXTRANJEROS', 15);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en jornada ordinaria (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOS', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaportes en jornada ordinaria (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONPASAPORTES', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en jornada ordinaria (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOS', 2);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaportes en jornada ordinaria (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOS', 3);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en horas extraordinarias (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 4);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de D.N.I. en horas extraordinarias (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaporte en horas extraordinarias (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 6);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Producción de pasaporte en horas extraordinarias (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPRODUCCIONDOCUMENTOSHORASEXTRAORDINARIAS', 7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOS', 8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOS', 9);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'D.N.I. rural (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADNIRURAL', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'D.N.I. rural (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADNIRURAL', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOSEXPEDIDOS', 12);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Total documentos expedidos (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATOTALDOCUMENTOSEXPEDIDOS', 13);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación de Extranjeros Nº TOTAL DE TRÁMITES REALIZADOS (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADOCUMENTOSEXTRANJEROS', 14);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación de Extranjeros (Penúltimo año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADOCUMENTOSEXTRANJEROS', 15);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DNI y Pasaportes: Dotación de personal (turno de mañana, tarde, jornada continuada).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DNI y Pasaportes: Horario de atención al público. Especificar horario de verano', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DNI y Pasaportes: Equipos DNI-Pasaportes e impresoras, material e infraestructuras', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DNI y Pasaportes: Problemáticas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DNI y Pasaportes: Horario de atención al público. Especificar horario de verano.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DNI y Pasaportes: Equipos DNI-Pasaportes e impresoras, material e infraestructuras.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DNI y Pasaportes: Problemáticas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación de extranjeros: Dotación de personal, material e infraestructuras. Problemáticas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
 
 
 
 commit;
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 21);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 22);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración informe. Estructura de la unidad (incluir organigrama), catálogo (personal destinado y en comisión de servicio) y distribución del personal que la integra.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración informe. Infraestructuras (despachos, almacenes,…). Valoración sobre su adecuación. Necesidades y/o problemáticas asociadas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración informe. Medios materiales. Valoración sobre la adecuación de equipos, materiales, vestuario,…. Necesidades y/o problemáticas asociadas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
@@ -4902,7 +4892,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración informe. Demás cuestiones de interés, que deberían ser solucionadas para mejorar la actividad de cada Sección, Grupo o Subgrupo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
 
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: BRIGADA DE SEGURIDAD CIUDADANA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 22);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: BRIGADA DE SEGURIDAD CIUDADANA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 23);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sala del 091. Detallar el número de funcionarios adscritos al servicio de Sala y si el desempeño de estas funciones se realiza con estabilidad. Formación de los operadores. Necesidades y/o problemática.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sala del 091. Actividad. Llamadas o requerimientos. Dos años antes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVIDAD091PN', 1);
@@ -4961,7 +4951,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UIP. Número de peticiones interesando de los servicios de la UIP, así como la cifra de concesiones y salidas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPETICIONESUIPPN', 54);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UIP. Actividades.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVIDADESUIPPN', 55);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: BRIGADA DE EXTRANJERÍA Y FRONTERAS', SEQ_AREASCUESTIONARIOS.NEXTVAL, 23);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: BRIGADA DE EXTRANJERÍA Y FRONTERAS', SEQ_AREASCUESTIONARIOS.NEXTVAL, 24);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividad. EXPEDIENTES SANCIONADORES.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBRIGADAEXTRAJERIAEXPEDIENTESPN', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividad. DEVOLUCIONES MATERIALIZADAS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBRIGADAEXTRAJERIADEVOLUCIONESPN', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividad. SOLICITUDES INGRESO CIE.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBRIGADAEXTRAJERIASOLICITUDESPN', 2);
@@ -4985,7 +4975,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UCRIF- GOE. Puesto fronterizo del puerto/aeropuerto. (1) Cuando existe una descripción en el SIS a efectos de la no admisión del interesado.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZFRONTERAUGRIFPN', 16);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Base Aérea (Composición, ubicación y detalle de su actividad en los dos últimos años)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: BRIGADA DE POLICÍA JUDICIAL', SEQ_AREASCUESTIONARIOS.NEXTVAL, 24);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: BRIGADA DE POLICÍA JUDICIAL', SEQ_AREASCUESTIONARIOS.NEXTVAL, 25);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Observaciones telefónicas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Solicitudes judiciales de datos asociados a telefonía, terminales y comunicaciones electrónicas u otros servicios electrónicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Mandamientos de Entrada y Registro.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 2);
@@ -5027,7 +5017,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. GRUPO INFORMES.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINFORJUDICIALESPN', 29);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UNIDAD ADSCRITA A LOS TRIBUNALES. Composición, ubicación, detalle de su actividad y detenidos. Remisión de las memorias relativas a los dos años anteriores.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 30);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: POLICÍA CIENTÍFICA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 25);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: POLICÍA CIENTÍFICA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 26);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Completar la siguiente tabla.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPRINCPCIENTIFICAPN', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'POLICÍA CIENTÍFICA (DISTRITO). Organigrama.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'POLICÍA CIENTÍFICA (DISTRITO). Personal que lo compone y medios asignados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
@@ -5039,7 +5029,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'POLICÍA CIENTÍFICA (DISTRITO). Relación Identificaciones DACTILOGRAMAS / ADN (y otros).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINSPECCIONESOCULARESDACTILOGRAMASPN', 8);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'POLICÍA CIENTÍFICA (DISTRITO). Otros datos que se consideren de interés por ese Grupo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 9);
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: INFORMACIÓN', SEQ_AREASCUESTIONARIOS.NEXTVAL, 26);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: INFORMACIÓN', SEQ_AREASCUESTIONARIOS.NEXTVAL, 27);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Completar la siguiente tabla. Infórmese de los procedimientos dispuestos en relación al control de hospederías, alquileres de inmuebles y agencias de alquiler de vehículos, su coordinación con otras unidades y problemática que pueda suscitarse al respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPRINCINFORMACIONPN', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Completar la siguiente tabla. Intervenciones telefónicas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINTERVENCINESTELEFPN', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Respecto a la tabla anterior. (*) De existir, breve resumen a continuación de las causas motivadoras.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
@@ -5050,7 +5040,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'TEDAX-NRBQ. Actividades.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTEDAXACTPN', 7);
 
 COMMIT;
-Insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'RELACIONES Y COORDINACIÓN', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 27);
+Insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'RELACIONES Y COORDINACIÓN', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 28);
 
 insert into preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Con la Subdelegación del Gobierno.', 'ADJUNTOINPUT', 0);
 
@@ -5094,7 +5084,7 @@ insert into preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden)
 
 COMMIT;
 
-insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'PREVENCIÓN DE RIESGOS LABORALES: DATOS GENERALES', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 28);
+insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'PREVENCIÓN DE RIESGOS LABORALES: DATOS GENERALES', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 29);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estructura, Dependencia y Ámbito de Competencia. 
 Relación documentada de las actividades preventivas encuadradas en las especialidades contempladas no asumidas por el Servicio de Prevención y para cuya utilización se ha recurrido a un Servicio de Prevención Ajeno.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
@@ -5106,7 +5096,7 @@ insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden)
 Medios materiales de que dispone para desarrollar la acción preventiva encomendada y asumida. Acreditar si los Técnicos del Servicio de Prevención están instruidos en el uso de los equipos y si éstos están, en su caso, calibrados. A fecha de la visita se tendrá a disposición del equipo inspector copia de la documentación acreditativa relativa a la formación y calibración de los equipos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
 
 --Insert area datos funciones y actividades
-insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'PREVENCIÓN DE RIESGOS LABORALES: FUNCIONES Y ACTIVIDADES DE LOS SERVICIOS DE PREVENCIÓN', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 29);
+insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'PREVENCIÓN DE RIESGOS LABORALES: FUNCIONES Y ACTIVIDADES DE LOS SERVICIOS DE PREVENCIÓN', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 30);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Plan de Prevención. 
 Fecha de aprobación del Plan y Manual de Prevención de Riesgos Laborales y modificaciones que se hayan llevado a cabo, en su caso, en cada uno de los documentos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
@@ -5150,68 +5140,71 @@ Recursos materiales: relación de instalaciones, medios materiales sanitarios y 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vigilancia de la Salud. 
 Procedimientos de actuación y mecanismos de coordinación entre el Servicio Sanitario y el Servicio de Prevención en materia de vigilancia y control de la salud de los empleados públicos en el ámbito de la Dirección General de la Policía.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 13);
 
-insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
-Relación de accidentes de trabajo por provincias con indicación de mortales, graves y más de 4 leves.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 14);
+insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes ocurridos en Actos de Servicio. 
+Relación de accidentes de trabajo por provincias con indicación de mortales y graves, según lo dispuesto en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación” y, número de accidentados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 14);
 
-insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
-Relación de aquellos incidentes contemplados en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 15);
+insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes ocurridos en Actos de Servicio. 
+Relación de aquellos incidentes contemplados en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación”.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 15);
 
-insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
+insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes ocurridos en Actos de Servicio. 
 Relación de los informes de investigación realizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
 
-insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
-Relación de comunicaciones efectuadas a la Inspección de Trabajo de conformidad con lo establecido en la disposición adicional cuarta del RD 67/2010.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes e Incidentes ocurridos en Actos de Servicio.
+Responsable de ejecutar las medidas preventivas propuestas en los informes de investigación cuando el puesto de trabajo es común a nivel nacional.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
+
+insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes ocurridos en Actos de Servicio. 
+Relación de comunicaciones efectuadas a la Inspección de Trabajo de conformidad con lo establecido en la disposición adicional cuarta del RD 67/2010.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Información en Materia de Prevención de Riesgos Laborales. 
-Fichas de información de carácter general, especifico o de cualquier otra naturaleza elaborados por el Servicio de Prevención, así como Manuales, Campañas de Prevención, Trípticos y cualquier otro medio informativo. Procedimiento empleado para justificar la recepción por el personal.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
+Fichas de información de carácter general, especifico o de cualquier otra naturaleza elaborados por el Servicio de Prevención, así como Manuales, Campañas de Prevención, Trípticos y cualquier otro medio informativo. Procedimiento empleado para justificar la recepción por el personal.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida. 
-Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONINPARTIDA', 19);
+Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONIMPARTIDA', 20);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida. 
-Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONINPARTIDA', 20);
+Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONIMPARTIDA', 21);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Asesoramiento e informes emitidos. 
-Breve descripción de las actividades de asesoramiento y de informes o dictámenes emitidos por el Servicio de Prevención relacionados con el sistema de gestión de la prevención de riesgos laborales en el ámbito de la Dirección General de la Policía.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 21);
+Breve descripción de las actividades de asesoramiento y de informes o dictámenes emitidos por el Servicio de Prevención relacionados con el sistema de gestión de la prevención de riesgos laborales en el ámbito de la Dirección General de la Policía.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 22);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales. 
-Qué tipo de medidas se han adoptado para que las distintas plantillas y unidades la Policía Nacional dispongan de la información y las instrucciones adecuadas a seguir en materia de coordinación de actividades empresariales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 22);
+Qué tipo de medidas se han adoptado para que las distintas plantillas y unidades la Policía Nacional dispongan de la información y las instrucciones adecuadas a seguir en materia de coordinación de actividades empresariales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 23);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales. 
-¿Se informa al Servicio de Prevención de los contratos de prestación de obras o servicios suscritos en el ámbito de la actividad de la Dirección General de la Policía? En caso afirmativo indicar número y tipo de actividad contratada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 23);
+¿Se informa al Servicio de Prevención de los contratos de prestación de obras o servicios suscritos en el ámbito de la actividad de la Dirección General de la Policía? En caso afirmativo indicar número y tipo de actividad contratada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 24);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales. 
-Número y tipo de actuaciones en esta materia solicitadas al Servicio de Prevención por los titulares de los órganos de la Institución.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 24);
+Número y tipo de actuaciones en esta materia solicitadas al Servicio de Prevención por los titulares de los órganos de la Institución.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 25);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales. 
-Explicar brevemente si existe o se ejerce por el Servicio de Prevención algún tipo de control, vigilancia o seguimiento sobre las medidas previstas para la coordinación de actividades empresariales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 25);
+Explicar brevemente si existe o se ejerce por el Servicio de Prevención algún tipo de control, vigilancia o seguimiento sobre las medidas previstas para la coordinación de actividades empresariales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 26);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Registro y Archivo de Documentación. 
-En referencia a lo dispuesto en el Art. 23 de la Ley de Prevención de Riesgos Laborales, relación detallada de la documentación correspondiente a la actividad desplegada en el ámbito de la Dirección General de la Policía en materia de prevención de riesgos laborales, que se encuentra bajo la custodia y archivo de ese Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 26);
+En referencia a lo dispuesto en el Art. 23 de la Ley de Prevención de Riesgos Laborales, relación detallada de la documentación correspondiente a la actividad desplegada en el ámbito de la Dirección General de la Policía en materia de prevención de riesgos laborales, que se encuentra bajo la custodia y archivo de ese Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 27);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimientos e Instrucciones Operativas de Prevención de Riesgos Laborales. 
-Relación de Procedimientos e Instrucciones Operativas aprobados, pendientes de aprobación o en fase de elaboración y estudio. En su caso, informando sobre su causa o justificación, relación de Procedimientos o de Instrucciones Operativas en vigor que estén o hayan sido objeto de actualización o revisión.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 27);
+Relación de Procedimientos e Instrucciones Operativas aprobados, pendientes de aprobación o en fase de elaboración y estudio. En su caso, informando sobre su causa o justificación, relación de Procedimientos o de Instrucciones Operativas en vigor que estén o hayan sido objeto de actualización o revisión.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
-Registros de Actuaciones por Acoso Laboral.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
+Registros de Actuaciones por Acoso Laboral.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
-Relación de Acuerdos adoptados por Acoso laboral.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
+Relación de Acuerdos adoptados por Acoso laboral.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 30);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
-Número de Informes elaborados sobre situación previa de los riesgos psicosociales en la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 30);
+Número de Informes elaborados sobre situación previa de los riesgos psicosociales en la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 31);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
-Relación de las actuaciones de seguimiento respecto del cumplimiento de las medidas preventivas/correctoras propuestas en el marco de los riesgos laborales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 31);
+Relación de las actuaciones de seguimiento respecto del cumplimiento de las medidas preventivas/correctoras propuestas en el marco de los riesgos laborales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 32);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
-Número de denuncias falsas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 32);
+Número de denuncias falsas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 33);
 
-insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Relación de propuestas de mejora y sugerencias en materia de prevención recibidas en el Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 33);
+insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Relación de propuestas de mejora y sugerencias en materia de prevención recibidas en el Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 34);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración de la Memoria Anual. 
-Las actividades preventivas se documentan a través de una programación y memoria anual. Indicar si se contienen las prioridades fijadas y los objetivos alcanzados o en fase de elaboración a este respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 34);
+Las actividades preventivas se documentan a través de una programación y memoria anual. Indicar si se contienen las prioridades fijadas y los objetivos alcanzados o en fase de elaboración a este respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 35);
 
-insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informe de Auditoría Interna realizado por ese Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 35);
+insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informe de Auditoría Interna realizado por ese Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 36);
 
 commit;
