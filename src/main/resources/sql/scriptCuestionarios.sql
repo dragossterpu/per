@@ -3701,8 +3701,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales. ¿Se informa al personal ajeno a la unidad policial de los riesgos inherentes al puesto de trabajo que desempeña en la misma e igualmente el personal de policía que presta servicio en instalaciones ajenas a la unidad policial, es igualmente informado de tales riesgos?' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 17);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales. Número de coordinaciones realizadas en los dos últimos años. Copia de la última coordinación.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Siniestralidad laboral en los dos últimos años, incluyendo todas las Unidades de la Unidad Inspeccionada.
-OBSERVACIONES: 
-- Agrupar todos los accidentes anteriores por años y conceptos (in itinere, caídas al mismo nivel, accidente de tráfico, etc).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACCIDENTESLABORALES', 19);
+Agrupar todos los accidentes por conceptos in itinere, caídas al mismo nivel, accidente de tráfico, etc.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACCIDENTESLABORALES', 19);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'INFRAESTRUCTURAS E INSTALACIONES: OTRAS SEDES', SEQ_AREASCUESTIONARIOS.NEXTVAL, 7);
 
