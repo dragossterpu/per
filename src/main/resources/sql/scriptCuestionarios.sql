@@ -14,6 +14,15 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAS
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo02', 'HASTA Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo03', 'MOTIVO');
 
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONINPARTIDA', 'ACTIVIDAD');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONINPARTIDA', 'MATERIA (General, específica, Medidas de Emergencia…)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONINPARTIDA', 'Personal que la impartió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONINPARTIDA', 'Personal que lo recibió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAFORMACIONINPARTIDA', 'Número de alumnos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAFORMACIONINPARTIDA', 'Duración.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAFORMACIONINPARTIDA', 'Método utilizado (Telemático, presencial, divulgativo,…)');
+
+
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLARESERVAPLAZAS', 'campo01', 'NÚMERO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLARESERVAPLAZAS', 'campo02', 'MOTIVO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLARESERVAPLAZAS', 'campo03', 'Aceptadas');
