@@ -337,7 +337,7 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL,
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'DOCUMENTACIÓN DE CIUDADANOS ESPAÑOLES: D.N.I. y PASAPORTE: Dimensionado del personal. Equipos establecidos. Turnos de mañana, tarde y/o jornada continuada. Valorar suficiencia, insuficiencia o sobredimensionamiento. Existencia de equipos móviles y análisis ','72');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'DOCUMENTACIÓN DE CIUDADANOS ESPAÑOLES: D.N.I. y PASAPORTE: Comprobar qué actividades realizan y si tienen establecido un reparto de tareas entre los distintos funcionarios que permita valorar la carga individual de trabajo','73');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'DOCUMENTACIÓN DE CIUDADANOS ESPAÑOLES: D.N.I. y PASAPORTE: Funcionamiento de la cita previa. Retrasos. Existencia de aglomeración de gente en determinados horarios (colas). Propuestas de mejora','74');
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'DOCUMENTACIÓN DE CIUDADANOS ESPAÑOLES: D.N.I. y PASAPORTE:  Control de la actividad. Solicitar la siguiente información numérica, POR CADA EQUIPO, correspondiente a los dos últimos años naturales completos, de forma separada:
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'DOCUMENTACIÓN DE CIUDADANOS ESPAÑOLES: D.N.I. y PASAPORTE: Control de la actividad. Solicitar la siguiente información numérica, POR CADA EQUIPO, correspondiente a los dos últimos años naturales completos, de forma separada:
 -Producción de DNI (jornada ordinaria):
   -Número de funcionarios.
   -Número de terminales/Puestos de trabajo.
@@ -1316,7 +1316,7 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 -Donde se visualizan
 -Carteles señalización',21);
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO": Limpieza del Área de DETENCIÓN":
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO": Limpieza del Área de detención:
 -Estado visual de las dependencias
 -Empresa encargada.
 -Número de limpiadores/as.
@@ -1346,7 +1346,7 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO": Vigilancia in situ SI/NO',32);
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO": Vigilancia en remoto ',33);
+(SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO": Vigilancia en remoto',33);
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSTRUCCIÓN 12/2015, DE LA SECRETARÍA DE ESTADO DE SEGURIDAD, POR LA QUE SE APRUEBA EL "PROTOCOLO DE ACTUACIÓN EN LAS ÁREAS DE CUSTODIA DE DETENIDOS DE LAS FUERZAS Y CUERPOS DE  SEGURIDAD DEL ESTADO": Personal asignado (custodia in situ):
 -Por turno y total',34);
