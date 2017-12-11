@@ -2304,6 +2304,7 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZACACTOPECONCEPTOSDETENIDOSPN','TOTAL DETENIDOS');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZACACTOPECONCEPTOSDETENIDOSPN','Dos años antes');  
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZACACTOPECONCEPTOSDETENIDOSPN','Año anterior'); 
+
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZACACTOPECONCEPTOSIDENTIFPN','Identificcación. En vía Pública (L.O. 4/15). Nacionales.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZACACTOPECONCEPTOSIDENTIFPN','Identificcación. En vía Pública (L.O. 4/15). Extranjeros.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZACACTOPECONCEPTOSIDENTIFPN','Identificcación. Traslado a Dep. Policiales.');
@@ -2900,8 +2901,37 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZTEDAXACTPN','Dos años antes.');  
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZTEDAXACTPN','Año anterior.');
 
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZPROGESTGC','INFRACCIONES PENALES (DYF_UA_333)');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZPROGESTGC','INFRACCIONES PENALES (todo, DYF_UA_013)');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZPROGESTGC','INFRAC. PENALES PATRIMONIO');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZPROGESTGC','INFRAC. PENALES ESCLARECIDAS (DYF_UA_333)');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZPROGESTGC','INFRAC. PENALES ESCLARECIDAS (todo, DYF_UA_013)');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZPROGESTGC','INFRAC. PEN. ESCLAR. PATRIMONIO');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZPROGESTGC','DETENIDOS (DEI_UA_042)');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZPROGESTGC','DETENIDOS PATRIMONIO');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZPROGESTGC','Dos años antes. 
+SEC');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZPROGESTGC','Dos años antes. 
+SIGO/SAEX');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZPROGESTGC','Dos años antes. 
+DIFER. % SEC/SAEX');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZPROGESTGC','Año anterior. 
+SEC');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZPROGESTGC','Año anterior. 
+SIGO/SAEX');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZPROGESTGC','Año anterior. 
+DIFER. % SEC/SAEX');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'MATRIZPROGESTGC','VARIACIÓN % 
+Dos años antes / Año anterior
+SEC');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo08', 'MATRIZPROGESTGC','VARIACIÓN % 
+Dos años antes / Año anterior 
+SIGO/SAEX');
+
 
 --Insert modelo/areas/preguntas
+
+-- CUESTIONARIO CIES
 
 Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.nextval,'CIES','CUESTIONARIO CIES', sysdate, 'system',1);
 
@@ -3356,7 +3386,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 
 COMMIT;
 
---Cuestionario Guardia Civil
+-- CUESTIONARIO GUARDIA CIVIL
 
 Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'CGC','CUESTIONARIO GUARDIA CIVIL', sysdate, 'system',1);
 
@@ -3801,9 +3831,9 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal de material móvil: Datos del personal que compone el servicio de automoción (número y categoría). Especialidades que ostentan.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 25);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Inspección Técnica de Vehículos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZITV', 26);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividades de los mecánicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTMECANICOSGC', 27);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Accidentes. El responsable de Automovilismo elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos: 
-- Causas más comunes de los accidentes. Medidas adoptadas para prevenirlos. 
-- Determinación de responsabilidad del siniestro. 
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Accidentes. El responsable de Automovilismo elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos:
+- Causas más comunes de los accidentes. Medidas adoptadas para prevenirlos.
+- Determinación de responsabilidad del siniestro.
 - Resultado de las informaciones verbales, especificando aquellas en las que se adoptaron medidas disciplinarias y/o de resarcimiento.', 
 SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVEHICACCIDENTGC', 28);
 
@@ -3852,17 +3882,16 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Dotación actual.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTELECOESTADOGC', 7);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Detallar distribución de los teléfonos móviles.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 8);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Incluir los siguientes medios: Fotocopiadoras, Trituradoras de papel, Encuadernadoras y otros (especificar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAOTROSESTADOGC', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'El responsable del GATI elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos:  
-- SIRDEE:    
-	• Grado del despliegue y  cobertura.    
-	• Personal que lo atiende. Material disponible (terminales y repetidores), estado y % de operatividad de los terminales.     
-	• Mantenimiento de equipos (quién lo realiza y grado de conformidad).    
-	• Protocolos de actuación con otras FCS., cumplimiento y resultados.    
-	• Estadística de averías y sus causas año anterior. Zonas de sombra.    
-	• Aspectos a mejorar.  - Carencia de conexión a Intranet y/o Internet (señálese específicamente respecto de las Unidades territoriales) y líneas de las que se dispone.  - Problemática con las reparaciones, repuestos de tóner, herramientas, etc.    
-- Detalle de las conexiones con otros Cuerpos policiales. 
-- Funcionamiento del 062, 112 y otros (de existir).
-', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'El responsable del GATI elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos:
+ - SIRDEE: 
+    • Grado del despliegue y cobertura. 
+    • Personal que lo atiende. Material disponible (terminales y repetidores), estado y % de operatividad de los terminales. 
+    • Mantenimiento de equipos (quién lo realiza y grado de conformidad). 
+    • Protocolos de actuación con otras FCS., cumplimiento y resultados.    
+    • Estadística de averías y sus causas año anterior. Zonas de sombra.    
+    • Aspectos a mejorar.  - Carencia de conexión a Intranet y/o Internet (señálese específicamente respecto de las Unidades territoriales) y líneas de las que se dispone.  - Problemática con las reparaciones, repuestos de tóner, herramientas, etc.    
+ - Detalle de las conexiones con otros Cuerpos policiales.
+ - Funcionamiento del 062, 112 y otros (de existir).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Se deberán justificar las necesidades de nueva adjudicación y reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
 
 
@@ -4281,6 +4310,23 @@ insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden)
 Las actividades preventivas que se documentan a través de una programación y memoria anual. Indicar si se contienen las prioridades fijadas y los objetivos alcanzados o en fase de elaboración a este respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 29);
 
 COMMIT;
+
+Insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'PROGRAMA ESTADÍSTICO DE SEGURIDAD', SEQ_AREASCUESTIONARIOS.NEXTVAL, 41);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estructura del proceso de grabación. Actividades de control. Responsabilidades.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Facilitar copia de los siguientes informes, correspondientes a los años 2015, 2016 y primer semestre 2017, ámbito de la Comandancia (formato Excel o pdf):
+o   FDC_UC-012, resumen general de figuras delictivas complejas, conocidas y esclarecidas, por fecha de conocimiento y unidad responsable.
+o   DYF_UA_333 y DYF_UA_013, infracciones penales.
+o   DEI_UA_042, detenidos e investigados.
+o   SEC_UA_043, resumen y estado hechos SIGO.
+o   SEC_UR_043, unidad actuante un órgano externo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Tabla de estadística comparativa de datos del SEC con SIGO-SAEX. COMANDANCIA DE XXXXX', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPROGESTGC', 2);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informes y/o análisis relativos a la situación de la criminalidad en el ámbito de la unidad inspeccionada y, en su caso, medidas adoptadas para hacer frente a las amenazas singulares.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+
+commit;
+
+
+-- CUESTIONARIO POLICÍA NACIONAL
 
 Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'CPN','CUESTIONARIO POLICÍA NACIONAL', sysdate, 'system',1);
 
@@ -5196,5 +5242,12 @@ insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden)
 Las actividades preventivas se documentan a través de una programación y memoria anual. Indicar si se contienen las prioridades fijadas y los objetivos alcanzados o en fase de elaboración a este respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 35);
 
 insert into preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informe de Auditoría Interna realizado por ese Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 36);
+
+commit;
+
+Insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'PROGRAMA ESTADÍSTICO DE SEGURIDAD', SEQ_AREASCUESTIONARIOS.NEXTVAL, 31);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estructura del proceso de grabación. Actividades de control. Responsabilidades.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informes y/o análisis relativos a la situación de la criminalidad en el ámbito de la unidad inspeccionada y, en su caso, medidas adoptadas para hacer frente a las amenazas singulares.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 
 commit;
