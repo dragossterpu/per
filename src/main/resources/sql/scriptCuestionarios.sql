@@ -1166,21 +1166,19 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'MATRIZCINOACTIVIDADES', 'Último año');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila01', 'MATRIZCINOACTIVIDADES', 'Servicios: Explosivos: Preventivos');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila02', 'MATRIZCINOACTIVIDADES', 'Servicios: Explosivos: Prácticas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila03', 'MATRIZCINOACTIVIDADES', 'Servicios: Explosivos: Reales');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila04', 'MATRIZCINOACTIVIDADES', 'Servicios: Drogas: Preventivos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila05', 'MATRIZCINOACTIVIDADES', 'Servicios: Drogas: Prácticas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila06', 'MATRIZCINOACTIVIDADES', 'Servicios: Drogas: Reales');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila07', 'MATRIZCINOACTIVIDADES', 'Servicios: SYR: Preventivos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila08', 'MATRIZCINOACTIVIDADES', 'Servicios: SYR: Prácticas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila09', 'MATRIZCINOACTIVIDADES', 'Servicios: SYR: Reales');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila10', 'MATRIZCINOACTIVIDADES', 'Servicios: Otros (especificar) Preventivos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila11', 'MATRIZCINOACTIVIDADES', 'Servicios: Otros (especificar) Prácticas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila12', 'MATRIZCINOACTIVIDADES', 'Servicios: Otros (especificar) Reales');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila13', 'MATRIZCINOACTIVIDADES', 'Comparecencias judiciales');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila14', 'MATRIZCINOACTIVIDADES', 'Total servicios realizados');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila15', 'MATRIZCINOACTIVIDADES', 'Aprehensiones');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila16', 'MATRIZCINOACTIVIDADES', 'Valor de los efectos (En Euros)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila17', 'MATRIZCINOACTIVIDADES', 'Otras actividades (Citar. Exhibiciones,…)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila03', 'MATRIZCINOACTIVIDADES', 'Servicios: Explosivos: Actuaciones Reales');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila04', 'MATRIZCINOACTIVIDADES', 'Servicios: Drogas: Prácticas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila05', 'MATRIZCINOACTIVIDADES', 'Servicios: Drogas: Reales');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila06', 'MATRIZCINOACTIVIDADES', 'Servicios: SYR: Prácticas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila07', 'MATRIZCINOACTIVIDADES', 'Servicios: SYR: Reales');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila08', 'MATRIZCINOACTIVIDADES', 'Servicios: Otros (especificar) Preventivos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila09', 'MATRIZCINOACTIVIDADES', 'Servicios: Otros (especificar) Prácticas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila10', 'MATRIZCINOACTIVIDADES', 'Servicios: Otros (especificar) Reales');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila11', 'MATRIZCINOACTIVIDADES', 'Comparecencias judiciales');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila12', 'MATRIZCINOACTIVIDADES', 'Total servicios realizados');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila13', 'MATRIZCINOACTIVIDADES', 'Aprehensiones');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila14', 'MATRIZCINOACTIVIDADES', 'Valor de los efectos (En Euros)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila15', 'MATRIZCINOACTIVIDADES', 'Otras actividades (Citar. Exhibiciones,…)');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'MATRIZMONTANAACTIVIDADES', 'Penúltimo año');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'MATRIZMONTANAACTIVIDADES', 'Último año');
@@ -4087,7 +4085,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA : SERVICIO CINOLÓGICO', SEQ_AREASCUESTIONARIOS.NEXTVAL, 32);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Memorias de actividad de los años dos últimos años', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Memorias de actividad de los dos últimos años', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informar número de guías y animales especializados por actividad', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En defecto de lo anterior, adjúntese datos estadísticos en modelos en uso de la especialidad relativos a los dos últimos años. ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividad-Intervenciones', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZCINOACTIVIDADES', 3);
