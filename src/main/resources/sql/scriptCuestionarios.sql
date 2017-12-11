@@ -1255,6 +1255,12 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAPAFIF', 'Infracciones administrativas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAPAFIF', 'Otras (especificar)');
 
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLASECCPUESTO', 'Sección / Puesto Fiscal');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLASECCPUESTO', 'Delitos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLASECCPUESTO', 'Faltas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLASECCPUESTO', 'Infracciones administrativas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLASECCPUESTO', 'Otras (especificar)');
+
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAUFADILIGENCIAS', 'Diligencias instruidas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAUFADILIGENCIAS', 'Penúltimo año');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAUFADILIGENCIAS', 'Último año');
@@ -3962,12 +3968,16 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 - Unidades funcionales no recogidas en catálogo (EQUIPOS ROCA, USECICO, EICO, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACOMPANIASTERRITORIALES', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Seguridad Ciudadana de Comandancia (USECIC) Comandancia', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZUSEGCIUDADANA', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Seguridad Ciudadana de Compañía (GRUPO DE INTERVENCIÓN RÁPIDA)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZUSEGCIUDADANA', 2);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidades Fiscales PAFIF: Actuaciones policiales penúltimo año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPAFIF', 3);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidades Fiscales Sección-Puesto: Actuaciones policiales penúltimo año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASECCPUESTO', 4);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidades Fiscales PAFIF: Actuaciones policiales último año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPAFIF', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidades Fiscales Sección-Puesto: Actuaciones policiales último año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASECCPUESTO', 6);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividad operativa en materia de seguridad ciudadana.
 Aportar informes SIGO-SAEX “hechos por fecha de grabación y unidad actuante (HEC_UA_013), completo, de los dos años anteriores, relativo a las siguientes unidades:
 - Comandancia XXXX.
 - Compañías XXXX.
 - USECIC XXXX.
-- Puestos XXXX.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+- Puestos XXXX.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 7);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA : POLICÍA JUDICIAL', SEQ_AREASCUESTIONARIOS.NEXTVAL, 23);
 
@@ -4120,16 +4130,14 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad de Seguridad del Aeropuerto: Actividades- Denuncias infracciones administrativas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZSAEROPUERTODENUNCIAS', 3);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad de Seguridad del Puerto: Personal que la integra', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad de Seguridad del Puerto: Servicios que se prestan', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Patrullas Fiscales (PAFIF,s): Actuaciones policiales penúltimo año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPAFIF', 6);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Patrullas Fiscales (PAFIF,s): Actuaciones policiales último año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPAFIF', 7);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Personal que la integra', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 8);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Servicios que se prestan', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Actividades - Diligencias instruidas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADILIGENCIAS', 10);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Actividades - Denuncias infracciones administrativas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADENUNCIAS', 11);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Personal que la integra', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 12);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Servicios que se prestan', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 13);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Actividades - Diligencias instruidas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADILIGENCIAS', 14);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Actividades - Denuncias infracciones administrativas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADENUNCIAS', 15);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Personal que la integra', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Servicios que se prestan', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Actividades - Diligencias instruidas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADILIGENCIAS', 8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Aeropuerto: Actividades - Denuncias infracciones administrativas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADENUNCIAS', 9);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Personal que la integra', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Servicios que se prestan', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Actividades - Diligencias instruidas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADILIGENCIAS', 12);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Fiscal del Puerto: Actividades - Denuncias infracciones administrativas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUFADENUNCIAS', 13);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA : UNIDAD DE SEGURIDAD EN EDIFICIOS JUDICIALES', SEQ_AREASCUESTIONARIOS.NEXTVAL, 37);
 
