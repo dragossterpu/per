@@ -1738,7 +1738,8 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAARMAMENTOGC', 'Armamento');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAARMAMENTOGC', 'Total');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAARMAMENTOGC', 'Necesidades');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAARMAMENTOGC', 'Necesidades (Nueva adjud.)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAARMAMENTOGC', 'Necesidades (Reposición.)');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZMUNICIONGC', 'Cantidad');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZMUNICIONGC', 'Fecha caducidad');
@@ -3834,7 +3835,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Material antidisturbios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZMATANTIDISTGC', 21);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Material antidisturbios: Detallar fecha de fabricación de los botes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 22);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividades de armería realizadas en los dos últimos años.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVARMERIA', 23);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Relación de armas depositadas, pertenecientes a miembros de la GC, amparadas por Licencia tipo “A”.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 24);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Relación de armas oficiales depositadas, pertenecientes a miembros de la GC, amparadas por Licencia tipo “A”.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 24);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vestuario: Detalle numérico de prendas pendientes de recepción, fecha de petición, necesidades más urgentes, etc. Problemática.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 25);
 
 
