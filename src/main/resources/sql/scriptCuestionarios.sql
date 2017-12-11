@@ -2523,7 +2523,7 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06','TABLADILIGENCIASPN','Diligencias tramitadas (Año anterior)');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07','TABLADILIGENCIASPN','Diligencias archivadas (Año anterior)');
 
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01','TABLADETENIDOSUGRIFPN','SUBGRUPO');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01','TABLADETENIDOSUGRIFPN','GRUPO');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02','TABLADETENIDOSUGRIFPN','Detenidos españoles (Hace dos años)');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03','TABLADETENIDOSUGRIFPN','Detenidos extranjeros (Hace dos años)');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04','TABLADETENIDOSUGRIFPN','TOTAL (Hace dos años)');
@@ -2572,33 +2572,32 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZESTUPEFACCIENTESPN','Grupos investigados.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZESTUPEFACCIENTESPN','Grupos desarticulados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZESTUPEFACCIENTESPN','Detenidos. Españoles.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZESTUPEFACCIENTESPN','Detenidos. Españoles.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZESTUPEFACCIENTESPN','Entregas controladas. Con colaboración extranjera.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZESTUPEFACCIENTESPN','Entregas controladas. Sin colaboración extranjera.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Heroína (gramos).');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cocaína (gramos) .');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cannabis (Kilogramos). Haschis.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cannabis (Kilogramos). Marihuana/Grifa/Kifi.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cannabis (Kilogramos). Aceite.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). L.S.D.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). Anfetaminas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). M.D.M.A.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). Otros fármacos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Precursores.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Automóviles.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila18','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Dinero.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila19','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Joyas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila20','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Depósitos bancarios.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Armas de fuego reales.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila22','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Armas fuego simuladas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila23','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Armas blancas/objetos contundentes.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila24','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Balanzas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila25','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Prensas (nº) / Troqueles (si-no).');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila26','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Embarcaciones.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila27','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Bienes inmuebles.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila28','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Otros (especificar).');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZESTUPEFACCIENTESPN','Dos años antes');  
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZESTUPEFACCIENTESPN','Detenidos.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZESTUPEFACCIENTESPN','Entregas controladas. Con colaboración extranjera.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZESTUPEFACCIENTESPN','Entregas controladas. Sin colaboración extranjera.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Heroína (gramos).');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cocaína (gramos).');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cannabis (Kilogramos). Haschis.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cannabis (Kilogramos). Marihuana/Grifa/Kifi.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Cannabis (Kilogramos). Aceite.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). L.S.D.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). Anfetaminas.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). M.D.M.A.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14','MATRIZESTUPEFACCIENTESPN','Drogas intervenidas. Psicotrópicos (unidades). Otros fármacos.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Precursores.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Automóviles.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Dinero.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila18','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Joyas.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila19','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Depósitos bancarios.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila20','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Armas de fuego reales.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Armas fuego simuladas.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila22','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Armas blancas/objetos contundentes.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila23','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Balanzas.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila24','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Prensas (nº) / Troqueles (si-no).');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila25','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Embarcaciones.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila26','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Bienes inmuebles.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila27','MATRIZESTUPEFACCIENTESPN','Efectos intervenidos. Otros (especificar).');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZESTUPEFACCIENTESPN','Dos años antes');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZESTUPEFACCIENTESPN','Año anterior');
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZACTIVIDADUDEVPN','Homicidios. Hechos conocidos.');
@@ -2627,27 +2626,26 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZBLANQUEOCAPITALESPN','Grupos detectados.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZBLANQUEOCAPITALESPN','Grupos investigados.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZBLANQUEOCAPITALESPN','Grupos desarticulados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZBLANQUEOCAPITALESPN','Detenidos. Españoles.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZBLANQUEOCAPITALESPN','Detenidos. Extranjeros.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZBLANQUEOCAPITALESPN','Personas investigadas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZBLANQUEOCAPITALESPN','Comunicaciones hacia/desde el SEPBLAC.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Tráfico de drogas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Atracos bancos/no bancos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Robos domicilio.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Robos establecimientos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. T. I. V.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Fraudes, estafas y falsedades.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Infracciones fiscales.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Contrabando.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Prostitución.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Falta declaración exportación.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila18','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Sin determinar.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila19','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Otros (especificar).');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila20','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Vehículos');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Armas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila22','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Dinero.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila23','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Inmuebles.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila24','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Otros (especificar).');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZBLANQUEOCAPITALESPN','Detenidos.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZBLANQUEOCAPITALESPN','Personas investigadas.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZBLANQUEOCAPITALESPN','Comunicaciones hacia/desde el SEPBLAC.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Tráfico de drogas.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Atracos bancos/no bancos.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Robos domicilio.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Robos establecimientos.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. T. I. V.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Fraudes, estafas y falsedades.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Infracciones fiscales.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Contrabando.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Prostitución.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Falta declaración exportación.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Sin determinar.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila18','MATRIZBLANQUEOCAPITALESPN','Número de investigaciones origen del blanqueo. Otros (especificar).');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila19','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Vehículos');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila20','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Armas.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Dinero.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila22','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Inmuebles.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila23','MATRIZBLANQUEOCAPITALESPN','Efectos intervenidos. Otros (especificar).');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZBLANQUEOCAPITALESPN','Dos años antes');  
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZBLANQUEOCAPITALESPN','Año anterior');
 
@@ -2750,23 +2748,6 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZTOTALESUTIPN','Análisis Operativo.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZTOTALESUTIPN','Anal. Est.');
 
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZBPINFORMACIONPN','Investigaciones iniciadas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZBPINFORMACIONPN','Investigaciones iniciadas CON resultados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZBPINFORMACIONPN','Investigaciones iniciadas SIN resultados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZBPINFORMACIONPN','Investigaciones iniciadas que continuaron “activas” año/s siguientes.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZBPINFORMACIONPN','Investigaciones sobre Delincuencia Organizada.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZBPINFORMACIONPN','Encartados investigados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZBPINFORMACIONPN','Empresas investigadas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZBPINFORMACIONPN','Teléfonos intervenidos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZBPINFORMACIONPN','Detenidos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZBPINFORMACIONPN','Imputados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZBPINFORMACIONPN','I (Dos años antes)');  
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZBPINFORMACIONPN','II (Dos años antes)');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZBPINFORMACIONPN','III (Dos años antes)');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZBPINFORMACIONPN','I (Año anterior)');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZBPINFORMACIONPN','II (Año anterior)');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZBPINFORMACIONPN','III (Año anterior)');
-
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZBPPOLICIAJUDICIALPN','Investigaciones iniciadas.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZBPPOLICIAJUDICIALPN','Investigaciones iniciadas CON resultados.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZBPPOLICIAJUDICIALPN','Investigaciones iniciadas SIN resultados.');
@@ -2776,7 +2757,7 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZBPPOLICIAJUDICIALPN','Empresas investigadas.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZBPPOLICIAJUDICIALPN','Teléfonos intervenidos.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZBPPOLICIAJUDICIALPN','Detenidos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZBPPOLICIAJUDICIALPN','Imputados.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZBPPOLICIAJUDICIALPN','Investigados.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZBPPOLICIAJUDICIALPN','Tráfico ilicito vehículos');  
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZBPPOLICIAJUDICIALPN','UDYCO. UDYCO');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZBPPOLICIAJUDICIALPN','UDYCO. Crimen Organizado');
@@ -2784,19 +2765,6 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZBPPOLICIAJUDICIALPN','UDEV. Homicidios');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZBPPOLICIAJUDICIALPN','UDEF. Delinc. Econom.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'MATRIZBPPOLICIAJUDICIALPN','UDEF. Delitos Tecnológ.');
-
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZBPEXTRANJERIAPN','Investigaciones iniciadas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZBPEXTRANJERIAPN','Investigaciones iniciadas CON resultados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03','MATRIZBPEXTRANJERIAPN','Investigaciones iniciadas SIN resultados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZBPEXTRANJERIAPN','Investigaciones iniciadas que continuaron “activas” año/s siguientes.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZBPEXTRANJERIAPN','Investigaciones sobre Delincuencia Organizada.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZBPEXTRANJERIAPN','Encartados investigados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZBPEXTRANJERIAPN','Empresas investigadas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZBPEXTRANJERIAPN','Teléfonos intervenidos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZBPEXTRANJERIAPN','Detenidos.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZBPEXTRANJERIAPN','Imputados.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZBPEXTRANJERIAPN','Dos años antes.');  
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZBPEXTRANJERIAPN','Año anterior.');
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZUFAMINVESPN','MAYORES DE EDAD. Diligencias propias tramitadas.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZUFAMINVESPN','MAYORES DE EDAD. Diligencias traspasadas por otras Unidades.');
@@ -2815,8 +2783,8 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04','TABLAORDENPROTECPN','Sol. (Año anterior)');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05','TABLAORDENPROTECPN','Conc. (Año anterior)');
 
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZORDENPROTECPN','Unidad Policia Nacional.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZORDENPROTECPN','Unidad Policia Local.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZORDENPROTECPN','Unidad Policía Nacional.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZORDENPROTECPN','Unidad Policía Local.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZORDENPROTECPN','Extremo.');  
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZORDENPROTECPN','Alto.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZORDENPROTECPN','Medio.');  
@@ -2894,12 +2862,12 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04','MATRIZPRINCINFORMACIONPN','Conflictividad social (consignar aquellas que generan actividad operativa). Concentraciones-reuniones.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05','MATRIZPRINCINFORMACIONPN','Conflictividad social (consignar aquellas que generan actividad operativa). Manifestaciones.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06','MATRIZPRINCINFORMACIONPN','Conflictividad social (consignar aquellas que generan actividad operativa). Huelgas.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Terrorismo autóctono*.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Terrorismo Internacional / yihadista*.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Bandas juveniles*.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Delitos de odio*.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Ocupación de inmuebles*.');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Otros (especificar)*.');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Terrorismo autóctono. *');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Terrorismo Internacional / yihadista. *');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Bandas juveniles. *');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Delitos de odio. *');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Ocupación de inmuebles. *');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12','MATRIZPRINCINFORMACIONPN','Diligencias instruidas por. Otros (especificar). *');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13','MATRIZPRINCINFORMACIONPN','Operaciones / investigaciones seguidas por ámbito. (consignar de modo diferenciado). Terrorismo autóctono.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14','MATRIZPRINCINFORMACIONPN','Operaciones / investigaciones seguidas por ámbito. (consignar de modo diferenciado). Terrorismo Internacional / yihadista.');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15','MATRIZPRINCINFORMACIONPN','Operaciones / investigaciones seguidas por ámbito. (consignar de modo diferenciado). Bandas juveniles.');
@@ -5018,46 +4986,38 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Base Aérea (Composición, ubicación y detalle de su actividad en los dos últimos años)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: BRIGADA DE POLICÍA JUDICIAL', SEQ_AREASCUESTIONARIOS.NEXTVAL, 25);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Observaciones telefónicas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Solicitudes judiciales de datos asociados a telefonía, terminales y comunicaciones electrónicas u otros servicios electrónicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 1);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Mandamientos de Entrada y Registro.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 2);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. (*) De existir, breve resumen a continuación de las causas motivadoras de las tablas anteriores.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Diligencias.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADILIGENCIASPN', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Detenidos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADETENIDOSUGRIFPN', 5);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Resultados de la actividad contra el tráfico de drogas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZESTUPEFACCIENTESPN', 6);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Resultados de la actividad UDEV.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVIDADUDEVPN', 7);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Resultados contra el blanqueo de capitales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBLANQUEOCAPITALESPN', 8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Observaciones telefónicas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Solicitudes judiciales de datos asociados a telefonía, terminales y comunicaciones electrónicas u otros servicios electrónicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Mandamientos de Entrada y Registro.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAUCRIFGOEPN', 2);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. (*) De existir, breve resumen a continuación de las causas motivadoras de las tablas anteriores.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Diligencias.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADILIGENCIASPN', 4);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Detenidos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLADETENIDOSUGRIFPN', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Resultados de la actividad contra el tráfico de drogas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZESTUPEFACCIENTESPN', 6);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Resultados de la actividad UDEV.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVIDADUDEVPN', 7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos operativos. Resultados contra el blanqueo de capitales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBLANQUEOCAPITALESPN', 8);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Delincuencia económica.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDELINCUENCIAECONOMICAPN', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). ACTIVIDAD. TURNOS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDENUNCIASODACPN', 10);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). DENUNCIAS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDENUNCIASNUMODACPN', 11);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). Media diaria de diligencias tramitadas en cada turno.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDENUNCIASMEDIDAODACPN', 12);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). DILIGENCIAS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDILIGENCIASODACPN', 13);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). Estadística de juicios rápidos. 
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Oficina de denuncias y atención al ciudadano (ODAC). ACTIVIDAD. TURNOS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDENUNCIASODACPN', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Oficina de denuncias y atención al ciudadano (ODAC). DENUNCIAS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDENUNCIASNUMODACPN', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Oficina de denuncias y atención al ciudadano (ODAC). Media diaria de diligencias tramitadas en cada turno.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDENUNCIASMEDIDAODACPN', 12);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Oficina de denuncias y atención al ciudadano (ODAC). DILIGENCIAS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDILIGENCIASODACPN', 13);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Oficina de denuncias y atención al ciudadano (ODAC). Estadística de juicios rápidos. 
 JRD – Juicio Rápido con Detenidos. 
 JRSD – Juicio Rápido sin Detenidos. 
 JIDL – Juicio Inmediato por Delitos Leves', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAJUICIORAPIDOPN', 14);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). Unidad Territorial/Provincial/Local de Inteligencia. Dos años antes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINTELIGENCIAODACPN', 15);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). Unidad Territorial/Provincial/Local de Inteligencia. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINTELIGENCIAODACPN', 16);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). Investigaciones activas en curso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINVESTIGACINESODACPN', 17);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). Aplicación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZAPLICACIONODACPN', 18);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). UTI Distrito. Dos años antes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTOTALESUTIPN', 19);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos y subgrupos operativos. Oficina de denuncias y atención al ciudadano (ODAC). UTI Distrito. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTOTALESUTIPN', 20);
-
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'CONCEPTOS. - Investigaciones iniciadas: las que fueron dadas de alta en el periodo objeto de análisis (dos años atrás).
-- Investigaciones con resultados: se contabilizan, sobre las investigaciones abiertas en el periodo, aquellas en las que se obtuvieron cualquier tipo de resultados (detenidos e identificados sin detener, por ejemplo), independientemente de la fecha de los resultados (hay investigaciones iniciadas en un año sobre las que se obtuvieron resultados en año/s siguientes).
-- Investigaciones sobre grupos organizados: cuando en un momento determinado de la investigación se puede determinar, de forma objetiva, que el grupo investigado cumple los requisitos establecidos por la Unión Europea para considerarlo delincuencia organizada, se cataloga como tal, asignándole un código que permite llevar el registro, control y seguimiento de todas las organizaciones criminales detectadas, investigadas y desarticuladas en el territorio nacional, competencia del CNP.
-- Encartados, empresas, teléfonos intervenidos y detenidos: al igual que lo reseñado en el anterior apartado sobre investigaciones con resultados, los datos que se facilitan son los que constan en las investigaciones iniciadas en cada uno de los periodos, con independencia de la fecha de alta de los mismos. Se contabilizan tanto a las Unidades titulares de las investigaciones como a las colaboradoras.
-
-RESULTADOS. B.P. INFORMACIÓN.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBPINFORMACIONPN', 21);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. B.P. POLICÍA JUDICIAL. Dos años antes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBPPOLICIAJUDICIALPN', 22);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. B.P. POLICÍA JUDICIAL. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBPPOLICIAJUDICIALPN', 23);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. B.P EXTRANJERÍA Y FRONTERAS.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBPEXTRANJERIAPN', 24);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-investigación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZUFAMINVESPN', 25);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-investigación. Se adjuntaran datos de la actividad desarrollada por esta Unidad, separando lo relativo a mujeres y lo relacionado con menores, y respecto a estos, se distinguirán claramente las actuaciones de “reforma” y “protección”.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 26);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-protección. VIOLENCIA DE GÉNERO. Total Órdenes de Protección solicitadas / concedidas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAORDENPROTECPN', 27);                
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-protección. VIOLENCIA DE GÉNERO. Total Órdenes de Protección a fecha la cumplimentación del Cuestionario.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZORDENPROTECPN', 28);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. GRUPO INFORMES.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINFORJUDICIALESPN', 29);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UNIDAD ADSCRITA A LOS TRIBUNALES. Composición, ubicación, detalle de su actividad y detenidos. Remisión de las memorias relativas a los dos años anteriores.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 30);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Territorial/Provincial/Local de Inteligencia. Dos años antes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINTELIGENCIAODACPN', 15);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Territorial/Provincial/Local de Inteligencia. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINTELIGENCIAODACPN', 16);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Investigaciones activas en curso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINVESTIGACINESODACPN', 17);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Aplicación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZAPLICACIONODACPN', 18);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UTI Distrito. Dos años antes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTOTALESUTIPN', 19);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UTI Distrito. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTOTALESUTIPN', 20);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. B.P. POLICÍA JUDICIAL. Dos años antes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBPPOLICIAJUDICIALPN', 21);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. B.P. POLICÍA JUDICIAL. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBPPOLICIAJUDICIALPN', 22);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-investigación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZUFAMINVESPN', 23);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-investigación. Se adjuntaran datos de la actividad desarrollada por esta Unidad, separando lo relativo a mujeres y lo relacionado con menores, y respecto a estos, se distinguirán claramente las actuaciones de “reforma” y “protección”.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 24);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-protección. VIOLENCIA DE GÉNERO. Total Órdenes de Protección solicitadas / concedidas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAORDENPROTECPN', 25);                
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. UFAM-protección. VIOLENCIA DE GÉNERO. Total Órdenes de Protección a fecha la cumplimentación del Cuestionario.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZORDENPROTECPN', 26);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESULTADOS. GRUPO INFORMES.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINFORJUDICIALESPN', 27);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'UNIDAD ADSCRITA A LOS TRIBUNALES. Composición, ubicación, detalle de su actividad y detenidos. Remisión de las memorias relativas a los dos años anteriores.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA: POLICÍA CIENTÍFICA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 26);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Completar la siguiente tabla.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPRINCPCIENTIFICAPN', 0);
