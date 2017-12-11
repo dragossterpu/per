@@ -1149,7 +1149,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombr
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila06', 'MATRIZGDEXACTIVIDADES', 'Informes');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila07', 'MATRIZGDEXACTIVIDADES', 'Dispositivos');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila08', 'MATRIZGDEXACTIVIDADES', 'Prácticas realizadas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila09', 'MATRIZGDEXACTIVIDADES', 'Servicios conjuntos con TEDAX Policía Nacional');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila09', 'MATRIZGDEXACTIVIDADES', 'Servicios/practicas  conjuntos con TEDAX Policía Nacional y con el ET');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila10', 'MATRIZGDEXACTIVIDADES', 'Inspecciones a EBYL’s dependientes (especificar)');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAGEASEMBARCACIONES', 'Clase y matrícula');
@@ -4100,9 +4100,10 @@ insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SE
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Memorias de actividad de los años dos últimos años', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En defecto de lo anterior, adjúntese datos estadísticos en modelos en uso de la especialidad relativos a los dos últimos años. ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividades ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZGDEXACTIVIDADES', 2);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipo de Búsqueda y Localización de Artefactos Explosivos (EBYL): Número de componentes y Unidades a las que pertenecen', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipo de Búsqueda y Localización de Artefactos Explosivos (EBYL): Horario de actividad', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipo de Búsqueda y Localización de Artefactos Explosivos (EBYL): Actividades desarrolladas durante los dos últimos años', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Planes de formación específicos. Implementación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipo de Búsqueda y Localización de Artefactos Explosivos (EBYL): Número de componentes y Unidades a las que pertenecen', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipo de Búsqueda y Localización de Artefactos Explosivos (EBYL): Horario de actividad', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipo de Búsqueda y Localización de Artefactos Explosivos (EBYL): Actividades desarrolladas durante los dos últimos años', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA : GEAS', SEQ_AREASCUESTIONARIOS.NEXTVAL, 31);
 
