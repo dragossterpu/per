@@ -4019,17 +4019,17 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA : INTERVENCIÓN DE ARMAS', SEQ_AREASCUESTIONARIOS.NEXTVAL, 26);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Armas controladas a fecha cumplimentación. Si a la fecha de cumplimentación de este informe existieran actuaciones pendientes de depuración, consígnese separadamente a qué armas afectan', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASCONTROLADAS', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Expedición de licencias de armas penúltimo año
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Expedición/Tramitación de licencias de armas penúltimo año
 (*).- Carabinas y pistolas no asimiladas a escopetas 
 (**).- Autorizaciones especiales para menores 
 (***).- Tarjeta europea', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENCIAS', 1);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Expedición de licencias de armas último año
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Expedición/Tramitación de licencias de armas último año
 (*).- Carabinas y pistolas no asimiladas a escopetas 
 (**).- Autorizaciones especiales para menores 
 (***).- Tarjeta europea', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENCIAS', 2);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Armas penúltimo año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMAS', 3);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Armas último año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMAS', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En relación a las armas depositadas a disposición de autoridades judiciales o administrativas, interesa conocer por bloques temporales aquellas que acumulan periodos dilatados sobre los que bien cabría pensar en la resolución de los procedimientos o expedientes que justifican su depósito o la imposibilidad actual de determinar la autoridad competente de aquellos. (*)Por disposición legal o reglamentaria', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASDEPOSAUTORIDADES', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En relación a las armas depositadas a disposición de autoridades judiciales y/o administrativas, interesa conocer:', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASDEPOSAUTORIDADES', 5);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Guías expedidas penúltimo año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASGUIAS', 6);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Guías expedidas último año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASGUIAS', 7);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Expedientes instruidos penúltimo año', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASEXPEDIENTES', 8);
