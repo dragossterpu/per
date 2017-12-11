@@ -3842,25 +3842,28 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 --Insert area INFORMÁTICA Y TELECOMUNICACIONES
 insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'RECURSOS MATERIALES: INFORMÁTICA Y TELECOMUNICACIONES', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 11);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'El responsable del GATI elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos:
- - SIRDEE: 
- • Grado del despliegue y cobertura. 
- • Personal que lo atiende. Material disponible (terminales y repetidores), estado y % de operatividad de los terminales. 
- • Mantenimiento de equipos (quién lo realiza y grado de conformidad). 
- • Protocolos de actuación con otras FF. y CC. de S., cumplimiento y resultados. 
- • Estadística de averías y sus causas año 2016. Zonas de sombra. 
- • Aspectos a mejorar.
- - Carencia de conexión a Intranet y/o Internet (señálese específicamente respecto de las Unidades territoriales) y líneas de las que se dispone.
- - Problemática con las reparaciones, repuestos de tóner, herramientas, etc. 
- - Detalle de las conexiones con otros Cuerpos policiales.
- - Funcionamiento del 062, 112 y otros (de existir).
-', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamientos informáticos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINFORMATICAADJUD', 1);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamientos informáticos: Motivar en el caso de necesidad de material de nueva adjudicación o reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Dotación actual.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTELECOESTADOGC', 3);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Detallar distribución de los teléfonos móviles.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Incluir los siguientes medios: Fotocopiadoras, Trituradoras de papel, Encuadernadoras y otros (especificar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAOTROSESTADOGC', 5);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Se deberán justificar las necesidades de nueva adjudicación y reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal de Informática y Telecomunicaciones según CPT y Personal Real.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Infraestructuras de Informática y Telecomunicaciones.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal en Informática y Telecomunicaciones: Distribución.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal de Informática y Telecomunicaciones: Formación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal de Informática y Telecomunicaciones: Turnos y horarios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamientos informáticos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINFORMATICAADJUD', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamientos informáticos: Motivar en el caso de necesidad de material de nueva adjudicación o reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Dotación actual.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTELECOESTADOGC', 7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Detallar distribución de los teléfonos móviles.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Incluir los siguientes medios: Fotocopiadoras, Trituradoras de papel, Encuadernadoras y otros (especificar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAOTROSESTADOGC', 9);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'El responsable del GATI elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos:  
+- SIRDEE:    
+	• Grado del despliegue y  cobertura.    
+	• Personal que lo atiende. Material disponible (terminales y repetidores), estado y % de operatividad de los terminales.     
+	• Mantenimiento de equipos (quién lo realiza y grado de conformidad).    
+	• Protocolos de actuación con otras FCS., cumplimiento y resultados.    
+	• Estadística de averías y sus causas año anterior. Zonas de sombra.    
+	• Aspectos a mejorar.  - Carencia de conexión a Intranet y/o Internet (señálese específicamente respecto de las Unidades territoriales) y líneas de las que se dispone.  - Problemática con las reparaciones, repuestos de tóner, herramientas, etc.    
+- Detalle de las conexiones con otros Cuerpos policiales. 
+- Funcionamiento del 062, 112 y otros (de existir).
+', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Se deberán justificar las necesidades de nueva adjudicación y reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
 
 
 commit;
