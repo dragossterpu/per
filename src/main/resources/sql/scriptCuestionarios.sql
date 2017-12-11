@@ -789,6 +789,23 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombr
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila11', 'MATRIZATESTADOSINSTRUIDOS', 'Unidad Adscrita');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila12', 'MATRIZATESTADOSINSTRUIDOS', 'TOTAL UNIDAD');
 
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'MATRIZOPERACIONESSYNVES', 'Penúltimo año: Fecha grabación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'MATRIZOPERACIONESSYNVES', 'Penúltimo año: Nombre Operación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'MATRIZOPERACIONESSYNVES', 'Último año: Fecha grabación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'MATRIZOPERACIONESSYNVES', 'Último año: Nombre Operación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila01', 'MATRIZOPERACIONESSYNVES', 'Equipo Homicidios-Desaparecidos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila02', 'MATRIZOPERACIONESSYNVES', 'Equipo Investig Personas-EMUME');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila03', 'MATRIZOPERACIONESSYNVES', 'E. Patrimonio ');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila04', 'MATRIZOPERACIONESSYNVES', 'EDOA ');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila05', 'MATRIZOPERACIONESSYNVES', 'Delitos Urbanísticos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila06', 'MATRIZOPERACIONESSYNVES', 'TOTAL SECCIÓN INVESTIGACIÓN ');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila07', 'MATRIZOPERACIONESSYNVES', 'Equipo 1 ');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila08', 'MATRIZOPERACIONESSYNVES', 'Equipo 2 ');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila09', 'MATRIZOPERACIONESSYNVES', 'Equipo 3 ');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila10', 'MATRIZOPERACIONESSYNVES', 'TOTAL EQUIPOS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila11', 'MATRIZOPERACIONESSYNVES', 'Unidad Adscrita');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila12', 'MATRIZOPERACIONESSYNVES', 'TOTAL UNIDAD');
+
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'MATRIZDROGASINTERVENIDAS', 'Penúltimo año: Heroína');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'MATRIZDROGASINTERVENIDAS', 'Penúltimo año: Cocaína');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'MATRIZDROGASINTERVENIDAS', 'Penúltimo año: Cannabis');
@@ -3990,12 +4007,13 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Detenidos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDETENIDOSINVESTIGADOS', 3);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Investigados', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDETENIDOSINVESTIGADOS', 4);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Atestados instruidos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZATESTADOSINSTRUIDOS', 5);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Drogas intervenidas (En gramos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDROGASINTERVENIDAS', 6);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Otros efectos intervenidos (*) Valoración económica', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZEFECTOSINTERVENIDOS', 7);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Inspecciones oculares. (*) Se localizaron restos lofoscópicos u otros que pueden servir para identificar autor.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINSPECCIONESOCULARES', 8);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Detenidos reseñados', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDETENIDOSRESENADOS', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Violencia de género: Total de órdenes de protección solicitadas / concedidas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAVIOLENCIAGENERO', 10);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Total Órdenes de Protección a fecha la cumplimentación del Cuestionario', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAORDENESPROTECCION', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Operaciones abiertas en SINVES', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZOPERACIONESSYNVES', 6);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Drogas intervenidas (En gramos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDROGASINTERVENIDAS', 7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Otros efectos intervenidos (*) Valoración económica', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZEFECTOSINTERVENIDOS', 8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Inspecciones oculares. (*) Se localizaron restos lofoscópicos u otros que pueden servir para identificar autor.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINSPECCIONESOCULARES', 9);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Detenidos reseñados', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDETENIDOSRESENADOS', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Violencia de género: Total de órdenes de protección solicitadas / concedidas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAVIOLENCIAGENERO', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Total Órdenes de Protección a fecha la cumplimentación del Cuestionario', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAORDENESPROTECCION', 12);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad Orgánica de Policía Judicial: Estadísticas de juicios rápidos (JRD – Juicio Rápido con Detenidos. JRSD – Juicio Rápido sin Detenidos. JIDL – Juicio Inmediato por Delitos Leves)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAJUICIOSRAPIDOS', 13);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA : INFORMACIÓN', SEQ_AREASCUESTIONARIOS.NEXTVAL, 24);
