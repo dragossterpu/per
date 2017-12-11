@@ -3960,14 +3960,15 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 - Puestos Principales, estructura, carencias que se observan y problemas que concurren en estas Unidades. 
 - Puestos Ordinarios A, B y C. Problemas. Modalidad y horario servicio de Puertas.
 - Núcleos Operativos.
-- Unidades funcionales no recogidas en catálogo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACOMPANIASTERRITORIALES', 0);
+- Unidades fiscales dependientes de las compañías territoriales: PAFIF, Sección-Puesto Fiscal, etc.
+- Unidades funcionales no recogidas en catálogo (EQUIPOS ROCA, USECICO, EICO, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACOMPANIASTERRITORIALES', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Seguridad Ciudadana de Comandancia (USECIC) Comandancia', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZUSEGCIUDADANA', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Seguridad Ciudadana de Compañía (GRUPO DE INTERVENCIÓN RÁPIDA)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZUSEGCIUDADANA', 2);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividad operativa en materia de seguridad ciudadana.
 Aportar informes SIGO-SAEX “hechos por fecha de grabación y unidad actuante (HEC_UA_013), completo, de los dos años anteriores, relativo a las siguientes unidades:
 - Comandancia XXXX.
 - Compañías XXXX.
-- USECIA XXXX.
+- USECIC XXXX.
 - Puestos XXXX.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
 
 insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA : POLICÍA JUDICIAL', SEQ_AREASCUESTIONARIOS.NEXTVAL, 23);
