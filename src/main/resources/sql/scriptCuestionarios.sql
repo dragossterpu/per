@@ -4920,7 +4920,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 
 commit;
 
-insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA', SEQ_AREASCUESTIONARIOS.NEXTVAL, 22);
+insert into Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'ÁREA OPERATIVA. Cada unidad operativa elaborará y remitirá un informe de manera individualizada, incluyendo a sus unidades y grupos subordinados (los coordinadores de servicio realizarán un informe independiente), que contendrá al menos la siguiente información.', SEQ_AREASCUESTIONARIOS.NEXTVAL, 22);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración informe. Estructura de la unidad (incluir organigrama), catálogo (personal destinado y en comisión de servicio) y distribución del personal que la integra.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración informe. Infraestructuras (despachos, almacenes,…). Valoración sobre su adecuación. Necesidades y/o problemáticas asociadas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración informe. Medios materiales. Valoración sobre la adecuación de equipos, materiales, vestuario,…. Necesidades y/o problemáticas asociadas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
