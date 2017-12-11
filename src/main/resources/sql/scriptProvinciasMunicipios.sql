@@ -8187,4 +8187,6 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'Zuera', lpad('50', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'Ceuta', lpad('51', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'Melilla', lpad('52', 2, '0'));
+insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'Luarca', lpad('33', 2, '0'));
+insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'Vecindario', lpad('35', 2, '0'));
 commit;
