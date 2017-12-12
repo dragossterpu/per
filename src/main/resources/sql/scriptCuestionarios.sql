@@ -1741,17 +1741,6 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAARMAMENTOGC', 'Necesidades (Nueva adjud.)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAARMAMENTOGC', 'Necesidades (Reposición.)');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZMUNICIONGC', 'Cantidad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZMUNICIONGC', 'Fecha caducidad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZMUNICIONGC', 'Necesidades');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZMUNICIONGC', '9x19mm Ordinario NATO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZMUNICIONGC', '9x19mm No Toxic');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZMUNICIONGC', '7,62x51 Ordinario NATO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZMUNICIONGC', '5,56x45 Ordinario NATO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZMUNICIONGC', '12/70 Bala');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06', 'MATRIZMUNICIONGC', '12/70 Posta');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07', 'MATRIZMUNICIONGC', '12/70 Perdigón');
-
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZMATANTIDISTGC', 'Buen estado');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZMATANTIDISTGC', 'Regular');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZMATANTIDISTGC', 'Malo');
@@ -2019,9 +2008,9 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZITV', 'Penúltimo año');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZITV', 'Último año');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZITV', 'Vehíc. que la pasaron');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZITV', 'Vehíc. presentados a ITV');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZITV', 'Vehíc. rechazados en 1ª inst.');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZITV', 'Vehíc. que la pasaron en 2ª inst.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZITV', 'por Vehíc. rechazados en 2ª inst.');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZITV', 'Vehíc. baja definitiva');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAVEHICMALESTADO', 'Marca/Modelo');
@@ -3867,7 +3856,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Depósito de armamento: ¿Son adecuadas las condiciones de humedad y temperatura a lo largo de todo el año? En caso negativo, indicar las causas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 12);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Depósito de armamento: ¿Hay disponibles termómetro e higrómetro para tales mediciones?.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 13);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de armas. Especificar armamento (Fusil, Escopeta, Subfusil, Pistolas, Lanzagranadas u otros) y modelo/calibre (CETME 7.62, HK, BERETTA 92 FS, etc.) si procede.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMAMENTOGC', 14);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de munición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZMUNICIONGC', 15);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de munición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZDOTACIONMUNICION', 15);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Chalecos antibalas: Asignados individualmente (indicar externos e internos tanto masculinos como femeninos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 16);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Chalecos antibalas: De uso colectivo (indicar externos e internos tanto masculinos como femeninos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 17);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Chalecos antibalas: Nº de funcionarios pendientes de que se les asignen chalecos individuales, con arreglo a las directrices marcadas por la Superioridad.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 18);
@@ -4861,7 +4850,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal en Informática y Telecomunicaciones: Distribución.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal de Informática y Telecomunicaciones: Formación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal de Informática y Telecomunicaciones: Turnos y horarios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informática: Equipamentos informáticos adjudicados. Especificar unidad/es adjudicación Pc,s e impresoras, se consignará aparte el DNI,e.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINFORMATICAADJUD', 5);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informática: Equipamientos informáticos adjudicados. Especificar unidad/es adjudicación Pc,s e impresoras, se consignará aparte el DNI,e.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINFORMATICAADJUD', 5);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Informática: Motivar en el caso de necesidad de material de nueva adjudicación o reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Dotación actual de medios según estado.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTELECOESTADO', 7);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Dotación actual de medios por servicio. (*) Detallar personal adjudicatario y limitación de saldo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTELECODISTRIB', 8);
