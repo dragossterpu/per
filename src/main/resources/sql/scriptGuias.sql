@@ -1456,14 +1456,12 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL,
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Atención de las averías por las compañías Renting:	' ,	34);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nª de vehículos renting de sustitución:	' ,	35);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Inspección Técnica de Vehículos (ITV): 	' ,	36);
-
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV: 
 Acuerdos para la práctica de ITV: ……… de ………… tiene un acuerdo con el Ministerio de Defensa para la realización de la ITV en instalaciones militares). En cuanto a los vehículos renting son retirados por contrato antes de la fecha finalización del plazo para el paso de la ITV  (4 años)
 Orden del 27 de julio de 1999 de Ministerio de Industria y Energía sobre extintores en vehículos: 
 • 1 extintor de clase 5ª/21B para vehículos de transporte de personas hasta 9 plazas incluido el conductor. 
 • 1 extintor de clase 8ª/34 B para vehículos de transporte de personas de hasta 23 plazas incluido el conductor. 
 • 1 extinto de clase 21 A /113 B para vehículos  de transporte de personas de  más de 23 plazas incluido el conductor.' ,	37);
-
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:
 Seguidamente se procedió a la inspección de forma aleatoria de los siguientes vehículos para comprobar su estado general, su documentación y los equipos que portaban: 
 El vehículo tipo “K”, marca ………….., matrícula oficial ………….. y matrícula civil ………………………, disponía: 
@@ -1479,6 +1477,8 @@ El vehículo tipo “K”, marca ………….., matrícula oficial …………
 • Extintor de incendios:
 • Triángulos: 
 • Rueda de repuesto:
+', 38);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV: 	
 El vehículo tipo “Z”, ………….marca ……………, matrícula oficial
 • Libro de Control de Vehículos y Material de Dotación (identidad, horarios, recorridos y naturaleza genérica de los servicios prestados”:
 • Fotocopia compulsada  u original del Consorcio de Compensación de Seguros en vigor:
@@ -1496,11 +1496,10 @@ El vehículo tipo “Z”, ………….marca ……………, matrícula oficia
 • Manta térmica para accidente:
 • Cintas  policiales delimitadoras:
 • Paleta difusora (STOP)
-• Palanqueta de apertura de puertas (Barra uña)', 38);
-
+• Palanqueta de apertura de puertas (Barra uña)' ,	39);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV: 	
 En cuanto a la media de utilización  de los vehículos para el sistema “Renting” establecida por resulta que en los dos últimos años. 
-En cuanto a la media de utilización  de los vehículos propiedad del DGGC en los dos últimos años: SI' ,	39);
+En cuanto a la media de utilización  de los vehículos propiedad del DGGC en los dos últimos años: SI' ,	40);
 
 
 --GUÍA AUTOMOCIÓN PN 
@@ -1563,7 +1562,8 @@ El vehículo tipo “K”, marca..………….., matrícula oficial ………�
 • Conos linterna 
 • Triángulos: 
 • Lanza destellos
-• Rueda de repuesto:
+• Rueda de repuesto.',	36);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:
 El vehículo tipo “Z”, ………….marca ……………, matrícula oficial
 • Libro de Control de Vehículos y Material de Dotación (identidad, horarios, recorridos y naturaleza genérica de los servicios prestados” (Los Libros de control de vehículos y material de dotación, para vehículos Z, con número de imprenta A-079, deberán ser custodiados en las plantillas de destino del vehículo por un periodo no inferir a 12 meses, quedando los mismos a disposición del Área para las auditorias que se realizarán de forma aleatoria)
 • Fotocopia compulsada  u original del Consorcio de Compensación de Seguros en vigor:
@@ -1585,10 +1585,10 @@ El vehículo tipo “Z”, ………….marca ……………, matrícula oficia
 • Paleta difusora (STOP)
 • Palanqueta de apertura de puertas (Barra uña)  
 • Armero 2 llaves
-• Martillo',	36);
+• Martillo.' ,	37);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:
 En cuanto a la media de utilización  de los vehículos para el sistema “Renting” establecida por resulta que en los dos últimos años (la mayoría son  de asignación en fecha 01-10-xxxx y tan sólo se nos facilitó datos de kilometraje de un número limitado de los anteriores a esta fecha): 
-En cuanto a la media de utilización  de los vehículos propiedad de PN en los dos últimos años.' ,	37);
+En cuanto a la media de utilización  de los vehículos propiedad de PN en los dos últimos años.' ,	38);
 
 
 --GUIA DE INFORMÁTICA Y TELECOMUNICACIONES PN
