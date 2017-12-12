@@ -270,7 +270,6 @@ public class ProvisionalSolicitudBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
-     * @throws ProgesinException lanzada
      */
     @Test
     public final void testGestionarCargaDocumentoNoEsDocumentacion() {

@@ -101,7 +101,8 @@ public class InformeBeanExportacionTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.informes.InformeBean#exportarInforme(java.lang.String)}.
+     * Test method for
+     * {@link es.mira.progesin.web.beans.informes.InformeBean#exportarInforme(java.lang.String, java.lang.String)}.
      * @throws ProgesinException error
      */
     @Test
@@ -160,7 +161,8 @@ public class InformeBeanExportacionTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.informes.InformeBean#exportarInforme(java.lang.String)}.
+     * Test method for
+     * {@link es.mira.progesin.web.beans.informes.InformeBean#exportarInforme(java.lang.String, java.lang.String)}.
      * @throws ProgesinException error
      */
     @Test
