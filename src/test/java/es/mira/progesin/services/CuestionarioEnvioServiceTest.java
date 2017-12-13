@@ -36,6 +36,7 @@ import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
@@ -198,6 +199,9 @@ public class CuestionarioEnvioServiceTest {
         municipio.setName(PROVINCIA);
         municipio.setProvincia(provincia);
         inspeccion.setMunicipio(municipio);
+        TipoInspeccion tipoInspeccion=new TipoInspeccion();
+        tipoInspeccion.setCodigo("tipo");
+        inspeccion.setTipoInspeccion(tipoInspeccion);
         CuestionarioEnvio cuestionarioEnviado = CuestionarioEnvio.builder().id(1L)
                 .cuestionarioPersonalizado(cuestionarioPersonalizado).inspeccion(inspeccion).correoEnvio("correo")
                 .motivoCuestionario("motivo").build();
