@@ -152,8 +152,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 listadoUsuariosProvisionales.get(0));
         areaUsuarioCuestEnvRepository.save(areasUsuarioCuestEnv);
         
-        String asunto = "Envío de cuestionario " + cuestionarioEnvio.getInspeccion().getTipoUnidad().getDescripcion()
-                + " de " + cuestionarioEnvio.getInspeccion().getNombreUnidad() + " ("
+        String asunto = "Cuestionario Inspección " + cuestionarioEnvio.getInspeccion().getTipoInspeccion() + " a "
+                + cuestionarioEnvio.getInspeccion().getTipoUnidad() + " de "
+                + cuestionarioEnvio.getInspeccion().getNombreUnidad() + " ("
                 + cuestionarioEnvio.getInspeccion().getMunicipio().getProvincia().getNombre()
                 + "). Número de expediente " + cuestionarioEnvio.getInspeccion().getNumero() + ".";
         
