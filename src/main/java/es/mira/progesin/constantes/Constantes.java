@@ -9,11 +9,6 @@ package es.mira.progesin.constantes;
 public final class Constantes {
     
     /**
-     * Email para el envío de correo a IPSS.
-     */
-    public static final String EMAILIPSS = "ipss_progesin@interior.es";
-    
-    /**
      * Tipo de respuesta MATRIZ para los cuestionarios.
      */
     public static final String TIPORESPUESTAMATRIZ = "MATRIZ";
