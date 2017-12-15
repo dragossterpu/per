@@ -1419,49 +1419,49 @@ commit;
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUÍA AUTOMOCIÓN GC', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'El Destacamento de Material Móvil tiene la siguiente estructura.' ,	0);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación del Destacamento de Material Móvil (Delegación de Automoción) (Taller-Zona, Comandancia, Compañía ) está ubicado en ………………..presenta el siguiente personal cubierto:	' ,	1);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de puestos de trabajo aparecen:	' ,	2);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Puestos cubiertos:	' ,	3);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Auxiliados en el taller:	' ,	4);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actividad desarrollada por la  Delegación es la encargada de la administración general de los vehículos oficiales (labores burocráticas)	' ,	5);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Programa preventivo de mantenimiento y mantenimientos realizados:	' ,	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Reparaciones de los vehículos propiedad de GC que se realizan:	' ,	7);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como se ejerce el control de las reparaciones de los vehículos de la GC. Cuando un vehículo oficial del GC se accidenta se lleva a los talleres y, tras la confección del parte de accidentes y su grabación en ALFIL, se repara.	' ,	8);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Otras reparaciones donde se hacen:	' ,	9);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Compra de recambios de material	' ,	10);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de trabajo: análisis del rendimiento y evaluación del desempeño	' ,	11);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: Adecuación del dimensionado de la Unidad a la Actividad desarrollada.	' ,	12);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Limpieza de los vehículos	' ,	13);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Encontrándose  en la misma depositadas la documentación original de los vehículos oficiales para evitar pérdidas, en concreto, de  los seguros de los vehículos con el Consorcio de Compensación de Seguros, las Libretas de Documentación y Datos con las Tarjetas de Inspección  Técnicas y los  Permisos de Circulación y los informes favorables de ITV.	' ,	14);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'De los …. guardias……. son especialistas en automoción con un curso de grabación y gestión como peritos tasadores en ALFIL, ………. especialistas en formación vial, tramitación de carnets de conducir, accidentes y control de los vehículos “renting” y el resto son personal de apoyo. De los especialistas en automoción, ……….. son mecánicos de coches, ……. mecánico de  motos y ………. electricista.	' ,	15);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cursos de actualización o formación de camión, motos, todoterrenos, microbuses  y furgonetas SEDEX.	' ,	16);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Necesidades de especialización: Despacho: el Jefe de la Delegación, …….. para la Secretaría General y Nave para taller, Almacén de repuestos.	' ,	17);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Grúa: Problemática	' ,	18);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto al material informático con los que dispone la Delegación está compuesto por …. ordenadores……….., impresoras, ordenadores con una impresoras en talleres y en……………	' ,	19);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto a los créditos presupuestarios de la Delegación, en los dos últimos años. Gastos de reparaciones y repuestos los dos últimos años (suministro de maquinaria, útiles de transporte) (casos de existir resúmenes mensuales)	' ,	20);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Control y liquidación de carburante y lubricante (vemos los kilómetros recorridos de todo el parque incluidas las motos)	' ,	21);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Control de la limitación de 2.000 kilómetros mensuales para todos los vehículos de servicio de nueva adquisición, durante sus dos primeros años contados a partir de su matriculación.	' ,	22);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Gastos de reparaciones y repuestos en especial los que están en mal estado.	' ,	23);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Durante los dos últimos años la Delegación ha realizado resúmenes del control mensual del gasto tanto para las reparaciones, los cambios de neumáticos, baterías y repuestos de los vehículos oficiales.	' ,	24);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La Delegación dispone de una relación de los movimientos de los vehículos policiales efectuados en los Talleres de la misma, con indicación de la entrada,  el motivo, la salida y pendientes de reparación.	' ,	25);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Programa preventivo de mantenimiento reflejado en la aplicación ALFIL (aceite, filtros, correa de distribución y neumáticos) :	' ,	26);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Tratamiento de los residuos.' ,	27);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ratio de efectivos destinados por vehículo adjudicado.	' ,	28);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Quien establece el estado B R M de los vehículos. Documento de Pauta sobre el estado de los vehículos (escritos)	' ,	29);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Accidentes:	' ,	30);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Analizando los accidentes de los vehículos por culpa propia, con contrario y sin contrario en los dos últimos años, tenemos que:' ,	31);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Medidas adoptadas respecto a los accidentes por culpa propia:	' ,	32);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Vehículos en mal estado, causas y gasto acumulado en ALFIL, pasan la ITV	' ,	33);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Atención de las averías por las compañías Renting:	' ,	34);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nª de vehículos renting de sustitución:	' ,	35);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Inspección Técnica de Vehículos (ITV): 	' ,	36);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'El Destacamento de Material Móvil tiene la siguiente estructura.', 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación del Destacamento de Material Móvil (Delegación de Automoción) (Taller-Zona, Comandancia, Compañía ) está ubicado en ………………..presenta el siguiente personal cubierto: ' , 1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de puestos de trabajo aparecen:', 2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Puestos cubiertos:', 3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Auxiliados en el taller:', 4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actividad desarrollada por la  Delegación es la encargada de la administración general de los vehículos oficiales (labores burocráticas)', 5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Programa preventivo de mantenimiento y mantenimientos realizados:', 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Reparaciones de los vehículos propiedad de GC que se realizan:', 7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como se ejerce el control de las reparaciones de los vehículos de la GC. Cuando un vehículo oficial del GC se accidenta se lleva a los talleres y, tras la confección del parte de accidentes y su grabación en ALFIL, se repara. ' , 8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Otras reparaciones donde se hacen:', 9);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Compra de recambios de material', 10);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de trabajo: análisis del rendimiento y evaluación del desempeño', 11);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: Adecuación del dimensionado de la Unidad a la Actividad desarrollada.', 12);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Limpieza de los vehículos', 13);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Encontrándose  en la misma depositadas la documentación original de los vehículos oficiales para evitar pérdidas, en concreto, de  los seguros de los vehículos con el Consorcio de Compensación de Seguros, las Libretas de Documentación y Datos con las Tarjetas de Inspección  Técnicas y los  Permisos de Circulación y los informes favorables de ITV. ' , 14);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'De los …. guardias……. son especialistas en automoción con un curso de grabación y gestión como peritos tasadores en ALFIL, ………. especialistas en formación vial, tramitación de carnets de conducir, accidentes y control de los vehículos “renting” y el resto son personal de apoyo. De los especialistas en automoción, ……….. son mecánicos de coches, ……. mecánico de  motos y ………. electricista. ' , 15);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cursos de actualización o formación de camión, motos, todoterrenos, microbuses  y furgonetas SEDEX.' , 16);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Necesidades de especialización: Despacho: el Jefe de la Delegación, …….. para la Secretaría General y Nave para taller, Almacén de repuestos. ' , 17);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Grúa: Problemática ' , 18);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto al material informático con los que dispone la Delegación está compuesto por …. ordenadores……….., impresoras, ordenadores con una impresoras en talleres y en…………… ' , 19);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto a los créditos presupuestarios de la Delegación, en los dos últimos años. Gastos de reparaciones y repuestos los dos últimos años (suministro de maquinaria, útiles de transporte) (casos de existir resúmenes mensuales) ' , 20);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Control y liquidación de carburante y lubricante (vemos los kilómetros recorridos de todo el parque incluidas las motos) ' , 21);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Control de la limitación de 2.000 kilómetros mensuales para todos los vehículos de servicio de nueva adquisición, durante sus dos primeros años contados a partir de su matriculación. ' , 22);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Gastos de reparaciones y repuestos en especial los que están en mal estado. ' , 23);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Durante los dos últimos años la Delegación ha realizado resúmenes del control mensual del gasto tanto para las reparaciones, los cambios de neumáticos, baterías y repuestos de los vehículos oficiales. ' , 24);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La Delegación dispone de una relación de los movimientos de los vehículos policiales efectuados en los Talleres de la misma, con indicación de la entrada,  el motivo, la salida y pendientes de reparación. ' , 25);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Programa preventivo de mantenimiento reflejado en la aplicación ALFIL (aceite, filtros, correa de distribución y neumáticos) : ' , 26);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Tratamiento de los residuos.' , 27);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ratio de efectivos destinados por vehículo adjudicado. ' , 28);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Quien establece el estado B R M de los vehículos. Documento de Pauta sobre el estado de los vehículos (escritos) ' , 29);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Accidentes: ' , 30);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Analizando los accidentes de los vehículos por culpa propia, con contrario y sin contrario en los dos últimos años, tenemos que:' , 31);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Medidas adoptadas respecto a los accidentes por culpa propia: ' , 32);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Vehículos en mal estado, causas y gasto acumulado en ALFIL, pasan la ITV ' , 33);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Atención de las averías por las compañías Renting: ' , 34);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nª de vehículos renting de sustitución: ' , 35);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Inspección Técnica de Vehículos (ITV):  ' , 36);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV: 
 Acuerdos para la práctica de ITV: ……… de ………… tiene un acuerdo con el Ministerio de Defensa para la realización de la ITV en instalaciones militares). En cuanto a los vehículos renting son retirados por contrato antes de la fecha finalización del plazo para el paso de la ITV  (4 años)
 Orden del 27 de julio de 1999 de Ministerio de Industria y Energía sobre extintores en vehículos: 
 • 1 extintor de clase 5ª/21B para vehículos de transporte de personas hasta 9 plazas incluido el conductor. 
 • 1 extintor de clase 8ª/34 B para vehículos de transporte de personas de hasta 23 plazas incluido el conductor. 
-• 1 extinto de clase 21 A /113 B para vehículos  de transporte de personas de  más de 23 plazas incluido el conductor.' ,	37);
+• 1 extinto de clase 21 A /113 B para vehículos  de transporte de personas de  más de 23 plazas incluido el conductor.' , 37);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:
 Seguidamente se procedió a la inspección de forma aleatoria de los siguientes vehículos para comprobar su estado general, su documentación y los equipos que portaban: 
 El vehículo tipo “K”, marca ………….., matrícula oficial ………….. y matrícula civil ………………………, disponía: 
@@ -1478,7 +1478,7 @@ El vehículo tipo “K”, marca ………….., matrícula oficial …………
 • Triángulos: 
 • Rueda de repuesto:
 ', 38);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV: 	
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:  
 El vehículo tipo “Z”, ………….marca ……………, matrícula oficial
 • Libro de Control de Vehículos y Material de Dotación (identidad, horarios, recorridos y naturaleza genérica de los servicios prestados”:
 • Fotocopia compulsada  u original del Consorcio de Compensación de Seguros en vigor:
@@ -1496,57 +1496,57 @@ El vehículo tipo “Z”, ………….marca ……………, matrícula oficia
 • Manta térmica para accidente:
 • Cintas  policiales delimitadoras:
 • Paleta difusora (STOP)
-• Palanqueta de apertura de puertas (Barra uña)' ,	39);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV: 	
+• Palanqueta de apertura de puertas (Barra uña)' , 39);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:  
 En cuanto a la media de utilización  de los vehículos para el sistema “Renting” establecida por resulta que en los dos últimos años. 
-En cuanto a la media de utilización  de los vehículos propiedad del DGGC en los dos últimos años: SI' ,	40);
+En cuanto a la media de utilización  de los vehículos propiedad del DGGC en los dos últimos años: SI' , 40);
 
 
 --GUÍA AUTOMOCIÓN PN 
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUÍA AUTOMOCIÓN PN', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Estructura	' ,	0);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación La Delegación de Automoción de ………. está ubicada en…. 	' ,	1);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de puestos de trabajo aparecen:	' ,	2);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Puestos cubiertos:	' ,	3);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Auxiliados en el taller:	' ,	4);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actividad desarrollada: la  Delegación es la encargada de la administración  general de los vehículos oficiales (labores burocráticas) 	' ,	5);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Reparaciones de los vehículos propiedad de PN que se realizan:	' ,	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como se ejerce el control de las reparaciones de los vehículos de la PN: partes de trabajo que se abren a la entrada del vehículo en talleres y se cierran cuando sale. Comprobación de varios partes de reparación y que hayan quedado reflejados en la aplicación ASIA.	' ,	7);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cuando un vehículo oficial de PN se accidenta se lleva a los talleres y, tras la confección del parte de accidentes y su grabación en ASIA, se repara.	' ,	8);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La Delegación dispone de una relación de los movimientos de los vehículos policiales efectuados en los Talleres de la misma, con indicación de la entrada,  el motivo, la salida y pendientes de reparación.	' ,	9);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Otras reparaciones donde se hacen:	' ,	10);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Programa preventivo de mantenimiento reflejado en la aplicación ASIA (aceite, filtros, correa de distribución y neumáticos). Mantenimientos.	' ,	11);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: Adecuación del dimensionado de la Unidad a la Actividad desarrollada.	' ,	12);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Limpieza de los vehículos	' ,	13);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Encontrándose  en la misma depositadas la documentación original de los vehículos oficiales para evitar pérdidas, en concreto, de  los Certificados y Recibos de Seguros de los vehículos con el Consorcio de Compensación de Seguros, las Libretas de Documentación y Datos con las Tarjetas de Inspección Técnicas,  los  Permisos de Circulación y los documentos de ITV (Informe de Inspección Técnica  de Vehículos.	' ,	14);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Policías especialistas en automoción con un curso de grabación y gestión como peritos tasadores en ASIA, ………. especialistas en formación vial, tramitación de carnets de conducir, accidentes y control de los vehículos “renting” y el resto son personal de apoyo. De los especialistas en automoción, ……….. son mecánicos de coches, ……. mecánico de  motos y ………. electricista.	' ,	15);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cursos de actualización o formación de camión, motos, todoterrenos, microbuses  y furgonetas SEDEX/TEDAX.	' ,	16);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Necesidades de especialización: Despacho: el Jefe de la Delegación, …….. para la Secretaría General y Nave para taller, almacén de repuestos.	' ,	17);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Grúa (propia utilizada cuando o contratos): Problemática	' ,	18);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto al material informático con los que dispone la Delegación está compuesto por…. ordenadores……….., impresoras, ordenadores con una impresoras en talleres y en……………	' ,	19);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto a los créditos presupuestarios de la Delegación, en los dos últimos años.  Gastos de reparaciones y repuestos de los dos últimos años (suministro de maquinaria, útiles de transporte) (casos de existir resúmenes mensuales). Compra de recambios de material:	' ,	20);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ver gastos de reparaciones y repuestos en especial de los vehículos que están en mal estado.	' ,	21);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Durante los dos últimos años la Delegación ha realizado resúmenes del control mensual del gasto tanto para las reparaciones, los cambios de neumáticos, baterías y repuestos de los vehículos oficiales. 	' ,	22);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Control y liquidación de carburante y lubricante (vemos los kilómetros recorridos de todo el parque incluidas las motos)	' ,	23);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Tratamiento de los residuos.	' ,	24);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Quien establece el estado B R M de los vehículos: (escritos)	' ,	25);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Vehículos en mal estado, causas y gasto acumulado en ASIA, pasan la ITV	' ,	26);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ratio de efectivos destinados por vehículo adjudicado.	' ,	27);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Accidentes en general:	' ,	28);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Analizando los accidentes de los vehículos por culpa propia, con contrario y sin contrario en los dos últimos años, tenemos que:	' ,	29);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Medidas adoptadas respecto a los accidentes por culpa propia:	' ,	30);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Atención de las averías por las compañías Renting:	' ,	31);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nª de vehículos renting de sustitución:	' ,	32);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Vehículos K de renting : kilometraje, utilización.	' ,	33);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Inspección Técnica de Vehículos (ITV):	' ,	34);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:	
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Estructura ' , 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación La Delegación de Automoción de ………. está ubicada en….  ' , 1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de puestos de trabajo aparecen: ' , 2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Puestos cubiertos: ' , 3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Auxiliados en el taller: ' , 4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actividad desarrollada: la  Delegación es la encargada de la administración  general de los vehículos oficiales (labores burocráticas)  ' , 5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Reparaciones de los vehículos propiedad de PN que se realizan: ' , 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como se ejerce el control de las reparaciones de los vehículos de la PN: partes de trabajo que se abren a la entrada del vehículo en talleres y se cierran cuando sale. Comprobación de varios partes de reparación y que hayan quedado reflejados en la aplicación ASIA. ' , 7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cuando un vehículo oficial de PN se accidenta se lleva a los talleres y, tras la confección del parte de accidentes y su grabación en ASIA, se repara. ' , 8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La Delegación dispone de una relación de los movimientos de los vehículos policiales efectuados en los Talleres de la misma, con indicación de la entrada,  el motivo, la salida y pendientes de reparación. ' , 9);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Otras reparaciones donde se hacen: ' , 10);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Programa preventivo de mantenimiento reflejado en la aplicación ASIA (aceite, filtros, correa de distribución y neumáticos). Mantenimientos. ' , 11);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: Adecuación del dimensionado de la Unidad a la Actividad desarrollada. ' , 12);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Limpieza de los vehículos ' , 13);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Encontrándose  en la misma depositadas la documentación original de los vehículos oficiales para evitar pérdidas, en concreto, de  los Certificados y Recibos de Seguros de los vehículos con el Consorcio de Compensación de Seguros, las Libretas de Documentación y Datos con las Tarjetas de Inspección Técnicas,  los  Permisos de Circulación y los documentos de ITV (Informe de Inspección Técnica  de Vehículos. ' , 14);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Policías especialistas en automoción con un curso de grabación y gestión como peritos tasadores en ASIA, ………. especialistas en formación vial, tramitación de carnets de conducir, accidentes y control de los vehículos “renting” y el resto son personal de apoyo. De los especialistas en automoción, ……….. son mecánicos de coches, ……. mecánico de  motos y ………. electricista. ' , 15);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cursos de actualización o formación de camión, motos, todoterrenos, microbuses  y furgonetas SEDEX/TEDAX. ' , 16);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Necesidades de especialización: Despacho: el Jefe de la Delegación, …….. para la Secretaría General y Nave para taller, almacén de repuestos. ' , 17);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Grúa (propia utilizada cuando o contratos): Problemática ' , 18);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto al material informático con los que dispone la Delegación está compuesto por…. ordenadores……….., impresoras, ordenadores con una impresoras en talleres y en…………… ' , 19);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'En cuanto a los créditos presupuestarios de la Delegación, en los dos últimos años.  Gastos de reparaciones y repuestos de los dos últimos años (suministro de maquinaria, útiles de transporte) (casos de existir resúmenes mensuales). Compra de recambios de material: ' , 20);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ver gastos de reparaciones y repuestos en especial de los vehículos que están en mal estado. ' , 21);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Durante los dos últimos años la Delegación ha realizado resúmenes del control mensual del gasto tanto para las reparaciones, los cambios de neumáticos, baterías y repuestos de los vehículos oficiales.  ' , 22);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Control y liquidación de carburante y lubricante (vemos los kilómetros recorridos de todo el parque incluidas las motos) ' , 23);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Tratamiento de los residuos. ' , 24);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Quien establece el estado B R M de los vehículos: (escritos) ' , 25);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Vehículos en mal estado, causas y gasto acumulado en ASIA, pasan la ITV ' , 26);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ratio de efectivos destinados por vehículo adjudicado. ' , 27);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Accidentes en general: ' , 28);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Analizando los accidentes de los vehículos por culpa propia, con contrario y sin contrario en los dos últimos años, tenemos que: ' , 29);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Medidas adoptadas respecto a los accidentes por culpa propia: ' , 30);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Atención de las averías por las compañías Renting: ' , 31);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nª de vehículos renting de sustitución: ' , 32);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Vehículos K de renting : kilometraje, utilización. ' , 33);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Inspección Técnica de Vehículos (ITV): ' , 34);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV: 
 Acuerdos para la práctica de ITV: ……………………la tiene un acuerdo con el Ministerio de Defensa para la realización de la ITV en instalaciones militares). En cuanto a los vehículos renting son retirados por contrato antes de la fecha finalización del plazo para el paso de la ITV  (4 años)
 Orden del 27 de julio de 1999 de Ministerio de Industria y Energía sobre extintores en vehículos: 
 • 1 extintor de clase 5ª/21B para vehículos de transporte de personas hasta 9 plazas incluido el conductor. 
 • 1 extintor de clase 8ª/34 B para vehículos de transporte de personas de hasta 23 plazas incluido el conductor. 
-• 1 extinto de clase 21 A /113 B para vehículos  de transporte de personas de  más de 23 plazas incluido el conductor.' ,	35);
+• 1 extinto de clase 21 A /113 B para vehículos  de transporte de personas de  más de 23 plazas incluido el conductor.' , 35);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:
 Seguidamente se procedió a la inspección de forma aleatoria de los siguientes vehículos para comprobar su estado general, su documentación y los equipos que portaban: 
 El vehículo tipo “K”, marca..………….., matrícula oficial ………….. y matrícula civil ………………………, disponía: 
@@ -1562,7 +1562,7 @@ El vehículo tipo “K”, marca..………….., matrícula oficial ………�
 • Conos linterna 
 • Triángulos: 
 • Lanza destellos
-• Rueda de repuesto.',	36);
+• Rueda de repuesto.', 36);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:
 El vehículo tipo “Z”, ………….marca ……………, matrícula oficial
 • Libro de Control de Vehículos y Material de Dotación (identidad, horarios, recorridos y naturaleza genérica de los servicios prestados” (Los Libros de control de vehículos y material de dotación, para vehículos Z, con número de imprenta A-079, deberán ser custodiados en las plantillas de destino del vehículo por un periodo no inferir a 12 meses, quedando los mismos a disposición del Área para las auditorias que se realizarán de forma aleatoria)
@@ -1585,29 +1585,29 @@ El vehículo tipo “Z”, ………….marca ……………, matrícula oficia
 • Paleta difusora (STOP)
 • Palanqueta de apertura de puertas (Barra uña)  
 • Armero 2 llaves
-• Martillo.' ,	37);
+• Martillo.' , 37);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Acuerdos para pasar la ITV:
 En cuanto a la media de utilización  de los vehículos para el sistema “Renting” establecida por resulta que en los dos últimos años (la mayoría son  de asignación en fecha 01-10-xxxx y tan sólo se nos facilitó datos de kilometraje de un número limitado de los anteriores a esta fecha): 
-En cuanto a la media de utilización  de los vehículos propiedad de PN en los dos últimos años.' ,	38);
+En cuanto a la media de utilización  de los vehículos propiedad de PN en los dos últimos años.' , 38);
 
 
 --GUIA DE INFORMÁTICA Y TELECOMUNICACIONES PN
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUIA DE INFORMÁTICA Y TELECOMUNICACIONES PN', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INFORMÁTICA	',	0);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de Puestos de Trabajo, personal real y distribución de personal. (El CPT prevé 1 Delegado de Informática de la escala ejecutiva)	',	1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INFORMÁTICA ', 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de Puestos de Trabajo, personal real y distribución de personal. (El CPT prevé 1 Delegado de Informática de la escala ejecutiva) ', 1);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Turnos y horarios de servicio: 
-Desplazamientos a otras platillas',	2);
+Desplazamientos a otras platillas', 2);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: 
 Control de las actividades diarias a través de partes de trabajo. 
 Grabación estadística de hechos policiales, vehículos…
 Reparaciones de equipos, tiempos de respuesta y grado de satisfacción. 
-Adecuación del dimensionado de la Unidad a la actividad desarrollada.',	3);
+Adecuación del dimensionado de la Unidad a la actividad desarrollada.', 3);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Adecuación de Equipos y Material: 
 La Delegación de informática disponen: ……. de ordenadores ,……. Impresoras.
 Fecha de adquisición y de instalación de los ordenadores.
-¿Existen ordenadores almacenados y no instalados? ¿Se adoptan medias para que no se pierda las garantías?',	4);
+¿Existen ordenadores almacenados y no instalados? ¿Se adoptan medias para que no se pierda las garantías?', 4);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Estado del equipamiento informático y número de equipos sustituidos en el año anterior. 
 Licencias, ¿Están utilizando licencias piratas? ¿Licencia Libre Office?.
 Control del gasto de las impresoras y reposición de tóner.
@@ -1615,31 +1615,31 @@ Ratio entre el personal destinado y el número de ordenadores (El Escorial: 1 Pc
 Número de impresoras y ratio por persona (1 impresas de red  x 4,5 PC,s).
 Número de accesos a Internet.
 Cuentas e-mail: por personales, por grupos.
-Período de garantía de los ordenadores e impresoras.',	5);
+Período de garantía de los ordenadores e impresoras.', 5);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cualificación profesional alcanzada: 
 Formación del personal
 Cursos de formación en informática y telecomunicaciones  (TIC)
 Cursos realizados en los 3 últimos años
-Accesos a las bases policiales tanto del personal como del Delegado de la Plantilla (SIDENPOL, SEIGESPOL, ARGOS, ADEXTRA, OBJETOS, etc',	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas:	',	7);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'TELECOMUNICACIONES	',	8);
+Accesos a las bases policiales tanto del personal como del Delegado de la Plantilla (SIDENPOL, SEIGESPOL, ARGOS, ADEXTRA, OBJETOS, etc', 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas: ', 7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'TELECOMUNICACIONES ', 8);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'El CPT contempla………… puestos de especialistas de la escala básica
-En la actualidad personal cubierto.',	9);
+En la actualidad personal cubierto.', 9);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Turnos y horarios de servicio: 
 Horario de prestación del servicio
 Desplazamientos a otras platillas
-Cómo se atienden las incidencias, urgencias, fines de semana (¿se compensa de alguna manera?',	10);
+Cómo se atienden las incidencias, urgencias, fines de semana (¿se compensa de alguna manera?', 10);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cualificación profesional alcanzada:
 Cursos de formación en Telecomunicaciones e Informática (TIC).
 Conocimiento del manejo de los terminales SIRDEE por los usuarios.
-Acceso a Internet ¿quién accede y como se autoriza?',	11);
+Acceso a Internet ¿quién accede y como se autoriza?', 11);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: 
 Actividades, mantenimiento, reparaciones 
 Programación de los terminales SIRDEE.
 Asistencia a las video-conferencias en los 2 últimos años. 
 Visionados de las CCTV (nocturno).
 Se da cobertura a las comisarías provinciales, locales………
-Accesos a las bases policiales del personal (SIDENPOL, SIGESPOL, ARGOS, ADEXTRA, OBJETOS, etc), ¿Se ejerce algún control del acceso por parte de este personal?',	12);
+Accesos a las bases policiales del personal (SIDENPOL, SIGESPOL, ARGOS, ADEXTRA, OBJETOS, etc), ¿Se ejerce algún control del acceso por parte de este personal?', 12);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'"Adecuación de Equipos y Material: 
 Número de equipos SIRDEE: 
 Grado de cobertura SIRDEE ¿zonas de sombra? 
@@ -1647,81 +1647,81 @@ Número de emisoras base:
 Número de emisoras  móviles en vehículos.
 Número de teléfonos móviles.
 Solicitudes  de cámaras al Área de Telecomunicaciones de la Subdirección General de Logística (sustitución de las cámaras fijas por móviles).
-Recepción de cámaras en los dos últimos años.',	13);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas:',	14);
+Recepción de cámaras en los dos últimos años.', 13);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas:', 14);
 
 
 --GUÍA VESTUARIO GC
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUÍA VESTUARIO GC', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación y características de la dependencia.' ,	0);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Personal que la atiende. Suficiencia o no. Causas.' ,	1);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Horario:' ,	2);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Gestión y control (), cada funcionario  graba las solicitudes a través del  programa ALFIL,  el personal de Vestuario realiza sólo el control y recepción de lotes los cuales se adjudican individualmente sin existir stock.' ,	3);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Normativa reguladora en las peticiones y detalle de cómo y a quién se efectúan.' ,	4);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo específico sobre uniformidad para especialidades.' ,	5);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar retrasos en la reposición de prendas y calzado en las diferentes especialidades con expresión de la fecha de petición (en los dos últimos años), divisas…' ,	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Sección de Motos : Comprobar la dotación que se asigna a este personal y si se le facilitan protecciones para hombros, codos, rodilleras con sistema anti-abrasión, chalecos reflectantes.' ,	7);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Detalle de la distribución y entrega de prendas.' ,	8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación y características de la dependencia.' , 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Personal que la atiende. Suficiencia o no. Causas.' , 1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Horario:' , 2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Gestión y control (), cada funcionario  graba las solicitudes a través del  programa ALFIL,  el personal de Vestuario realiza sólo el control y recepción de lotes los cuales se adjudican individualmente sin existir stock.' , 3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Normativa reguladora en las peticiones y detalle de cómo y a quién se efectúan.' , 4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo específico sobre uniformidad para especialidades.' , 5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar retrasos en la reposición de prendas y calzado en las diferentes especialidades con expresión de la fecha de petición (en los dos últimos años), divisas…' , 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Sección de Motos : Comprobar la dotación que se asigna a este personal y si se le facilitan protecciones para hombros, codos, rodilleras con sistema anti-abrasión, chalecos reflectantes.' , 7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Detalle de la distribución y entrega de prendas.' , 8);
 
 --GUÍA VESTUARIO PN
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUÍA VESTUARIO PN', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación y características de la dependencia.' ,	0);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Personal que la atiende. Suficiencia o no. Causas.' ,	1);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Horario:' ,	2);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Gestión y control (bases de datos), el personal de vestuario graba las solicitudes a través de formularios normalizados en una aplicación centralizada proporcionada por el Servicio Central de Vestuario de la División Económica y Técnica.' ,	3);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo específico sobre uniformidad para especialidades. Normativa reguladora en las peticiones y detalle de cómo y a quién se efectúan.' ,	4);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar retrasos en la reposición de prendas y calzado en las diferentes especialidades (BPSC) con expresión de la fecha de petición (en los dos últimos años), divisas…' ,	5);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Sección de Motos (BPSC): Comprobar la dotación que se asigna a este personal y si se le facilitan protecciones para hombros, codos, rodilleras con sistema anti-abrasión, chalecos reflectantes.' ,	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Sección de Subsuelo (BPSC): ¿Está dotada de monos desechables para la labor diaria y botas de seguridad?, ¿se han pedido?' ,	7);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'¿Quién facilita los monos de trabajo ignífugos?, ¿se han pedido?, ¿a quién?, ¿cuándo?' ,	8);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Detalle de la distribución y entrega de prendas.' ,	9);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ubicación y características de la dependencia.' , 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Personal que la atiende. Suficiencia o no. Causas.' , 1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Horario:' , 2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Gestión y control (bases de datos), el personal de vestuario graba las solicitudes a través de formularios normalizados en una aplicación centralizada proporcionada por el Servicio Central de Vestuario de la División Económica y Técnica.' , 3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo específico sobre uniformidad para especialidades. Normativa reguladora en las peticiones y detalle de cómo y a quién se efectúan.' , 4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Verificar retrasos en la reposición de prendas y calzado en las diferentes especialidades (BPSC) con expresión de la fecha de petición (en los dos últimos años), divisas…' , 5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Sección de Motos (BPSC): Comprobar la dotación que se asigna a este personal y si se le facilitan protecciones para hombros, codos, rodilleras con sistema anti-abrasión, chalecos reflectantes.' , 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Sección de Subsuelo (BPSC): ¿Está dotada de monos desechables para la labor diaria y botas de seguridad?, ¿se han pedido?' , 7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'¿Quién facilita los monos de trabajo ignífugos?, ¿se han pedido?, ¿a quién?, ¿cuándo?' , 8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Detalle de la distribución y entrega de prendas.' , 9);
 
 --GUIA GRUPO DE APOYO EN TECNOLOGÍAS DE LA INFORMACIÓN (GATI) GC
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUIA GRUPO DE APOYO EN TECNOLOGÍAS DE LA INFORMACIÓN (GATI) GC', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de Puestos de Trabajo, personal real y distribución de personal.	',	0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de Puestos de Trabajo, personal real y distribución de personal. ', 0);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Turnos y horarios de servicio: 
-Desplazamientos a otras platillas: ¿Se anotan en la aplicación SIGO las salidas diarias, cuantificación de las actividades realizadas y tiempos invertidos?',	1);
+Desplazamientos a otras platillas: ¿Se anotan en la aplicación SIGO las salidas diarias, cuantificación de las actividades realizadas y tiempos invertidos?', 1);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: 
 Control de las actividades diarias a través de partes de trabajo. Grabación estadística de hechos policiales, vehículos…Reparaciones de equipos, tiempos de respuesta y grado de satisfacción. 
-Adecuación del dimensionado de la Unidad a la actividad desarrollada.',	2);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Adecuación de Equipos y Material: El GATI dispone: ……. de ordenadores ,……. Impresoras.',	3);
+Adecuación del dimensionado de la Unidad a la actividad desarrollada.', 2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Adecuación de Equipos y Material: El GATI dispone: ……. de ordenadores ,……. Impresoras.', 3);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'"Estado del equipamiento informático y número de equipos sustituidos en el año anterior. 
-Control del gasto de las impresoras y reposición de tóner.',	4);
+Control del gasto de las impresoras y reposición de tóner.', 4);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Ratio entre el personal destinado y el número de ordenadores. 
 Número de impresoras y ratio por persona.
 Número de accesos a Internet.
 Cuentas e-mail: por personales, por grupos. 
-Período de garantía de los ordenadores e impresoras.',	5);
+Período de garantía de los ordenadores e impresoras.', 5);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cualificación profesional alcanzada: 
 Formación del personal.
 Cursos de formación en informática y telecomunicaciones  (TIC).
 Cursos realizados en los 3 últimos años.
-Accesos a las bases policiales tanto del personal: ALFIL Y SIGO.',	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas: 	',	7);
+Accesos a las bases policiales tanto del personal: ALFIL Y SIGO.', 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas:  ', 7);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Telecomunicaciones:
 El CPT contempla………… puestos de especialistas de la escala básica
-En la actualidad personal cubierto:',	8);
+En la actualidad personal cubierto:', 8);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Turnos y horarios de servicio: 
 Horario de prestación del servicio.
 Desplazamientos a otras platillas: ¿Se anotan en la aplicación SIGO las salidas diarias, cuantificación de las actividades realizadas y tiempos invertidos?.
-Cómo se atienden las incidencias, urgencias, fines de semana (¿se compensa de alguna manera?',	9);
+Cómo se atienden las incidencias, urgencias, fines de semana (¿se compensa de alguna manera?', 9);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cualificación profesional alcanzada:
 Cursos de formación en Telecomunicaciones e Informática (TIC). 
 Conocimiento del manejo de los terminales SIRDEE por los usuarios.
-Acceso a Internet ¿quién accede y como se autoriza?.',	10);
+Acceso a Internet ¿quién accede y como se autoriza?.', 10);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Carga de Trabajo: 
 Actividades, mantenimiento, reparaciones.
 Programación de los terminales SIRDEE.
 Asistencia a las video-conferencias en los 2 últimos años. 
 Visionados de las CCTV (nocturno).
 Se da cobertura a las compañías y puestos.
-Accesos a las bases policiales del personal a ALFIL y SIGO.  ¿Se ejerce algún control del acceso por parte de este personal?',	11);
+Accesos a las bases policiales del personal a ALFIL y SIGO.  ¿Se ejerce algún control del acceso por parte de este personal?', 11);
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'"Adecuación de Equipos y Material: 
 Número de equipos SIRDEE y grado de cobertura:  ¿zonas de sombra?.
 Número de emisoras base. 
@@ -1729,46 +1729,46 @@ Número de emisoras  móviles en vehículos.
 Número de equipos y ratio. 
 Número de teléfonos móviles y ratio.  
 Solicitudes  de cámaras al Área de ……………… (sustitución de las cámaras fijas por móviles): 
-Recepción de cámaras en los dos últimos años.',	12);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas:',	13);
+Recepción de cámaras en los dos últimos años.', 12);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Problemática, necesidades expuestas:', 13);
 
 
 --GUÍA PROGRAMA PATIO GC
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUÍA PROGRAMA PATIO GC', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Dónde se realizan los ejercicios de tiro (campos de tiro – Convenios con el Ejército):',	0);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nº de profesores instructores operativos SIO (oficiales, nivel 1) nº instructores operativos SIO ( resto del personal con nivel 2)',	1);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Porcentajes de participación durante los dos últimos años.	',	2);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Fichas de Intervención Operativa: en papel  o soporte informático (Tabla Excel individualizada) sobre la aplicación del Programa PATIO.',	3);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Revisión de Actas Semestrales sobre la aplicación del Programa PATIO remitido a las Comandancias:',	4);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'¿Se lleva algún control de los que no realizan el tiro, se justifica, ¿se toman medidas disciplinarias? ',	5);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nivel alcanzado: APTO / NO APTO caso de refuerzo',	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La Comandancia  dicta la orden de servicio del Plan Patio   y nombra el servicio para la realización de las prácticas del PROGRAMA PATIO. ¿Cómo se planifica los ejercicios semestrales? Pedir copia de las ordenes semestrales.',	7);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actas semestrales enviadas a la Comandancia',	8);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como medida preventiva, ¿se pone en conocimiento de los servicios de emergencia 112, la fecha y los lugares donde se realizarán los ejercicios de tiro, con una antelación mínima de…………….(una semana) al objeto de coordinarlos con servicios de emergencia en caso que fuera necesario, tal como establece en el Plan de Contingencia de la Comandancia? Los ejercicios de tiro ¿cuentan con personal sanitario y la presencia física de una ambulancia?:',	9);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Consumo de cartuchería:',	10);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Dónde se realizan los ejercicios de tiro (campos de tiro – Convenios con el Ejército):', 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nº de profesores instructores operativos SIO (oficiales, nivel 1) nº instructores operativos SIO ( resto del personal con nivel 2)', 1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Porcentajes de participación durante los dos últimos años. ', 2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Fichas de Intervención Operativa: en papel  o soporte informático (Tabla Excel individualizada) sobre la aplicación del Programa PATIO.', 3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Revisión de Actas Semestrales sobre la aplicación del Programa PATIO remitido a las Comandancias:', 4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'¿Se lleva algún control de los que no realizan el tiro, se justifica, ¿se toman medidas disciplinarias? ', 5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nivel alcanzado: APTO / NO APTO caso de refuerzo', 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'La Comandancia  dicta la orden de servicio del Plan Patio   y nombra el servicio para la realización de las prácticas del PROGRAMA PATIO. ¿Cómo se planifica los ejercicios semestrales? Pedir copia de las ordenes semestrales.', 7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Actas semestrales enviadas a la Comandancia', 8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como medida preventiva, ¿se pone en conocimiento de los servicios de emergencia 112, la fecha y los lugares donde se realizarán los ejercicios de tiro, con una antelación mínima de…………….(una semana) al objeto de coordinarlos con servicios de emergencia en caso que fuera necesario, tal como establece en el Plan de Contingencia de la Comandancia? Los ejercicios de tiro ¿cuentan con personal sanitario y la presencia física de una ambulancia?:', 9);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Consumo de cartuchería:', 10);
 
 
 --GUÍA PLAN NACIONAL DE TIRO (PNT) PN
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'GUÍA PLAN NACIONAL DE TIRO (PNT) PN', 'I.G.P.', 0,trunc(sysdate), 'system');
 
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Dónde se realizan los ejercicios de tiro (nº de galerías):',	0);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de puestos de trabajo:',	1);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Personal cubierto: Nº de instructores de tiro: ¿titulado como especialista en armamento y tiro?',	2);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Los instructores de tiro: ¿Pasan reconocimientos médicos para la prevención de riesgos  (oficiales o particulares):',	3);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Porcentajes de participación durante los dos últimos años:',	4);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Digitalización de la Cartilla anual del PN',	5);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Revisión de Actas Trimestrales: ',	6);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Informe trimestral a la Superioridad del incumplimiento del Plan de Tiro por parte del funcionario encargado.',	7);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Citación a cada funcionario para el cumplimiento del PNT',	8);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Solicitud del justificante de la no asistencia a las prácticas de tiro del funcionario. ¿Se lleva algún control de los que no realizan el tiro, se justifica, ¿se toman medidas disciplinarias?',	9);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nivel alcanzado:',	10);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Libro de  control de tiro de la galería:',	11);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cartillas de tiro: ¿ Se cumplimentan? (hacer muestreo de varias cartillas). Existe alguna otra aplicación informática.',	12);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Calendario para las prácticas de tiro, como se planifica los ejercicios trimestrales? : Orden escrita de…, apuntarse el funcionario.',	13);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como medida preventiva, ¿se pone en conocimiento de los servicios de emergencia 112, la fecha y los lugares donde se realizarán los ejercicios de tiro, con una antelación mínima de…………….(una semana) al objeto de coordinarlos con servicios de emergencia en caso que fuera necesario.',	14);
-insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Consumo de cartuchería:',	15);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Dónde se realizan los ejercicios de tiro (nº de galerías):', 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Catálogo de puestos de trabajo:', 1);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Personal cubierto: Nº de instructores de tiro: ¿titulado como especialista en armamento y tiro?', 2);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Los instructores de tiro: ¿Pasan reconocimientos médicos para la prevención de riesgos  (oficiales o particulares):', 3);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Porcentajes de participación durante los dos últimos años:', 4);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Digitalización de la Cartilla anual del PN', 5);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Revisión de Actas Trimestrales: ', 6);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Informe trimestral a la Superioridad del incumplimiento del Plan de Tiro por parte del funcionario encargado.', 7);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Citación a cada funcionario para el cumplimiento del PNT', 8);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Solicitud del justificante de la no asistencia a las prácticas de tiro del funcionario. ¿Se lleva algún control de los que no realizan el tiro, se justifica, ¿se toman medidas disciplinarias?', 9);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Nivel alcanzado:', 10);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Libro de  control de tiro de la galería:', 11);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Cartillas de tiro: ¿ Se cumplimentan? (hacer muestreo de varias cartillas). Existe alguna otra aplicación informática.', 12);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Calendario para las prácticas de tiro, como se planifica los ejercicios trimestrales? : Orden escrita de…, apuntarse el funcionario.', 13);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Como medida preventiva, ¿se pone en conocimiento de los servicios de emergencia 112, la fecha y los lugares donde se realizarán los ejercicios de tiro, con una antelación mínima de…………….(una semana) al objeto de coordinarlos con servicios de emergencia en caso que fuera necesario.', 14);
+insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'Consumo de cartuchería:', 15);
 
 commit;
